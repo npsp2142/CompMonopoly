@@ -2,18 +2,19 @@ package com.company.model;
 
 import com.company.model.component.Player;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class GameController {
     public static GameController instance;
-    private final Scanner scanner;
-    private final InputStream inputStream;
+    private final BufferedReader bufferedReader;
+
     public GameController(InputStream inputStream) {
-        this.inputStream = inputStream;
-        scanner = new Scanner(inputStream);
+        bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         if (instance == null) {
             instance = this;
         }
@@ -21,23 +22,23 @@ public class GameController {
 
     public Player.Response getResponse(String promptMessage) {
         ArrayList<String> tokens = new ArrayList<>();
-        GameDisplay.promptMessage(promptMessage);
-
-        Scanner scanner = new Scanner(inputStream);
-        if (scanner.hasNextLine()) {
-            String token = scanner.nextLine();
+        try {
+            GameDisplay.promptMessage(promptMessage);
+            String token = bufferedReader.readLine();
             tokens.add(token);
+            switch (tokens.get(0).toLowerCase()) {
+                case "y":
+                    return Player.Response.YES;
+                case "n":
+                    return Player.Response.NO;
+                default:
+                    GameDisplay.warnMessage("Unknown Response");
+                    return null;
+            }
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
-
-        switch (tokens.get(0).toLowerCase()) {
-            case "y":
-                return Player.Response.YES;
-            case "n":
-                return Player.Response.NO;
-            default:
-                GameDisplay.warnMessage("Unknown Response");
-                return null;
-        }
+        return null;
     }
 
 
@@ -45,9 +46,11 @@ public class GameController {
         ArrayList<String> tokens = new ArrayList<>();
         GameDisplay.printCommandPrompt();
 
-        if (scanner.hasNextLine()) {
-            String[] token = scanner.nextLine().split("\\s");
+        try {
+            String[] token = bufferedReader.readLine().split("\\s");
             Collections.addAll(tokens, token);
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
 
         return tokens;

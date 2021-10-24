@@ -6,18 +6,22 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class GameDisplay {
-    private static GameDisplay instance;
-    private final PrintStream printStream;
-
     private static final int TERMINAL_WIDTH = 80;
     private static final char DIVIDER_SYMBOL = '-';
     private static final char SPACE_SYMBOL = ' ';
+    private static GameDisplay instance;
+    private final PrintStream printStream;
 
     public GameDisplay(OutputStream outputStream) {
         printStream = new PrintStream(outputStream);
-        if(instance == null){
+        if (instance == null) {
             instance = this;
         }
+    }
+
+
+    public static void flush() {
+        instance.getPrintStream().flush();
     }
 
     public static void infoMessage(String message) {
@@ -52,8 +56,7 @@ public class GameDisplay {
         for (int i = 0; i < TERMINAL_WIDTH; i++) {
             builder.append(DIVIDER_SYMBOL);
         }
-        builder.append('\n');
-        instance.getPrintStream().print(builder);
+        instance.getPrintStream().println(builder);
     }
 
     public static void titleBar(String title) {

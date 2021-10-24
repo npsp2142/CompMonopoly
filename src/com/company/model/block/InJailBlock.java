@@ -1,7 +1,7 @@
 package com.company.model.block;
 
-import com.company.model.component.Player;
 import com.company.model.component.Location;
+import com.company.model.component.Player;
 import com.company.model.effect.*;
 import com.company.model.observer.BlockObserver;
 
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class InJailBlock extends Block {
+    public static final int FINE = 150;
     private final Location location;
-    private final Map<Player,Integer> roundCounter;
+    private final Map<Player, Integer> roundCounter;
 
     public InJailBlock(String name,
                        ArrayList<BlockObserver> blockObservers,
@@ -24,8 +25,8 @@ public class InJailBlock extends Block {
     @Override
     public OnLandEffect createOnLandEffect(Player player) {
         Player.Response response;
-        response =  player.getResponse(String.format("pay $%d HKD to leave. [y] or Roll double [n]",
-               FINE ));
+        response = player.getResponse(String.format("pay $%d HKD to leave. [y] or Roll double [n]",
+                FINE));
 
         if (response == Player.Response.YES) {
             return new PayToLeaveJailEffect(
@@ -38,7 +39,7 @@ public class InJailBlock extends Block {
         }
         int[] dices = player.roll(2);
         return new RollToLeaveJailEffect(
-                "RollToLeave",
+                "Roll To Leave",
                 player,
                 dices,
                 new MoveEffect("You are free", player, player.roll(2), location),
@@ -47,7 +48,6 @@ public class InJailBlock extends Block {
                 roundCounter
         );
     }
-    public static final int FINE = 150;
 
     @Override
     public OnEnterEffect createOnEnterEffect(Player player) {
@@ -58,6 +58,6 @@ public class InJailBlock extends Block {
     @Override
     public String getDescription() {
         return String.format("%s - No Move %d at maximum - Pay Fine %d HKD if not roll to leave",
-                this,RollToLeaveJailEffect.MAX_STAY, FINE);
+                this, RollToLeaveJailEffect.MAX_STAY, FINE);
     }
 }

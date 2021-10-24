@@ -2,8 +2,6 @@ package com.company.model.component;
 
 import com.company.model.GameDisplay;
 import com.company.model.block.Block;
-import com.company.model.component.Board;
-import com.company.model.component.Player;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
 
@@ -25,7 +23,7 @@ public class Location implements Serializable {
 
     public void setStartLocation(Block block) {
         for (Player player : players) {
-            if(location.get(player) == null){
+            if (location.get(player) == null) {
                 location.put(player, block);
                 continue;
             }
@@ -33,7 +31,6 @@ public class Location implements Serializable {
         }
 
     }
-
 
     public void moveStep(Player player, int step) {
         Block currentBlock = location.get(player);
@@ -64,11 +61,11 @@ public class Location implements Serializable {
     }
 
     public void moveTo(Player player, String name) {
-        Block block= board.findBlock(name);
-        if(block== null){
+        Block block = board.findBlock(name);
+        if (block == null) {
             return;
         }
-        moveTo(player,block);
+        moveTo(player, block);
     }
 
     public void moveTo(Player player, Block block) {
@@ -76,9 +73,9 @@ public class Location implements Serializable {
         location.replace(player, block);
     }
 
-    public void reload(){
-        for (Player player :players
-                ) {
+    public void reload() {
+        for (Player player : players
+        ) {
             location.replace(player, board.getStartBlock());
         }
     }

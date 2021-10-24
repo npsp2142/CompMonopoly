@@ -3,6 +3,7 @@ package com.company.model;
 import com.company.model.command.Command;
 import com.company.model.command.CommandFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameApplication {
@@ -11,42 +12,38 @@ public class GameApplication {
     private boolean isExitApp;
     private Status status;
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public enum Status {
-        MENU, PLAYING,
-    }
-
     public GameApplication(
-                           CommandFactory commandFactory,
-                           Status status) {
+            CommandFactory commandFactory,
+            Status status) {
         instance = this;
         this.commandFactory = commandFactory;
         this.status = status;
     }
 
-
     public void run() {
-        beforeRun();
-        while (!isExitApp) {
-            Command command = getCommand();
-            if (command == null) {
-                GameDisplay.warnMessage("Unknown Command");
-                continue;
+        try {
+            beforeRun();
+            while (!isExitApp) {
+                Command command = getCommand();
+                if (command == null) {
+                    GameDisplay.warnMessage("Unknown Command");
+                    continue;
+                }
+                if (!command.isValid()) {
+                    GameDisplay.warnMessage("Invalid Command");
+                    continue;
+                }
+                command.execute();
             }
-            if (!command.isValid()) {
-                GameDisplay.warnMessage("Invalid Command");
-                continue;
-            }
-            command.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     private void beforeRun() {
         isExitApp = false;
-        System.out.println("Welcome to COMP Monopoly. Type \"start\" to start the game");
+        GameDisplay.titleBar("Welcome to COMP Monopoly. Type \"start\" to start the game");
     }
 
     public Command getCommand() {
@@ -62,8 +59,16 @@ public class GameApplication {
         return status;
     }
 
-    public void quitGame(){
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void quitGame() {
         status = Status.MENU;
+    }
+
+    public enum Status {
+        MENU, PLAYING,
     }
 
 
