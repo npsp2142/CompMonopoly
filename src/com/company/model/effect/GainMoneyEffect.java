@@ -3,8 +3,8 @@ package com.company.model.effect;
 import com.company.model.component.Player;
 
 public class GainMoneyEffect extends Effect implements OnLandEffect, OnEnterEffect{
-    private Player player;
-    private int amount;
+    private final Player player;
+    private final int amount;
     public GainMoneyEffect(String name, Player player, int amount) {
         super(name);
         this.player = player;

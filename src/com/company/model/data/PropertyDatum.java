@@ -1,7 +1,5 @@
 package com.company.model.data;
 
-import com.company.model.component.Player;
-
 import java.io.Serializable;
 
 public class PropertyDatum implements Serializable {

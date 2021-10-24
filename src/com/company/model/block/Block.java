@@ -9,16 +9,18 @@ import java.util.ArrayList;
 
 public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
     private final String name;
-    protected ArrayList<BlockObserver> blockObservers;
+    private final ArrayList<BlockObserver> blockObservers;
 
     public Block(String name,ArrayList<BlockObserver> blockObservers){
         this.name = name;
         this.blockObservers = blockObservers;
     }
 
-    public void addSubscriber(BlockObserver blockObserver){
-        blockObservers.add(blockObserver);
-    }
+// --Commented out by Inspection START (24/10/2021 17:13):
+//    public void addSubscriber(BlockObserver blockObserver){
+//        blockObservers.add(blockObserver);
+//    }
+// --Commented out by Inspection STOP (24/10/2021 17:13)
 
     public void notifySubscribers(Player player){
         for (BlockObserver blockObserver : blockObservers

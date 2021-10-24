@@ -9,7 +9,6 @@ import com.company.model.observer.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Main {
     public static GameApplication createGameApplication(){
@@ -148,11 +147,13 @@ public class Main {
             MoneyObserver moneyObserver = new MoneyObserver(new HashMap<>());
             blockObservers.add(locationBlockObserver);
             playerObservers.add(moneyObserver);
+
             GameSystem gameSystem = new GameSystem(board,players, properties, location);
             CommandFactory factory = new CommandFactory(gameSystem);
-            GameController controller = new GameController(new Scanner(System.in));
+            new GameController(System.in);
             new GameDisplay(System.out);
-            return new GameApplication(gameSystem,factory,controller,GameApplication.Status.MENU);
+
+            return new GameApplication(factory,GameApplication.Status.MENU);
     }
     public static void main(String[] args) {
         Player.NEED_PROMPT = true;

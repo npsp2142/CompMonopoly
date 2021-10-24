@@ -2,18 +2,19 @@ package com.company.model;
 
 import com.company.model.command.Command;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class GameDisplay {
-    private final PrintStream printStream;
     private static GameDisplay instance;
+    private final PrintStream printStream;
 
     private static final int TERMINAL_WIDTH = 80;
     private static final char DIVIDER_SYMBOL = '-';
     private static final char SPACE_SYMBOL = ' ';
 
-    public GameDisplay(PrintStream printStream) {
-        this.printStream = printStream;
+    public GameDisplay(OutputStream outputStream) {
+        printStream = new PrintStream(outputStream);
         if(instance == null){
             instance = this;
         }

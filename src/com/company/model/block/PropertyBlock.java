@@ -9,8 +9,10 @@ import java.util.ArrayList;
 
 public class PropertyBlock extends Block implements OnLandBlock{
     private final Property property;
+    private final ArrayList<BlockObserver> blockObservers;
     public PropertyBlock(String name, ArrayList<BlockObserver> blockObservers, Property property) {
         super(name, blockObservers);
+        this.blockObservers = blockObservers;
         this.property = property;
     }
 

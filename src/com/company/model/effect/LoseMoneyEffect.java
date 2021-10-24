@@ -3,8 +3,8 @@ package com.company.model.effect;
 import com.company.model.component.Player;
 
 public class LoseMoneyEffect extends Effect implements OnLandEffect{
-    private Player player;
-    private int amount;
+    private final Player player;
+    private final int amount;
     public LoseMoneyEffect(String name, Player player, int amount) {
         super(name);
         this.player = player;

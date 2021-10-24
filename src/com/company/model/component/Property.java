@@ -1,7 +1,5 @@
 package com.company.model.component;
 
-import java.io.Serializable;
-
 public class Property {
     private final String name;
     private final int price;

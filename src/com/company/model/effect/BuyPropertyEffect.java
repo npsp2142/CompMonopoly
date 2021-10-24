@@ -4,9 +4,9 @@ import com.company.model.component.Player;
 import com.company.model.component.Property;
 
 public class BuyPropertyEffect extends Effect implements OnLandEffect{
-    private Player player;
-    private Property property;
-    private LoseMoneyEffect loseMoneyEffect;
+    private final Player player;
+    private final Property property;
+    private final LoseMoneyEffect loseMoneyEffect;
     public BuyPropertyEffect(String name, Player player, Property property,LoseMoneyEffect loseMoneyEffect) {
         super(name);
         this.player = player;

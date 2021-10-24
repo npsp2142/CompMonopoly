@@ -34,7 +34,7 @@ public class GoToJailBlock extends Block{
     public OnEnterEffect createOnEnterEffect(Player player) {
         return new NoEffect();
     }
-    public static String DEFAULT_NAME = "Go To Jail Effect";
+    public static final String DEFAULT_NAME = "Go To Jail Effect";
 
     @Override
     public String getDescription() {

@@ -1,8 +1,8 @@
 package com.company.model.effect;
 
 public class GoJailEffect extends Effect implements OnLandEffect{
-    SetGroundedEffect setGroundedEffect;
-    TeleportEffect teleportEffect;
+    final SetGroundedEffect setGroundedEffect;
+    final TeleportEffect teleportEffect;
 
     public GoJailEffect(String name, SetGroundedEffect setGroundedEffect, TeleportEffect teleportEffect) {
         super(name);

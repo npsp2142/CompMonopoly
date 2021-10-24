@@ -1,8 +1,8 @@
 package com.company.model.effect;
 
 public class PayRentEffect extends Effect implements OnLandEffect{
-    GainMoneyEffect gainMoneyEffect;
-    LoseMoneyEffect loseMoneyEffect;
+    final GainMoneyEffect gainMoneyEffect;
+    final LoseMoneyEffect loseMoneyEffect;
     public PayRentEffect(String name,GainMoneyEffect gainMoneyEffect, LoseMoneyEffect loseMoneyEffect) {
         super(name);
         this.gainMoneyEffect = gainMoneyEffect;

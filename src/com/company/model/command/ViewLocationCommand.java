@@ -23,10 +23,8 @@ public class ViewLocationCommand implements Command {
             builder.append(location.getCurrentLocation(player)) ;
             builder.append("\n") ;
         }
-
         builder.delete(builder.toString().length()-1, builder.toString().length());
         GameDisplay.infoMessage(builder.toString());
-
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.company.model.GameApplication;
 import com.company.model.component.Player;
 
 public class GiveYesRespondCommand implements Command{
-   public Player player;
+   public final Player player;
     public GiveYesRespondCommand(Player player){
         this.player = player;
     }

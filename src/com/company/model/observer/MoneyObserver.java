@@ -6,7 +6,7 @@ import com.company.model.component.Player;
 import java.util.Map;
 
 public class MoneyObserver implements PlayerObserver {
-    public Map<Player,Integer> money;
+    public final Map<Player,Integer> money;
     public MoneyObserver(Map<Player,Integer> money){
         this.money = money;
     }

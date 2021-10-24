@@ -1,3 +1,4 @@
+import com.company.model.GameDisplay;
 import com.company.model.block.*;
 import com.company.model.component.*;
 import com.company.model.effect.MoveEffect;
@@ -27,10 +28,11 @@ public class BlockTest {
     @BeforeEach
     void setUp() {
 
+        new GameDisplay(System.out);
+
         blockObservers = new ArrayList<>();
 
         players = new ArrayList<>();
-        location = new Location(board, players);
 
         playerA = new Player(
                 "Player A",
@@ -41,13 +43,11 @@ public class BlockTest {
         );
         players.add(playerA);
 
-
-
-
-        HashMap<Player,Integer> playerIntegerHashMap = new HashMap<>();
-        playerIntegerHashMap.put(playerA,0);
-
         goBlock = new GoBlock("Go", blockObservers);
+
+        board = new Board(goBlock);
+        location = new Location(board, players);
+
         centralBlock = new PropertyBlock("Central", blockObservers,
                 new Property("Central", 800, 90));
         wanChaiBlock = new PropertyBlock("Wan Chai", blockObservers,
@@ -61,7 +61,7 @@ public class BlockTest {
         );
         goToJailBlock = new GoToJailBlock("Go To Jail",blockObservers, location,justVisitingOrInJailBlock);
 
-        board = new Board(goBlock);
+
 
         board.addBlock(goBlock);
         board.addBlock(centralBlock);
@@ -114,8 +114,6 @@ public class BlockTest {
         Player.NEED_PROMPT = false;
         playerA.setResponse(Player.Response.NO);
         location.moveStep(playerA, 1);
-
-        int oldAmount = playerA.getAmount();
         assert (inJailRoundCounter.get(playerA) == 0);
         effect = new MoveEffect("",playerA, playerA.roll(2), location);
         effect.onLand();

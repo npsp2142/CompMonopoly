@@ -10,10 +10,6 @@ public class NoEffect extends Effect implements OnLandEffect, OnEnterEffect {
         super(name);
         description = DEFAULT_NAME;
     }
-    public NoEffect(String name,String description) {
-        super(name);
-        this.description = description;
-    }
 
     @Override
     public void onLand() {
@@ -29,5 +25,5 @@ public class NoEffect extends Effect implements OnLandEffect, OnEnterEffect {
         return String.format("%s: %s",this,description) ;
     }
 
-    public static String DEFAULT_NAME = "No Effect";
+    public static final String DEFAULT_NAME = "No Effect";
 }

@@ -19,8 +19,8 @@ public class GoBlock extends Block{
         return new GainMoneyEffect(DEFAULT_NAME,player,SALARY);
     }
 
-    public static int SALARY = 1500;
-    public static String DEFAULT_NAME = "Go Effect";
+    public static final int SALARY = 1500;
+    public static final String DEFAULT_NAME = "Go Effect";
 
     @Override
     public OnLandEffect createOnLandEffect(Player player) {

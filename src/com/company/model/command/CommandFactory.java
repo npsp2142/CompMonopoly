@@ -14,9 +14,26 @@ public class CommandFactory {
     }
 
     public Command make(ArrayList<String> tokens){
+        if(GameApplication.instance.getStatus()==GameApplication.Status.MENU){
+            switch (tokens.get(0).toLowerCase()) {
+                case "start":
+                    return new StartCommand(GameApplication.instance);
+                case "save":
+                    return new SaveCommand(gameSystem);
+                case "load":
+                    return new LoadCommand(gameSystem);
+                case "quit":
+                    return new QuitCommand(GameApplication.instance);
+            }
+            return  null;
+        }
         switch (tokens.get(0).toLowerCase()){
             case "start":
                 return new StartCommand(GameApplication.instance);
+            case "save":
+                return new SaveCommand(gameSystem);
+            case "load":
+                return new LoadCommand(gameSystem);
             case "quit":
                 return new QuitCommand(GameApplication.instance);
             case "location":
@@ -25,16 +42,14 @@ public class CommandFactory {
             case "roll":
             case "r":
                 return new RollCommand(
-                        gameSystem.getCurrentPlayer(),
-                        gameSystem.getPlayerLocation(),
                         new MoveEffect("Roll",
                                 gameSystem.getCurrentPlayer(),
                                 gameSystem.getCurrentPlayer().roll(2),
                                 gameSystem.getPlayerLocation()));
             case "y":
-                return  new GiveYesRespondCommand(gameSystem.getCurrentPlayer());
+                return new GiveYesRespondCommand(gameSystem.getCurrentPlayer());
             case "n":
-                return  new GiveNoResponseCommand(gameSystem.getCurrentPlayer());
+                return new GiveNoResponseCommand(gameSystem.getCurrentPlayer());
             case "help":
                 return new HelpCommand();
             case "info":
@@ -62,10 +77,6 @@ public class CommandFactory {
             case "board":
             case "b":
                 return new ViewBoardCommand(gameSystem.getBoard());
-            case "save":
-                return new SaveCommand(gameSystem);
-            case "load":
-                return new LoadCommand(gameSystem);
             case "cheat":
                 if ("-lm".equalsIgnoreCase(tokens.get(1))) {
                     return new ReduceMoneyCommand(new LoseMoneyEffect("Cheat", gameSystem.getCurrentPlayer(),

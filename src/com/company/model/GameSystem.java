@@ -285,7 +285,7 @@ public class GameSystem {
         GameApplication.instance.setStatus(GameApplication.Status.PLAYING);
     }
 
-    public static boolean NEED_ASK_END_TURN = false;
-    public static int MAX_TURN = 100;
-    public static String DEFAULT_NAME = "tmp\\save_file.txt";
+    public static final boolean NEED_ASK_END_TURN = false;
+    public static final int MAX_TURN = 100;
+    public static final String DEFAULT_NAME = "tmp\\save_file.txt";
 }

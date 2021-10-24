@@ -2,28 +2,30 @@ package com.company.model;
 
 import com.company.model.component.Player;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
 public class GameController {
     public static GameController instance;
-    public final Scanner scanner;
-
-    public GameController(Scanner scanner) {
-        this.scanner = scanner;
-
+    private final Scanner scanner;
+    private final InputStream inputStream;
+    public GameController(InputStream inputStream) {
+        this.inputStream = inputStream;
+        scanner = new Scanner(inputStream);
         if (instance == null) {
             instance = this;
         }
     }
 
     public Player.Response getResponse(String promptMessage) {
-
         ArrayList<String> tokens = new ArrayList<>();
         GameDisplay.promptMessage(promptMessage);
-        if (scanner.hasNext()) {
-            String token = scanner.next();
+
+        Scanner scanner = new Scanner(inputStream);
+        if (scanner.hasNextLine()) {
+            String token = scanner.nextLine();
             tokens.add(token);
         }
 
@@ -42,10 +44,12 @@ public class GameController {
     public ArrayList<String> getArguments() {
         ArrayList<String> tokens = new ArrayList<>();
         GameDisplay.printCommandPrompt();
+
         if (scanner.hasNextLine()) {
             String[] token = scanner.nextLine().split("\\s");
             Collections.addAll(tokens, token);
         }
+
         return tokens;
     }
 }

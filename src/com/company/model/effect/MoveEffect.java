@@ -39,6 +39,7 @@ public class MoveEffect extends Effect implements OnLandEffect,Describable{
                 stringBuilder.append(String.format("%s roll %d.\n", player.getName(), step));
             }
             stringBuilder.append(onLandEffect.getDescription());
+
             return stringBuilder.toString();
         }
         StringBuilder stringBuilder = new StringBuilder();

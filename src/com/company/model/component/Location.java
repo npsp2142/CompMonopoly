@@ -15,7 +15,7 @@ import java.util.Map;
 public class Location implements Serializable {
     private final Map<Player, Block> location;
     private final Board board;
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     public Location(Board board, ArrayList<Player> players) {
         location = new Hashtable<>();

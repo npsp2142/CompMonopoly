@@ -47,7 +47,7 @@ public class InJailBlock extends Block {
                 roundCounter
         );
     }
-    public static int FINE = 150;
+    public static final int FINE = 150;
 
     @Override
     public OnEnterEffect createOnEnterEffect(Player player) {

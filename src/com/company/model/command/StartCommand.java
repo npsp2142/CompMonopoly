@@ -1,6 +1,5 @@
 package com.company.model.command;
 
-import com.company.Main;
 import com.company.model.GameApplication;
 import com.company.model.GameSystem;
 

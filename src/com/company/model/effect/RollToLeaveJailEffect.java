@@ -10,7 +10,7 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect,Descri
     private final CureEffect cureEffect;
     private final LoseMoneyEffect loseMoneyEffect;
     private final Map<Player,Integer> roundCounter;
-    public static int MAX_STAY = 3;
+    public static final int MAX_STAY = 3;
     public RollToLeaveJailEffect(String name,
                                  Player player,
                                  int[] dices,

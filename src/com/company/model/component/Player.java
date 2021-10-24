@@ -15,9 +15,9 @@ public class Player {
     private final String name;
     private Status status;
     private int amount;
-    private Dice dice;
+    private final Dice dice;
     private Response response;
-    private ArrayList<PlayerObserver> playerObservers;
+    private final ArrayList<PlayerObserver> playerObservers;
 
     public Player(String name, Status status, int amount, Dice dice,
                   ArrayList<PlayerObserver> playerObservers) {
@@ -59,13 +59,6 @@ public class Player {
         return location.getCurrentLocation(this);
     }
 
-    public Dice getDice(){
-        return dice;
-    }
-
-    public ArrayList<PlayerObserver> getPlayerObservers() {
-        return playerObservers;
-    }
 
     public int[] roll(int times){
         int[] result = new int[times];
@@ -76,9 +69,11 @@ public class Player {
         return result;
     }
 
-    public  void addSubscriber(PlayerObserver playerObserver){
-        playerObservers.add(playerObserver);
-    }
+// --Commented out by Inspection START (24/10/2021 17:19):
+//    public void addSubscriber(PlayerObserver playerObserver){
+//        playerObservers.add(playerObserver);
+//    }
+// --Commented out by Inspection STOP (24/10/2021 17:19)
 
     public void notifySubscribers(){
         for (PlayerObserver playerObserver : playerObservers
@@ -116,6 +111,6 @@ public class Player {
 
 
 
-    public static int DEFAULT_AMOUNT = 1500;
+    public static final int DEFAULT_AMOUNT = 1500;
     public static boolean NEED_PROMPT = false;
 }

@@ -53,10 +53,6 @@ public class Board {
         return getNextBlock(block);
     }
 
-    public ArrayList<Block> getBlocks() {
-        return blocks;
-    }
-
     public Block getStartBlock() {
         return startBlock;
     }

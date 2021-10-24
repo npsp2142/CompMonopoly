@@ -19,8 +19,6 @@ public class IncomeTaxBlock extends Block{
     public OnLandEffect createOnLandEffect(Player player) {
         int oldAmount = player.getAmount();
         return new LoseMoneyEffect("Income Tax",player,(int)(oldAmount * INCOME_TAX_RATE));
-
-
     }
 
     @Override

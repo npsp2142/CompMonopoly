@@ -34,8 +34,8 @@ public class ChanceBlock extends Block{
                 this,MAX_ADD,MAX_REDUCE,PROBABILITY_ADD*100);
     }
 
-    public static int MAX_ADD = 200;
-    public static int MAX_REDUCE = 300;
-    public static String DEFAULT_EFFECT_NAME = "Chance";
-    public static float PROBABILITY_ADD = 0.5f;
+    public static final int MAX_ADD = 200;
+    public static final int MAX_REDUCE = 300;
+    public static final String DEFAULT_EFFECT_NAME = "Chance";
+    public static final float PROBABILITY_ADD = 0.5f;
 }

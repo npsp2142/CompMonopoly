@@ -7,7 +7,7 @@ import com.company.model.block.Block;
 import java.util.Map;
 
 public class LocationBlockObserver implements BlockObserver {
-    public Map<Player,Block> location;
+    public final Map<Player,Block> location;
     public LocationBlockObserver(Map<Player,Block>location){
         this.location =location;
     }

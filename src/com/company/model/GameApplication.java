@@ -1,24 +1,13 @@
 package com.company.model;
 
-import com.company.model.block.*;
 import com.company.model.command.Command;
 import com.company.model.command.CommandFactory;
-import com.company.model.observer.BlockObserver;
-import com.company.model.observer.LocationBlockObserver;
-import com.company.model.observer.MoneyObserver;
-import com.company.model.observer.PlayerObserver;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
 
 public class GameApplication {
     public static GameApplication instance;
-    private GameSystem gameSystem;
-    private CommandFactory commandFactory;
-    private GameController gameController;
-    private Command command;
+    private final CommandFactory commandFactory;
     private boolean isExitApp;
     private Status status;
 
@@ -30,14 +19,11 @@ public class GameApplication {
         MENU, PLAYING,
     }
 
-    public GameApplication(GameSystem gameSystem,
+    public GameApplication(
                            CommandFactory commandFactory,
-                           GameController gameController,
                            Status status) {
         instance = this;
-        this.gameSystem = gameSystem;
         this.commandFactory = commandFactory;
-        this.gameController = gameController;
         this.status = status;
     }
 
@@ -45,7 +31,7 @@ public class GameApplication {
     public void run() {
         beforeRun();
         while (!isExitApp) {
-            command = getCommand();
+            Command command = getCommand();
             if (command == null) {
                 GameDisplay.warnMessage("Unknown Command");
                 continue;
@@ -66,10 +52,6 @@ public class GameApplication {
     public Command getCommand() {
         ArrayList<String> tokens = GameController.instance.getArguments();
         return commandFactory.make(tokens);
-    }
-
-    public void setCommand(Command command) {
-        this.command = command;
     }
 
     public void closeApplication() {
