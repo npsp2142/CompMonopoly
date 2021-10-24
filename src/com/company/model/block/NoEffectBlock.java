@@ -8,7 +8,7 @@ import com.company.model.observer.BlockObserver;
 
 import java.util.ArrayList;
 
-public class NoEffectBlock extends Block{
+public class NoEffectBlock extends Block {
     public NoEffectBlock(String name, ArrayList<BlockObserver> blockObservers) {
         super(name, blockObservers);
     }

@@ -8,6 +8,7 @@ import java.util.List;
 public class BankruptEffect extends Effect implements OnLandEffect {
     private final Player player;
     private final List<Property> properties;
+
     public BankruptEffect(String name, Player player, List<Property> properties) {
         super(name);
         this.player = player;
@@ -17,17 +18,17 @@ public class BankruptEffect extends Effect implements OnLandEffect {
     @Override
     public void onLand() {
         player.setBankruptStatus();
-        for (Property property:properties) {
-            if (property.getOwner()== null){
+        for (Property property : properties) {
+            if (property.getOwner() == null) {
                 continue;
             }
-            if(property.getOwner().equals(player)){
+            if (property.getOwner().equals(player)) {
                 property.setOwner(null);
             }
         }
     }
 
     public String getDescription() {
-        return String.format("%s - Trigger when no money in Turn End. Sell property to back healthy.",this);
+        return String.format("%s - Trigger when no money in Turn End. Sell property to back healthy.", this);
     }
 }

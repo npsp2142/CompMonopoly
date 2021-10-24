@@ -8,16 +8,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player {
-    public enum Status implements Serializable{
-        HEALTHY, BANKRUPT, IN_JAIL
-    }
-
+    public static final int DEFAULT_AMOUNT = 1500;
+    public static boolean NEED_PROMPT = false;
     private final String name;
+    private final Dice dice;
+    private final ArrayList<PlayerObserver> playerObservers;
     private Status status;
     private int amount;
-    private final Dice dice;
     private Response response;
-    private final ArrayList<PlayerObserver> playerObservers;
 
     public Player(String name, Status status, int amount, Dice dice,
                   ArrayList<PlayerObserver> playerObservers) {
@@ -36,12 +34,15 @@ public class Player {
     public void addAmount(int amount) {
         this.amount += amount;
     }
+
     public void setJailStatus() {
         status = Status.IN_JAIL;
     }
+
     public void setHealthyStatus() {
         status = Status.HEALTHY;
     }
+
     public void setBankruptStatus() {
         status = Status.BANKRUPT;
     }
@@ -49,24 +50,17 @@ public class Player {
     public Status getStatus() {
         return status;
     }
+
     public int getAmount() {
         return amount;
     }
+
     public String getName() {
         return name;
     }
+
     public Block getCurrentLocation(Location location) {
         return location.getCurrentLocation(this);
-    }
-
-
-    public int[] roll(int times){
-        int[] result = new int[times];
-        for (int i = 0; i < times; i++) {
-            result[i] = dice.roll();
-        }
-
-        return result;
     }
 
 // --Commented out by Inspection START (24/10/2021 17:19):
@@ -75,27 +69,31 @@ public class Player {
 //    }
 // --Commented out by Inspection STOP (24/10/2021 17:19)
 
-    public void notifySubscribers(){
+    public int[] roll(int times) {
+        int[] result = new int[times];
+        for (int i = 0; i < times; i++) {
+            result[i] = dice.roll();
+        }
+
+        return result;
+    }
+
+    public void notifySubscribers() {
         for (PlayerObserver playerObserver : playerObservers
         ) {
-            playerObserver.update(this );
+            playerObserver.update(this);
         }
     }
 
-    public void reload(){
+    public void reload() {
         status = Status.HEALTHY;
         amount = DEFAULT_AMOUNT;
     }
 
-
-    public enum Response {
-        YES, NO
-    }
-
     public Response getResponse(String prompt) {
-        if(Player.NEED_PROMPT){
+        if (Player.NEED_PROMPT) {
             Response tempResponse = null;
-            while (tempResponse == null){
+            while (tempResponse == null) {
                 tempResponse = GameController.instance.getResponse(prompt);
             }
             return tempResponse;
@@ -109,8 +107,10 @@ public class Player {
     }
 
 
-
-
-    public static final int DEFAULT_AMOUNT = 1500;
-    public static boolean NEED_PROMPT = false;
+    public enum Status implements Serializable {
+        HEALTHY, BANKRUPT, IN_JAIL
+    }
+    public enum Response {
+        YES, NO
+    }
 }

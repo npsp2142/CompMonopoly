@@ -1,26 +1,26 @@
 package com.company.model.component;
 
-import com.company.model.block.*;
+import com.company.model.block.Block;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Board {
     private final ArrayList<Block> blocks;
-    private final Hashtable<Block,Block> board;
+    private final Hashtable<Block, Block> board;
     private final Block startBlock;
 
-    public Board(Block startBlock){
+    public Board(Block startBlock) {
         this.startBlock = startBlock;
         this.board = new Hashtable<>();
         this.blocks = new ArrayList<>();
     }
 
-    public void addPath(Block start, Block destination){
-        board.put(start,destination);
+    public void addPath(Block start, Block destination) {
+        board.put(start, destination);
     }
 
-    public void addPath(String start, String destination){
+    public void addPath(String start, String destination) {
         Block startBlock = findBlock(start);
         if (startBlock == null)
             return;
@@ -28,25 +28,26 @@ public class Board {
         if (destinationBlock == null)
             return;
 
-        addPath(startBlock,destinationBlock);
+        addPath(startBlock, destinationBlock);
     }
 
-    public void addBlock(Block newBlock){
+    public void addBlock(Block newBlock) {
         blocks.add(newBlock);
     }
 
-    public Block findBlock(String name){
-        for (Block block : blocks){
-            if (block.getName().equals(name) )
+    public Block findBlock(String name) {
+        for (Block block : blocks) {
+            if (block.getName().equals(name))
                 return block;
         }
         return null;
     }
 
-    public Block getNextBlock(Block start){
+    public Block getNextBlock(Block start) {
         return board.get(start);
     }
-    public Block getNextBlock(String name){
+
+    public Block getNextBlock(String name) {
         Block block = findBlock(name);
         if (block == null)
             return null;

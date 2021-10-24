@@ -2,8 +2,9 @@ package com.company.model.effect;
 
 import com.company.model.component.Player;
 
-public class SetGroundedEffect extends Effect implements OnLandEffect{
+public class SetGroundedEffect extends Effect implements OnLandEffect {
     private final Player player;
+
     public SetGroundedEffect(String name, Player player) {
         super(name);
         this.player = player;
@@ -16,6 +17,6 @@ public class SetGroundedEffect extends Effect implements OnLandEffect{
 
     @Override
     public String getDescription() {
-        return String.format("%s: %s cannot move",this,player);
+        return String.format("%s: %s cannot move", this, player);
     }
 }

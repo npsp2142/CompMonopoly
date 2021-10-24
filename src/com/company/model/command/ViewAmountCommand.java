@@ -6,15 +6,17 @@ import com.company.model.component.Player;
 
 import java.util.ArrayList;
 
-public class ViewAmountCommand implements Command{
+public class ViewAmountCommand implements Command {
     private final ArrayList<Player> players;
-    public ViewAmountCommand(ArrayList<Player> players){
+
+    public ViewAmountCommand(ArrayList<Player> players) {
         this.players = players;
     }
+
     @Override
     public void execute() {
-        for(Player player :players){
-            GameDisplay.infoMessage(String.format("%-15s %d",player,player.getAmount()));
+        for (Player player : players) {
+            GameDisplay.infoMessage(String.format("%-15s %d", player, player.getAmount()));
         }
     }
 

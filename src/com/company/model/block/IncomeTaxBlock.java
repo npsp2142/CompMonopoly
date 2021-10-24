@@ -9,8 +9,9 @@ import com.company.model.observer.BlockObserver;
 
 import java.util.ArrayList;
 
-public class IncomeTaxBlock extends Block{
-    final float INCOME_TAX_RATE = (float)0.1;
+public class IncomeTaxBlock extends Block {
+    final float INCOME_TAX_RATE = (float) 0.1;
+
     public IncomeTaxBlock(String name, ArrayList<BlockObserver> blockObservers) {
         super(name, blockObservers);
     }
@@ -18,7 +19,7 @@ public class IncomeTaxBlock extends Block{
     @Override
     public OnLandEffect createOnLandEffect(Player player) {
         int oldAmount = player.getAmount();
-        return new LoseMoneyEffect("Income Tax",player,(int)(oldAmount * INCOME_TAX_RATE));
+        return new LoseMoneyEffect("Income Tax", player, (int) (oldAmount * INCOME_TAX_RATE));
     }
 
     @Override
@@ -28,6 +29,6 @@ public class IncomeTaxBlock extends Block{
 
     @Override
     public String getDescription() {
-        return this +" - Reduce money by " + INCOME_TAX_RATE *100 + "%";
+        return this + " - Reduce money by " + INCOME_TAX_RATE * 100 + "%";
     }
 }

@@ -1,6 +1,8 @@
 package com.company.model.command;
 
-import com.company.model.*;
+import com.company.model.GameApplication;
+import com.company.model.GameDisplay;
+import com.company.model.GameSystem;
 import com.company.model.effect.LoseMoneyEffect;
 import com.company.model.effect.MoveEffect;
 
@@ -9,12 +11,13 @@ import java.util.ArrayList;
 public class CommandFactory {
 
     private final GameSystem gameSystem;
-    public CommandFactory(GameSystem gameSystem){
+
+    public CommandFactory(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
     }
 
-    public Command make(ArrayList<String> tokens){
-        if(GameApplication.instance.getStatus()==GameApplication.Status.MENU){
+    public Command make(ArrayList<String> tokens) {
+        if (GameApplication.instance.getStatus() == GameApplication.Status.MENU) {
             switch (tokens.get(0).toLowerCase()) {
                 case "start":
                     return new StartCommand(GameApplication.instance);
@@ -25,9 +28,9 @@ public class CommandFactory {
                 case "quit":
                     return new QuitCommand(GameApplication.instance);
             }
-            return  null;
+            return null;
         }
-        switch (tokens.get(0).toLowerCase()){
+        switch (tokens.get(0).toLowerCase()) {
             case "start":
                 return new StartCommand(GameApplication.instance);
             case "save":
@@ -53,11 +56,11 @@ public class CommandFactory {
             case "help":
                 return new HelpCommand();
             case "info":
-                if (tokens.size() != 2){
+                if (tokens.size() != 2) {
                     GameDisplay.usageMessage("info [-location/-property]");
                     return new EmptyCommand();
                 }
-                switch (tokens.get(1).toLowerCase()){
+                switch (tokens.get(1).toLowerCase()) {
                     case "-location":
                     case "-l":
                         return new ViewLocationCommand(gameSystem.getPlayerLocation(), gameSystem.getPlayers());

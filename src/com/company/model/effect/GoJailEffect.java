@@ -1,6 +1,6 @@
 package com.company.model.effect;
 
-public class GoJailEffect extends Effect implements OnLandEffect{
+public class GoJailEffect extends Effect implements OnLandEffect {
     final SetGroundedEffect setGroundedEffect;
     final TeleportEffect teleportEffect;
 
@@ -18,7 +18,7 @@ public class GoJailEffect extends Effect implements OnLandEffect{
 
     @Override
     public String getDescription() {
-        return String.format("%s: Go jail",this) + "\n" +
+        return String.format("%s: Go jail", this) + "\n" +
                 setGroundedEffect.getDescription() + "\n" +
                 teleportEffect.getDescription();
     }

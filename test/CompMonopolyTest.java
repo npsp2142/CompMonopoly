@@ -4,7 +4,6 @@ import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 import com.company.model.block.GoBlock;
 import com.company.model.command.CommandFactory;
-import com.company.model.command.RollCommand;
 import com.company.model.command.StartCommand;
 import com.company.model.component.Location;
 import com.company.model.component.Property;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;

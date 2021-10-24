@@ -11,7 +11,7 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
     private final String name;
     private final ArrayList<BlockObserver> blockObservers;
 
-    public Block(String name,ArrayList<BlockObserver> blockObservers){
+    public Block(String name, ArrayList<BlockObserver> blockObservers) {
         this.name = name;
         this.blockObservers = blockObservers;
     }
@@ -22,16 +22,17 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
 //    }
 // --Commented out by Inspection STOP (24/10/2021 17:13)
 
-    public void notifySubscribers(Player player){
+    public void notifySubscribers(Player player) {
         for (BlockObserver blockObserver : blockObservers
         ) {
-            blockObserver.update(this,player );
+            blockObserver.update(this, player);
         }
     }
 
     public String getName() {
         return name;
     }
+
     @Override
     public String toString() {
         return ANSI.ANSI_PURPLE + name + ANSI.ANSI_RESET;

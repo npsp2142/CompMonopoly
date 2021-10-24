@@ -3,7 +3,7 @@ package com.company.model.command;
 import com.company.model.GameApplication;
 import com.company.model.effect.LoseMoneyEffect;
 
-public class ReduceMoneyCommand implements Command{
+public class ReduceMoneyCommand implements Command {
     private final LoseMoneyEffect loseMoneyEffect;
 
     public ReduceMoneyCommand(LoseMoneyEffect loseMoneyEffect) {

@@ -3,7 +3,7 @@ package com.company.model.command;
 import com.company.model.GameApplication;
 import com.company.model.GameSystem;
 
-public class SaveCommand implements Command{
+public class SaveCommand implements Command {
     private final GameSystem gameSystem;
 
     public SaveCommand(GameSystem gameSystem) {
@@ -17,7 +17,7 @@ public class SaveCommand implements Command{
     }
 
     @Override
-    public boolean isValid()  {
+    public boolean isValid() {
         return GameApplication.instance.getStatus() == GameApplication.Status.PLAYING;
     }
 }

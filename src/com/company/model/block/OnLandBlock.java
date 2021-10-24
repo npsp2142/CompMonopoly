@@ -4,5 +4,5 @@ import com.company.model.component.Player;
 import com.company.model.effect.OnLandEffect;
 
 public interface OnLandBlock {
-     OnLandEffect createOnLandEffect(Player player);
+    OnLandEffect createOnLandEffect(Player player);
 }

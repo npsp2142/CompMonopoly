@@ -1,16 +1,19 @@
 package com.company.model.command;
 
 import com.company.model.GameApplication;
+import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 
 public class StartCommand implements Command {
     private final GameApplication gameApplication;
-    public StartCommand(GameApplication gameApplication){
+
+    public StartCommand(GameApplication gameApplication) {
         this.gameApplication = gameApplication;
     }
+
     @Override
     public void execute() {
-        System.out.println("GAME START!");
+        GameDisplay.titleBar("GAME START!");
         GameSystem.instance.onGameStart();
     }
 

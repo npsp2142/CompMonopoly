@@ -1,6 +1,6 @@
 package com.company.model.command;
 
-public class EmptyCommand implements Command{
+public class EmptyCommand implements Command {
     @Override
     public void execute() {
 

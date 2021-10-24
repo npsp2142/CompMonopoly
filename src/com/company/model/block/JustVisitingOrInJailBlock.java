@@ -5,9 +5,9 @@ import com.company.model.observer.BlockObserver;
 
 import java.util.ArrayList;
 
-public class JustVisitingOrInJailBlock extends ConditionalBlock{
+public class JustVisitingOrInJailBlock extends ConditionalBlock {
     public JustVisitingOrInJailBlock(ArrayList<BlockObserver> blockObservers, NoEffectBlock noEffectBlock, InJailBlock inJailBlock) {
-        super(noEffectBlock.getName() + " / " +inJailBlock.getName(), blockObservers, noEffectBlock,inJailBlock);
+        super(noEffectBlock.getName() + " / " + inJailBlock.getName(), blockObservers, noEffectBlock, inJailBlock);
     }
 
     @Override

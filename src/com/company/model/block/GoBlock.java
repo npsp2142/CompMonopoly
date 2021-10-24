@@ -9,18 +9,18 @@ import com.company.model.observer.BlockObserver;
 
 import java.util.ArrayList;
 
-public class GoBlock extends Block{
+public class GoBlock extends Block {
+
+    public static final int SALARY = 1500;
+    public static final String DEFAULT_NAME = "Go Effect";
 
     public GoBlock(String name, ArrayList<BlockObserver> blockObservers) {
         super(name, blockObservers);
     }
 
     public OnEnterEffect createOnEnterEffect(Player player) {
-        return new GainMoneyEffect(DEFAULT_NAME,player,SALARY);
+        return new GainMoneyEffect(DEFAULT_NAME, player, SALARY);
     }
-
-    public static final int SALARY = 1500;
-    public static final String DEFAULT_NAME = "Go Effect";
 
     @Override
     public OnLandEffect createOnLandEffect(Player player) {
