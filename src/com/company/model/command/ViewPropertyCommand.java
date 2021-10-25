@@ -3,15 +3,16 @@ package com.company.model.command;
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
-import com.company.model.component.block.Block;
-import com.company.model.component.block.PropertyBlock;
 import com.company.model.component.Board;
 import com.company.model.component.Player;
+import com.company.model.component.block.Block;
+import com.company.model.component.block.PropertyBlock;
 
 public class ViewPropertyCommand implements Command {
     private final Player player;
     private final Board board;
     private final Mode mode;
+
     public ViewPropertyCommand(Player player, Board board, Mode mode) {
         this.player = player;
         this.board = board;

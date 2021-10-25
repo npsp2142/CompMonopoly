@@ -1,9 +1,6 @@
 package com.company;
 
-import com.company.model.CompMonopolyApplication;
-import com.company.model.GameController;
-import com.company.model.GameDisplay;
-import com.company.model.GameSystem;
+import com.company.model.*;
 import com.company.model.component.block.*;
 import com.company.model.command.CommandFactory;
 import com.company.model.component.*;
@@ -16,30 +13,15 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Main {
+
     public static CompMonopolyApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
         Random random = new Random(System.currentTimeMillis());
-
-        ArrayList<Player> players = new ArrayList<>();
-        Dice dice = new Dice(random, 4);
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Player A");
+        names.add("Player B");
         ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
-
-        Player playerA = new Player(
-                "Player A",
-                Player.Status.HEALTHY,
-                Player.DEFAULT_AMOUNT,
-                dice,
-                playerObservers
-        );
-        Player playerB = new Player(
-                "Player B",
-                Player.Status.HEALTHY,
-                Player.DEFAULT_AMOUNT,
-                dice,
-                playerObservers
-        );
-        players.add(playerA);
-        players.add(playerB);
-
+        PlayerFactory playerFactory = new PlayerFactory(names,random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
+        ArrayList<Player> players = playerFactory.make();
 
         ArrayList<BlockObserver> blockObservers = new ArrayList<>();
 
@@ -100,8 +82,8 @@ public class Main {
         Location location = new Location(board, players);
 
         HashMap<Player, Integer> roundCounter = new HashMap<>();
-        roundCounter.put(playerA, 0);
-        roundCounter.put(playerB, 0);
+        roundCounter.put(players.get(0), 0);
+        roundCounter.put(players.get(1), 0);
         InJailBlock inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers,location, roundCounter);
 
         JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(

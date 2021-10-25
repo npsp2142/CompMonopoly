@@ -25,7 +25,6 @@ public class BuyPropertyEffect extends Effect implements OnLandEffect {
         loseMoneyEffect.onLand();
     }
 
-    @Override
     public String getDescription() {
         return String.format("%s: %s buy %s", getColoredName(), player.getName(), property.getName());
     }

@@ -35,7 +35,6 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
         moveEffect.onLand();
     }
 
-    @Override
     public String getDescription() {
         return getColoredName() + ": You are grounded.";
     }

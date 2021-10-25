@@ -20,7 +20,6 @@ public class PayRentEffect extends Effect implements OnLandEffect {
         loseMoneyEffect.onLand();
     }
 
-    @Override
     public String getDescription() {
         return String.format("%s: Pay Rent", getColoredName());
     }

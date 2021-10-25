@@ -27,7 +27,7 @@ public class PropertyBlock extends Block {
                         "Buy Property", getEffectObservers(),
                         player,
                         property,
-                        new LoseMoneyEffect("Pay Ownership Fee", getEffectObservers(),player, property.getPrice()));
+                        new LoseMoneyEffect("Pay Ownership Fee", getEffectObservers(), player, property.getPrice()));
             }
             return new NoEffect("This Time No Buy", getEffectObservers());
         }
@@ -35,7 +35,7 @@ public class PropertyBlock extends Block {
             return new NoEffect("You are owner", getEffectObservers());
         }
         return new PayRentEffect("Pay Rent", getEffectObservers(),
-                new GainMoneyEffect("Get Rent",getEffectObservers(), property.getOwner(), property.getRent()),
+                new GainMoneyEffect("Get Rent", getEffectObservers(), property.getOwner(), property.getRent()),
                 new LoseMoneyEffect("Pay Rent", getEffectObservers(), player, property.getRent())
         );
     }

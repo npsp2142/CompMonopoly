@@ -35,8 +35,8 @@ public class InJailBlock extends Block {
             return new PayToLeaveJailEffect(
                     String.format("Pay To Leave %d", FINE), getEffectObservers(),
                     player, new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
-                    new CureEffect("You are free",getEffectObservers(), player),
-                    new MoveEffect("Roll To Move", getEffectObservers(),player, player.roll(2), location),
+                    new CureEffect("You are free", getEffectObservers(), player),
+                    new MoveEffect("Roll To Move", getEffectObservers(), player, player.roll(2), location),
                     roundCounter
             );
         }
@@ -45,9 +45,9 @@ public class InJailBlock extends Block {
                 "Roll To Leave", getEffectObservers(),
                 player,
                 dices,
-                new MoveEffect("You are free",getEffectObservers(), player, player.roll(2), location),
-                new CureEffect("You can move",getEffectObservers(), player),
-                new LoseMoneyEffect("Pay Fine",getEffectObservers(), player, FINE),
+                new MoveEffect("You are free", getEffectObservers(), player, player.roll(2), location),
+                new CureEffect("You can move", getEffectObservers(), player),
+                new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
                 roundCounter
         );
     }

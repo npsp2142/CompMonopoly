@@ -6,12 +6,11 @@ import com.company.model.effect.Describable;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * Block should be a Effect Facfory.
+ * Block should be a Effect Factory.
  *
  * @see com.company.model.effect.Effect
  */
@@ -19,6 +18,7 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
     private final String name;
     private final List<BlockObserver> blockObservers;
     private final List<EffectObserver> effectObservers;
+
     public Block(String name, List<BlockObserver> blockObservers, List<EffectObserver> effectObservers) {
         this.name = name;
         this.blockObservers = blockObservers;

@@ -18,6 +18,7 @@ public class EffectDisplay implements EffectObserver {
 
     /**
      * Print effect description.
+     *
      * @param effect the effect to print something
      */
     @Override

@@ -1,11 +1,13 @@
 import com.company.Main;
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
+import com.company.model.PlayerFactory;
 import com.company.model.component.block.*;
 import com.company.model.component.*;
 import com.company.model.effect.MoveEffect;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
+import com.company.model.observer.PlayerObserver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -36,15 +38,13 @@ public class BlockTest {
         new GameDisplay(System.out);
 
         blockObservers = new ArrayList<>();
-        players = new ArrayList<>();
-        playerA = new Player(
-                "Player A",
-                Player.Status.HEALTHY,
-                Player.DEFAULT_AMOUNT,
-                new Dice(new Random(3),4),
-                new ArrayList<>()
-        );
-        players.add(playerA);
+
+        Random random = new Random(3);
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Player A");
+        ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
+        PlayerFactory playerFactory = new PlayerFactory(names,random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
+        players = playerFactory.make();
 
         goBlock = new GoBlock("Go", blockObservers, effectObservers);
 
@@ -108,7 +108,7 @@ public class BlockTest {
         Player.NEED_PROMPT = false;
         playerA.setResponse(Player.Response.YES);
         location.moveStep(playerA, 1);
-        assert (playerA.getStatus().equals(Player.Status.IN_JAIL));
+        assert (playerA.getStatus().equals(Player.Status.GROUNDED));
 
     }
 

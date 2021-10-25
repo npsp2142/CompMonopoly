@@ -21,7 +21,6 @@ public class GoJailEffect extends Effect implements OnLandEffect {
         notifyEffectSubscribers();
     }
 
-    @Override
     public String getDescription() {
         return String.format("%s: Go jail", getColoredName());
     }

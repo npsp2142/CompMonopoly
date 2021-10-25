@@ -5,26 +5,28 @@ import com.company.model.component.block.Block;
 import com.company.model.observer.PlayerObserver;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Player {
     public static final int DEFAULT_AMOUNT = 1500;
+    public static final int MAX_ROLL_VALUE = 4;
     public static boolean NEED_PROMPT = false;
+
     private final String name;
-    private final Dice dice;
-    private final ArrayList<PlayerObserver> playerObservers;
+    private final Random random;
+    private final List<PlayerObserver> playerObservers;
+
     private Status status;
     private int amount;
     private Response response;
 
-    public Player(String name, Status status, int amount, Dice dice,
-                  ArrayList<PlayerObserver> playerObservers) {
+    public Player(String name, Random random, List<PlayerObserver> playerObservers) {
         this.name = name;
-        this.status = status;
-        this.amount = amount;
-        this.dice = dice;
+        this.random = random;
         this.playerObservers = playerObservers;
     }
+
 
     @Override
     public String toString() {
@@ -35,14 +37,6 @@ public class Player {
         this.amount += amount;
     }
 
-    public void setJailStatus() {
-        status = Status.IN_JAIL;
-    }
-
-    public void setHealthyStatus() {
-        status = Status.HEALTHY;
-    }
-
     public void setBankruptStatus() {
         status = Status.BANKRUPT;
     }
@@ -51,16 +45,20 @@ public class Player {
         return status;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public int getAmount() {
         return amount;
     }
 
-    public String getName() {
-        return name;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public Block getCurrentLocation(Location location) {
-        return location.getCurrentLocation(this);
+    public String getName() {
+        return name;
     }
 
 // --Commented out by Inspection START (24/10/2021 17:19):
@@ -69,10 +67,14 @@ public class Player {
 //    }
 // --Commented out by Inspection STOP (24/10/2021 17:19)
 
+    public Block getCurrentLocation(Location location) {
+        return location.getCurrentLocation(this);
+    }
+
     public int[] roll(int times) {
         int[] result = new int[times];
         for (int i = 0; i < times; i++) {
-            result[i] = dice.roll();
+            result[i] = random.nextInt(MAX_ROLL_VALUE) + 1;
         }
 
         return result;
@@ -106,10 +108,22 @@ public class Player {
         this.response = response;
     }
 
-
+    /**
+     *
+     */
     public enum Status implements Serializable {
-        HEALTHY, BANKRUPT, IN_JAIL
+        /**
+         * Player are healthy.
+         */
+        HEALTHY
+        /*
+          Player cannot play
+         */, BANKRUPT
+        /*
+          Player cannot move
+         */, GROUNDED
     }
+
     public enum Response {
         YES, NO
     }

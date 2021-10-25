@@ -59,6 +59,10 @@ public class GameSystem {
         return currentPlayer;
     }
 
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
     public Player getNextPlayer() {
         return players.get((players.indexOf(currentPlayer) + 1) % players.size());
     }
@@ -191,7 +195,7 @@ public class GameSystem {
             e.printStackTrace();
         }
 
-        GameDataFactory gameDataFactory = new GameDataFactory(players,properties,location,round,currentPlayer);
+        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, location, round, currentPlayer);
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_NAME);
@@ -216,16 +220,12 @@ public class GameSystem {
         if (gameData == null) {
             return;
         }
-        GameDataFactory gameDataFactory = new GameDataFactory(players,properties,location,round,currentPlayer);
-        gameDataFactory.load(this,gameData);
+        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, location, round, currentPlayer);
+        gameDataFactory.load(this, gameData);
     }
 
     public void setRound(int round) {
         this.round = round;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
     }
 
     public ArrayList<EffectObserver> getEffectObservers() {

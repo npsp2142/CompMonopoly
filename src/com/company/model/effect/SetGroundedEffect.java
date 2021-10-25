@@ -15,11 +15,10 @@ public class SetGroundedEffect extends Effect implements OnLandEffect {
 
     @Override
     public void onLand() {
-        player.setJailStatus();
+        player.setStatus(Player.Status.GROUNDED);
         notifyEffectSubscribers();
     }
 
-    @Override
     public String getDescription() {
         return String.format("%s: %s cannot move", this, player);
     }

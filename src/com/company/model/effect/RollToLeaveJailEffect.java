@@ -51,19 +51,8 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
         moveEffect.onLand();
     }
 
-    @Override
     public String getDescription() {
-        return String.format("%s: Try to leave fail by rolling",getColoredName());
-//        if (canRollToLeave()) {
-//            return String.format("%s: %s can move\n", this, player) +
-//                    moveEffect.getDescription();
-//        }
-//
-//        if (roundCounter.get(player) < 3) {
-//            return String.format("%s: %s remain %s round to leave", this, player, MAX_STAY - roundCounter.get(player));
-//        }
-//
-//        return "";
+        return String.format("%s: Try to leave fail by rolling", getColoredName());
     }
 
     private boolean canRollToLeave() {

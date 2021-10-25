@@ -14,7 +14,7 @@ public class JustVisitingOrInJailBlock extends ConditionalBlock {
             NoEffectBlock noEffectBlock,
             InJailBlock inJailBlock) {
         super(noEffectBlock.getName() + " / " +
-                inJailBlock.getName(), blockObservers, effectObservers,noEffectBlock, inJailBlock);
+                inJailBlock.getName(), blockObservers, effectObservers, noEffectBlock, inJailBlock);
     }
 
     @Override

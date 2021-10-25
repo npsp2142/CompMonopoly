@@ -20,7 +20,6 @@ public class LoseMoneyEffect extends Effect implements OnLandEffect {
         notifyEffectSubscribers();
     }
 
-    @Override
     public String getDescription() {
         return String.format("%s: %s lose %d HKD", getColoredName(), player, amount);
     }

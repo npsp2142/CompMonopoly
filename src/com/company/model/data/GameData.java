@@ -1,9 +1,5 @@
 package com.company.model.data;
 
-import com.company.model.data.LocationDatum;
-import com.company.model.data.PlayerDatum;
-import com.company.model.data.PropertyDatum;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -36,11 +32,11 @@ public class GameData implements Serializable {
         return locationDatum;
     }
 
-    public Integer getRound() {
-        return round;
-    }
-
     public PlayerDatum getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public Integer getRound() {
+        return round;
     }
 }

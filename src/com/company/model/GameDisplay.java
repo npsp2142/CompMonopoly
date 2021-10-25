@@ -61,6 +61,7 @@ public class GameDisplay {
 
     /**
      * ---------------------------------------------------------
+     *
      * @param title words is this title Bar
      */
     public static void titleBar(String title) {

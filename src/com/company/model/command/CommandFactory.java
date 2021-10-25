@@ -15,8 +15,8 @@ public class CommandFactory {
     public CommandFactory(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
     }
-    public Command make(ArrayList<String> tokens)
-    {
+
+    public Command make(ArrayList<String> tokens) {
         if (CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU) {
             switch (tokens.get(0).toLowerCase()) {
                 case "start":
@@ -44,7 +44,7 @@ public class CommandFactory {
             case "roll":
             case "r":
                 return new RollCommand(
-                        new MoveEffect("Roll To Move",gameSystem.getEffectObservers(),
+                        new MoveEffect("Roll To Move", gameSystem.getEffectObservers(),
                                 gameSystem.getCurrentPlayer(),
                                 gameSystem.getCurrentPlayer().roll(2),
                                 gameSystem.getPlayerLocation()));

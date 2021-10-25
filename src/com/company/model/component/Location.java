@@ -1,6 +1,5 @@
 package com.company.model.component;
 
-import com.company.model.GameDisplay;
 import com.company.model.component.block.Block;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;

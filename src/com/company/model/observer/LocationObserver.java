@@ -1,8 +1,8 @@
 package com.company.model.observer;
 
 import com.company.model.GameDisplay;
-import com.company.model.component.block.Block;
 import com.company.model.component.Player;
+import com.company.model.component.block.Block;
 
 import java.util.Map;
 
@@ -16,28 +16,16 @@ public class LocationObserver implements BlockObserver {
     @Override
     public void update(Block block, Player player) {
         if (!location.containsKey(player)) {
-            try {
-                GameDisplay.infoMessage(String.format("%s are at %s", player, block));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            GameDisplay.infoMessage(String.format("%s are at %s", player, block));
             location.put(player, block);
             return;
         }
 
         if (location.get(player).equals(block)) {
-            try {
-                GameDisplay.infoMessage(String.format("%s are at %s", player, block));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            GameDisplay.infoMessage(String.format("%s are at %s", player, block));
             return;
         }
-        try {
-            GameDisplay.infoMessage(String.format("%s move from %s to %s", player, location.get(player), block));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        GameDisplay.infoMessage(String.format("%s move from %s to %s", player, location.get(player), block));
         location.replace(player, block);
     }
 }

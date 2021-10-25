@@ -1,11 +1,9 @@
 package com.company.model.data;
 
 import com.company.model.GameSystem;
-import com.company.model.component.Dice;
 import com.company.model.component.Location;
 import com.company.model.component.Player;
 import com.company.model.component.Property;
-import com.company.model.data.*;
 import com.company.model.observer.PlayerObserver;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class GameDataFactory {
         this.currentPlayer = currentPlayer;
     }
 
-    public GameData make(){
+    public GameData make() {
         ArrayList<PlayerDatum> playerData = new ArrayList<>();
         HashMap<Player, PlayerDatum> playerDatumHashMap = new HashMap<>();
         for (Player player : players) {
@@ -55,21 +53,22 @@ public class GameDataFactory {
         return new GameData(playerData, propertyData, locationDatum, round, playerDatumHashMap.get(currentPlayer));
     }
 
-    public void load(GameSystem gameSystem, GameData gameData){
+    public void load(GameSystem gameSystem, GameData gameData) {
         ArrayList<PlayerDatum> playerData = gameData.getPlayerData();
         ArrayList<PropertyDatum> propertyData = gameData.getPropertyData();
         LocationDatum locationDatum = gameData.getLocationDatum();
 
+        // TODO: Add random in Game Data
         HashMap<PlayerDatum, Player> map = new HashMap<>();
         Random random = new Random(System.currentTimeMillis());
-        Dice dice = new Dice(random, 4);
         ArrayList<PlayerObserver> observers = new ArrayList<>();
         players.clear();
+
         // player
         for (PlayerDatum playerDatum : playerData) {
-            Player player = new Player(playerDatum.getName(), playerDatum.getStatus(), playerDatum.getAmount(),
-                    dice,
-                    observers);
+            Player player = new Player(playerDatum.getName(), random, observers);
+            player.setStatus(playerDatum.getStatus());
+            player.setAmount(playerDatum.getAmount());
             players.add(player);
             map.put(playerDatum, player);
         }
@@ -78,6 +77,7 @@ public class GameDataFactory {
         for (Property property : properties) {
             property.reload();
         }
+
         for (PropertyDatum propertyDatum : propertyData) {
             for (Property property : properties) {
                 if (property.getName().equals(propertyDatum.getName())) {
@@ -91,7 +91,8 @@ public class GameDataFactory {
             location.setStartLocation(location.getStartBlock());
             location.moveTo(map.get(datum), locationDatum.getLocation().get(datum).getName());
         }
+
         gameSystem.setCurrentPlayer(map.get(gameData.getCurrentPlayer()));
-        gameSystem.setRound(round);
+        gameSystem.setRound(gameData.getRound());
     }
 }

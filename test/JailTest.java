@@ -1,9 +1,11 @@
 import com.company.model.GameDisplay;
+import com.company.model.PlayerFactory;
 import com.company.model.component.block.*;
 import com.company.model.component.*;
 import com.company.model.effect.MoveEffect;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
+import com.company.model.observer.PlayerObserver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -35,14 +37,12 @@ public class JailTest {
         blockObservers = new ArrayList<>();
         effectObservers = new ArrayList<>();
         players = new ArrayList<>();
-        playerA = new Player(
-                "Player A",
-                Player.Status.HEALTHY,
-                Player.DEFAULT_AMOUNT,
-                new Dice(new Random(4),4),
-                new ArrayList<>()
-        );
-        players.add(playerA);
+        Random random = new Random(4);
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Player A");
+        ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
+        PlayerFactory playerFactory = new PlayerFactory(names,random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
+        players = playerFactory.make();
 
         goBlock = new GoBlock("Go", blockObservers,effectObservers);
 
