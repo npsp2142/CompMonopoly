@@ -20,8 +20,8 @@ public class Main {
         names.add("Player A");
         names.add("Player B");
         ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
-        PlayerFactory playerFactory = new PlayerFactory(names,random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
-        ArrayList<Player> players = playerFactory.make();
+        PlayerFactory playerFactory = new PlayerFactory(random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
+        ArrayList<Player> players = playerFactory.make(names);
 
         ArrayList<BlockObserver> blockObservers = new ArrayList<>();
 
@@ -76,20 +76,18 @@ public class Main {
         NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers, effectObservers);
         IncomeTaxBlock incomeTaxBlock = new IncomeTaxBlock("Income Tax", blockObservers, effectObservers);
 
-
-        Board board = new Board(goBlock);
-
-        Location location = new Location(board, players);
+        Board board = new Board();
+        PlayerLocation playerLocation = new PlayerLocation(board, players, goBlock);
 
         HashMap<Player, Integer> roundCounter = new HashMap<>();
         roundCounter.put(players.get(0), 0);
         roundCounter.put(players.get(1), 0);
-        InJailBlock inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers,location, roundCounter);
+        InJailBlock inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers, playerLocation, roundCounter);
 
         JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
                 blockObservers, effectObservers, justVisitingBlock, inJailBlock);
 
-        GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", blockObservers, effectObservers, location, justVisitingOrInJailBlock);
+        GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", blockObservers, effectObservers, playerLocation, justVisitingOrInJailBlock);
 
         board.addBlock(goBlock);
         board.addBlock(centralBlock);
@@ -139,10 +137,10 @@ public class Main {
         blockObservers.add(locationObserver);
         playerObservers.add(moneyObserver);
 
-        GameSystem gameSystem = new GameSystem(board, players, properties, effectObservers, location);
+        GameSystem gameSystem = new GameSystem(board, players, properties, effectObservers, playerLocation);
         CommandFactory factory = new CommandFactory(gameSystem);
         new GameController(inputStream);
-        new GameDisplay(outputStream);
+        new GameDisplay(outputStream, gameSystem);
 
         return new CompMonopolyApplication(factory, CompMonopolyApplication.Status.MENU);
     }

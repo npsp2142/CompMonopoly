@@ -52,13 +52,11 @@ public class PropertyBlock extends Block {
     @Override
     public String getDescription() {
         if (hasNoOwner()) {
-            return String.format("%s - Price: %d HKD - Rent: %d",
-                    this,
+            return String.format("Price: %d HKD - Rent: %d",
                     property.getPrice(),
                     property.getRent());
         }
-        return String.format("%s - %s - Rent: %d",
-                this,
+        return String.format("%s - Rent: %d",
                 property.getOwner(),
                 property.getRent());
     }

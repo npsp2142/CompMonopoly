@@ -1,7 +1,7 @@
 package com.company.model;
 
 import com.company.model.component.Board;
-import com.company.model.component.Location;
+import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
 import com.company.model.component.Property;
 import com.company.model.data.GameData;
@@ -17,34 +17,29 @@ public class GameSystem {
     public static final boolean NEED_ASK_END_TURN = false;
     public static final int MAX_TURN = 100;
     public static final String DEFAULT_NAME = "tmp\\save_file.txt";
-    public static GameSystem instance;
 
     private final Board board;
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
     private final ArrayList<EffectObserver> effectObservers;
-    private final Location location;
+    private final PlayerLocation playerLocation;
     private Player currentPlayer;
     private int round;
 
     public GameSystem(Board board,
                       ArrayList<Player> players,
                       ArrayList<Property> properties,
-                      ArrayList<EffectObserver> effectObservers, Location location) {
+                      ArrayList<EffectObserver> effectObservers, PlayerLocation playerLocation) {
         this.board = board;
         this.players = players;
         this.properties = properties;
         this.effectObservers = effectObservers;
-        this.location = location;
+        this.playerLocation = playerLocation;
         round = 0;
-        if (instance == null) {
-            instance = this;
-        }
-
     }
 
-    public Location getPlayerLocation() {
-        return location;
+    public PlayerLocation getLocation() {
+        return playerLocation;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -69,7 +64,7 @@ public class GameSystem {
 
     public void onGameStart() {
         CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
-        location.setStartLocation(board.getStartBlock());
+        playerLocation.setStartLocation();
         currentPlayer = players.get(0);
         reload();
         onRoundStart();
@@ -182,7 +177,7 @@ public class GameSystem {
             property.reload();
         }
         round = 0;
-        location.reload();
+        playerLocation.reload();
     }
 
     public void saveGame() {
@@ -195,7 +190,7 @@ public class GameSystem {
             e.printStackTrace();
         }
 
-        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, location, round, currentPlayer);
+        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, playerLocation, round, currentPlayer);
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_NAME);
@@ -213,14 +208,13 @@ public class GameSystem {
             FileInputStream fileInputStream = new FileInputStream(DEFAULT_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             gameData = (GameData) objectInputStream.readObject();
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         if (gameData == null) {
             return;
         }
-        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, location, round, currentPlayer);
+        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, playerLocation, round, currentPlayer);
         gameDataFactory.load(this, gameData);
     }
 

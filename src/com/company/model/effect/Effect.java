@@ -5,6 +5,11 @@ import com.company.model.observer.EffectObserver;
 
 import java.util.List;
 
+/**
+ * Concrete class should change component in some way.
+ *
+ * @see com.company.model.component
+ */
 public abstract class Effect implements Describable {
     private final String name;
     private final List<EffectObserver> effectObservers;

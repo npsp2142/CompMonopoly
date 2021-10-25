@@ -8,28 +8,40 @@ import java.util.List;
 import java.util.Random;
 
 public class PlayerFactory {
-    private final List<String> names;
     private final Random random;
     private final List<PlayerObserver> playerObservers;
     private final Player.Status status;
     private final int amount;
 
-    public PlayerFactory(List<String> names, Random random, List<PlayerObserver> playerObservers, Player.Status status, int amount) {
-        this.names = names;
+    public PlayerFactory(Random random,
+                         List<PlayerObserver> playerObservers,
+                         Player.Status status,
+                         int amount) {
         this.random = random;
         this.playerObservers = playerObservers;
         this.status = status;
         this.amount = amount;
     }
 
-    public ArrayList<Player> make() {
+    public ArrayList<Player> make(ArrayList<String> names) {
         ArrayList<Player> players = new ArrayList<>();
         for (String name : names) {
-            Player player = new Player(name, random, playerObservers);
-            player.setAmount(amount);
-            player.setStatus(status);
-            players.add(player);
+            players.add(make(name));
         }
         return players;
+    }
+
+    public Player make(String name){
+        Player player = new Player(name, random, playerObservers);
+        player.setAmount(amount);
+        player.setStatus(status);
+        return player;
+    }
+
+    public Player make(String name, Player.Status status, int amount){
+        Player player = new Player(name, random, playerObservers);
+        player.setAmount(amount);
+        player.setStatus(status);
+        return player;
     }
 }

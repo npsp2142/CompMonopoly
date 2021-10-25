@@ -16,16 +16,18 @@ public class LocationObserver implements BlockObserver {
     @Override
     public void update(Block block, Player player) {
         if (!location.containsKey(player)) {
-            GameDisplay.infoMessage(String.format("%s are at %s", player, block));
+            GameDisplay.infoMessage(String.format("%s are at %s", player, block.getColoredName()));
             location.put(player, block);
             return;
         }
 
         if (location.get(player).equals(block)) {
-            GameDisplay.infoMessage(String.format("%s are at %s", player, block));
+            GameDisplay.infoMessage(String.format("%s are at %s", player, block.getColoredName()));
             return;
         }
-        GameDisplay.infoMessage(String.format("%s move from %s to %s", player, location.get(player), block));
+        GameDisplay.infoMessage(
+                String.format("%s move from %s to %s", player, location.get(player).getColoredName(),
+                        block.getColoredName()));
         location.replace(player, block);
     }
 }

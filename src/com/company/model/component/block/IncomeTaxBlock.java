@@ -31,6 +31,6 @@ public class IncomeTaxBlock extends Block {
 
     @Override
     public String getDescription() {
-        return this + " - Reduce money by " + INCOME_TAX_RATE * 100 + "%";
+        return "Reduce money by " + INCOME_TAX_RATE * 100 + "%";
     }
 }

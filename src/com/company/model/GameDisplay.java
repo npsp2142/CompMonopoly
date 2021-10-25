@@ -11,6 +11,7 @@ public class GameDisplay {
     private static final char SPACE_SYMBOL = ' ';
     private static GameDisplay instance;
     private final PrintStream printStream;
+    private GameSystem gameSystem;
 
     public GameDisplay(OutputStream outputStream) {
         printStream = new PrintStream(outputStream);
@@ -19,6 +20,13 @@ public class GameDisplay {
         }
     }
 
+    public GameDisplay(OutputStream outputStream, GameSystem gameSystem) {
+        printStream = new PrintStream(outputStream);
+        this.gameSystem = gameSystem;
+        if (instance == null) {
+            instance = this;
+        }
+    }
 
     public static void flush() {
         instance.getPrintStream().flush();
@@ -82,7 +90,8 @@ public class GameDisplay {
     public static void printCommandPrompt() {
         switch (CompMonopolyApplication.instance.getStatus()) {
             case PLAYING:
-                instance.getPrintStream().print(ANSI.ANSI_GREEN + GameSystem.instance.getCurrentPlayer() + ANSI.ANSI_RESET);
+                if(instance.gameSystem == null)return;
+                instance.getPrintStream().print(ANSI.ANSI_GREEN + instance.gameSystem.getCurrentPlayer() + ANSI.ANSI_RESET);
                 instance.getPrintStream().print(ANSI.ANSI_BLUE + " > " + ANSI.ANSI_RESET);
                 break;
             case MENU:
@@ -94,4 +103,10 @@ public class GameDisplay {
     public PrintStream getPrintStream() {
         return printStream;
     }
+
+// --Commented out by Inspection START (25/10/2021 21:47):
+//    public void setGameSystem(GameSystem gameSystem) {
+//        this.gameSystem = gameSystem;
+//    }
+// --Commented out by Inspection STOP (25/10/2021 21:47)
 }

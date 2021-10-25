@@ -67,8 +67,8 @@ public class Player {
 //    }
 // --Commented out by Inspection STOP (24/10/2021 17:19)
 
-    public Block getCurrentLocation(Location location) {
-        return location.getCurrentLocation(this);
+    public Block getCurrentLocation(PlayerLocation playerLocation) {
+        return playerLocation.getCurrentLocation(this);
     }
 
     public int[] roll(int times) {

@@ -48,6 +48,10 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
 
     @Override
     public String toString() {
+        return name;
+    }
+
+    public String getColoredName(){
         return ANSI.ANSI_PURPLE + name + ANSI.ANSI_RESET;
     }
 }

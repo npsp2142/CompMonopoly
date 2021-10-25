@@ -8,10 +8,8 @@ import java.util.Hashtable;
 public class Board {
     private final ArrayList<Block> blocks;
     private final Hashtable<Block, Block> board;
-    private final Block startBlock;
 
-    public Board(Block startBlock) {
-        this.startBlock = startBlock;
+    public Board() {
         this.board = new Hashtable<>();
         this.blocks = new ArrayList<>();
     }
@@ -54,7 +52,4 @@ public class Board {
         return getNextBlock(block);
     }
 
-    public Block getStartBlock() {
-        return startBlock;
-    }
 }

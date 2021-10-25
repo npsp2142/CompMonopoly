@@ -9,24 +9,26 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
-public class Location implements Serializable {
+public class PlayerLocation implements Serializable {
     private final Map<Player, Block> location;
     private final Board board;
     private final ArrayList<Player> players;
+    private final Block startBlock;
 
-    public Location(Board board, ArrayList<Player> players) {
+    public PlayerLocation(Board board, ArrayList<Player> players, Block startBlock) {
+        this.startBlock = startBlock;
         location = new Hashtable<>();
         this.board = board;
         this.players = players;
     }
 
-    public void setStartLocation(Block block) {
+    public void setStartLocation() {
         for (Player player : players) {
             if (location.get(player) == null) {
-                location.put(player, block);
+                location.put(player, startBlock);
                 continue;
             }
-            location.replace(player, block);
+            location.replace(player, startBlock);
         }
 
     }
@@ -72,13 +74,10 @@ public class Location implements Serializable {
     }
 
     public void reload() {
-        for (Player player : players
-        ) {
-            location.replace(player, board.getStartBlock());
-        }
+        setStartLocation();
     }
 
     public Block getStartBlock() {
-        return board.getStartBlock();
+        return startBlock;
     }
 }

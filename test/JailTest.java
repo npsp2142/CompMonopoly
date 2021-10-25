@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class JailTest {
     Board board;
-    Location location;
+    PlayerLocation playerLocation;
     ArrayList<Player> players;
     GoBlock goBlock;
     PropertyBlock centralBlock;
@@ -41,13 +41,14 @@ public class JailTest {
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");
         ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
-        PlayerFactory playerFactory = new PlayerFactory(names,random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
-        players = playerFactory.make();
+        PlayerFactory playerFactory = new PlayerFactory(random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
+        players = playerFactory.make(names);
 
         goBlock = new GoBlock("Go", blockObservers,effectObservers);
 
-        board = new Board(goBlock);
-        location = new Location(board, players);
+        Block startBlock = goBlock;
+        board = new Board();
+        playerLocation = new PlayerLocation(board, players, startBlock);
 
         centralBlock = new PropertyBlock("Central", blockObservers, effectObservers,
                 new Property("Central", 800, 90));
@@ -56,11 +57,11 @@ public class JailTest {
         justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers,effectObservers);
         inJailRoundCounter = new HashMap<>();
         inJailRoundCounter.put(playerA,0);
-        inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers, location,inJailRoundCounter);
+        inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers, playerLocation,inJailRoundCounter);
         justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(blockObservers,effectObservers,
                 justVisitingBlock, inJailBlock
         );
-        goToJailBlock = new GoToJailBlock("Go To Jail",blockObservers, effectObservers,location,justVisitingOrInJailBlock);
+        goToJailBlock = new GoToJailBlock("Go To Jail",blockObservers, effectObservers, playerLocation,justVisitingOrInJailBlock);
 
 
 
@@ -76,7 +77,7 @@ public class JailTest {
         board.addPath(wanChaiBlock,justVisitingOrInJailBlock);
         board.addPath(justVisitingOrInJailBlock,goBlock);
 
-        location.setStartLocation(goBlock);
+        playerLocation.setStartLocation();
 
     }
 
@@ -86,10 +87,10 @@ public class JailTest {
         MoveEffect effect;
         Player.NEED_PROMPT = false;
         playerA.setResponse(Player.Response.NO);
-        location.moveStep(playerA, 1);
+        playerLocation.moveStep(playerA, 1);
         assert (inJailRoundCounter.get(playerA) == 0);
 
-        effect = new MoveEffect("",effectObservers, playerA,playerA.roll(2), location);
+        effect = new MoveEffect("",effectObservers, playerA,playerA.roll(2), playerLocation);
         effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 0);
     }

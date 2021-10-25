@@ -1,6 +1,6 @@
 package com.company.model.component.block;
 
-import com.company.model.component.Location;
+import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
 import com.company.model.effect.*;
 import com.company.model.observer.BlockObserver;
@@ -11,24 +11,24 @@ import java.util.List;
 
 public class GoToJailBlock extends Block {
     public static final String DEFAULT_NAME = "Go To Jail";
-    private final Location location;
+    private final PlayerLocation playerLocation;
     private final JustVisitingOrInJailBlock justVisitingOrInJailBlock;
 
 
     public GoToJailBlock(String name,
                          ArrayList<BlockObserver> blockObservers, List<EffectObserver> effectObservers,
-                         Location location,
+                         PlayerLocation playerLocation,
                          JustVisitingOrInJailBlock justVisitingOrInJailBlock) {
         super(name, blockObservers, effectObservers);
         this.justVisitingOrInJailBlock = justVisitingOrInJailBlock;
-        this.location = location;
+        this.playerLocation = playerLocation;
     }
 
     public OnLandEffect createOnLandEffect(Player player) {
         return new GoJailEffect(
                 DEFAULT_NAME, getEffectObservers(),
                 new SetGroundedEffect("Grounded", getEffectObservers(), player),
-                new TeleportEffect(DEFAULT_NAME, getEffectObservers(), player, location, justVisitingOrInJailBlock, false)
+                new TeleportEffect(DEFAULT_NAME, getEffectObservers(), player, playerLocation, justVisitingOrInJailBlock, false)
         );
 
     }
@@ -40,6 +40,6 @@ public class GoToJailBlock extends Block {
 
     @Override
     public String getDescription() {
-        return String.format("%s - Go to %s and immediately end turn", this, justVisitingOrInJailBlock);
+        return String.format("Go to %s and immediately end turn", justVisitingOrInJailBlock);
     }
 }

@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class BlockTest {
     Board board;
-    Location location;
+    PlayerLocation playerLocation;
     ArrayList<Player> players;
     GoBlock goBlock;
     PropertyBlock centralBlock;
@@ -43,13 +43,14 @@ public class BlockTest {
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");
         ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
-        PlayerFactory playerFactory = new PlayerFactory(names,random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
-        players = playerFactory.make();
+        PlayerFactory playerFactory = new PlayerFactory(random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
+        players = playerFactory.make(names);
 
         goBlock = new GoBlock("Go", blockObservers, effectObservers);
 
-        board = new Board(goBlock);
-        location = new Location(board, players);
+        Block startBlock = goBlock;
+        board = new Board();
+        playerLocation = new PlayerLocation(board, players, startBlock);
 
         centralBlock = new PropertyBlock("Central", blockObservers, effectObservers,
                 new Property("Central", 800, 90));
@@ -58,11 +59,11 @@ public class BlockTest {
         justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers, effectObservers);
         inJailRoundCounter = new HashMap<>();
         inJailRoundCounter.put(playerA,0);
-        inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers, location,inJailRoundCounter);
+        inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers, playerLocation,inJailRoundCounter);
         justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(blockObservers, effectObservers,
                 justVisitingBlock, inJailBlock
         );
-        goToJailBlock = new GoToJailBlock("Go To Jail",blockObservers, effectObservers, location,justVisitingOrInJailBlock);
+        goToJailBlock = new GoToJailBlock("Go To Jail",blockObservers, effectObservers, playerLocation,justVisitingOrInJailBlock);
 
 
 
@@ -78,18 +79,18 @@ public class BlockTest {
         board.addPath(wanChaiBlock,justVisitingOrInJailBlock);
         board.addPath(justVisitingOrInJailBlock,goBlock);
 
-        location.setStartLocation(goBlock);
+        playerLocation.setStartLocation();
 
     }
     @Test
     public void MoveStepTest() {
-        location.moveStep(playerA,3);
-        assert (playerA.getCurrentLocation(location).equals(wanChaiBlock));
+        playerLocation.moveStep(playerA,3);
+        assert (playerA.getCurrentLocation(playerLocation).equals(wanChaiBlock));
     }
     @Test
     public void MoveToBlockTest() {
-        location.moveTo(playerA, justVisitingOrInJailBlock,true);
-        assert (playerA.getCurrentLocation(location).equals(justVisitingOrInJailBlock));
+        playerLocation.moveTo(playerA, justVisitingOrInJailBlock,true);
+        assert (playerA.getCurrentLocation(playerLocation).equals(justVisitingOrInJailBlock));
     }
 
 
@@ -97,8 +98,8 @@ public class BlockTest {
     public void GoToJail() {
         Player.NEED_PROMPT = false;
         playerA.setResponse(Player.Response.YES);
-        location.moveStep(playerA, 1);
-        Block block = playerA.getCurrentLocation(location);
+        playerLocation.moveStep(playerA, 1);
+        Block block = playerA.getCurrentLocation(playerLocation);
         assert (block.equals(justVisitingOrInJailBlock));
 
     }
@@ -107,7 +108,7 @@ public class BlockTest {
     public void SetInJail() {
         Player.NEED_PROMPT = false;
         playerA.setResponse(Player.Response.YES);
-        location.moveStep(playerA, 1);
+        playerLocation.moveStep(playerA, 1);
         assert (playerA.getStatus().equals(Player.Status.GROUNDED));
 
     }
@@ -118,18 +119,18 @@ public class BlockTest {
         MoveEffect effect;
         Player.NEED_PROMPT = false;
         playerA.setResponse(Player.Response.NO);
-        location.moveStep(playerA, 1);
+        playerLocation.moveStep(playerA, 1);
         assert (inJailRoundCounter.get(playerA) == 0);
 
-        effect = new MoveEffect("",effectObservers,playerA,playerA.roll(2), location);
+        effect = new MoveEffect("",effectObservers,playerA,playerA.roll(2), playerLocation);
         effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 1);
 
-        effect = new MoveEffect("",effectObservers,playerA, playerA.roll(2), location);
+        effect = new MoveEffect("",effectObservers,playerA, playerA.roll(2), playerLocation);
         effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 2);
 
-        effect = new MoveEffect("",effectObservers,playerA, playerA.roll(2), location);
+        effect = new MoveEffect("",effectObservers,playerA, playerA.roll(2), playerLocation);
         effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 0);
     }

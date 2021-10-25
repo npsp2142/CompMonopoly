@@ -31,6 +31,6 @@ public class GoBlock extends Block {
 
     @Override
     public String getDescription() {
-        return this + " - Gain: " + SALARY + " HKD";
+        return "Gain: " + SALARY + " HKD";
     }
 }

@@ -1,6 +1,6 @@
 package com.company.model.component.block;
 
-import com.company.model.component.Location;
+import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
 import com.company.model.effect.*;
 import com.company.model.observer.BlockObserver;
@@ -12,16 +12,16 @@ import java.util.Map;
 
 public class InJailBlock extends Block {
     public static final int FINE = 150;
-    private final Location location;
+    private final PlayerLocation playerLocation;
     private final Map<Player, Integer> roundCounter;
 
     public InJailBlock(String name,
                        ArrayList<BlockObserver> blockObservers,
                        List<EffectObserver> effectObservers,
-                       Location location,
+                       PlayerLocation playerLocation,
                        Map<Player, Integer> roundCounter) {
         super(name, blockObservers, effectObservers);
-        this.location = location;
+        this.playerLocation = playerLocation;
         this.roundCounter = roundCounter;
     }
 
@@ -36,7 +36,7 @@ public class InJailBlock extends Block {
                     String.format("Pay To Leave %d", FINE), getEffectObservers(),
                     player, new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
                     new CureEffect("You are free", getEffectObservers(), player),
-                    new MoveEffect("Roll To Move", getEffectObservers(), player, player.roll(2), location),
+                    new MoveEffect("Roll To Move", getEffectObservers(), player, player.roll(2), playerLocation),
                     roundCounter
             );
         }
@@ -45,7 +45,7 @@ public class InJailBlock extends Block {
                 "Roll To Leave", getEffectObservers(),
                 player,
                 dices,
-                new MoveEffect("You are free", getEffectObservers(), player, player.roll(2), location),
+                new MoveEffect("You are free", getEffectObservers(), player, player.roll(2), playerLocation),
                 new CureEffect("You can move", getEffectObservers(), player),
                 new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
                 roundCounter
@@ -60,7 +60,7 @@ public class InJailBlock extends Block {
 
     @Override
     public String getDescription() {
-        return String.format("%s - No Move %d at maximum - Pay Fine %d HKD if not roll to leave",
-                this, RollToLeaveJailEffect.MAX_STAY, FINE);
+        return String.format("No Move %d at maximum - Pay Fine %d HKD if not roll to leave",
+                RollToLeaveJailEffect.MAX_STAY, FINE);
     }
 }

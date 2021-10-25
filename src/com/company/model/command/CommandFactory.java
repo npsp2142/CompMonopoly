@@ -20,7 +20,7 @@ public class CommandFactory {
         if (CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU) {
             switch (tokens.get(0).toLowerCase()) {
                 case "start":
-                    return new StartCommand(CompMonopolyApplication.instance);
+                    return new StartCommand(CompMonopolyApplication.instance, gameSystem);
                 case "load":
                     return new LoadCommand(gameSystem);
                 case "quit":
@@ -31,7 +31,7 @@ public class CommandFactory {
 
         switch (tokens.get(0).toLowerCase()) {
             case "start":
-                return new StartCommand(CompMonopolyApplication.instance);
+                return new StartCommand(CompMonopolyApplication.instance, gameSystem);
             case "save":
                 return new SaveCommand(gameSystem);
             case "load":
@@ -40,14 +40,14 @@ public class CommandFactory {
                 return new QuitCommand(CompMonopolyApplication.instance);
             case "location":
             case "loc":
-                return new ViewLocationCommand(gameSystem.getPlayerLocation(), gameSystem.getPlayers());
+                return new ViewLocationCommand(gameSystem.getLocation(), gameSystem.getPlayers());
             case "roll":
             case "r":
                 return new RollCommand(
                         new MoveEffect("Roll To Move", gameSystem.getEffectObservers(),
                                 gameSystem.getCurrentPlayer(),
                                 gameSystem.getCurrentPlayer().roll(2),
-                                gameSystem.getPlayerLocation()));
+                                gameSystem.getLocation()), gameSystem);
             case "y":
                 return new GiveYesRespondCommand(gameSystem.getCurrentPlayer());
             case "n":
@@ -62,26 +62,28 @@ public class CommandFactory {
                 switch (tokens.get(1).toLowerCase()) {
                     case "-location":
                     case "-l":
-                        return new ViewLocationCommand(gameSystem.getPlayerLocation(), gameSystem.getPlayers());
+                        return new ViewLocationCommand(gameSystem.getLocation(), gameSystem.getPlayers());
                     case "-property":
                     case "-p":
                         return new ViewPropertyCommand(gameSystem.getCurrentPlayer(), gameSystem.getBoard(),
-                                ViewPropertyCommand.Mode.ALL);
+                                gameSystem.getLocation(), ViewPropertyCommand.Mode.ALL);
                 }
                 break;
             case "property":
             case "p":
                 return new ViewPropertyCommand(gameSystem.getCurrentPlayer(), gameSystem.getBoard(),
-                        ViewPropertyCommand.Mode.ALL);
+                        gameSystem.getLocation(), ViewPropertyCommand.Mode.ALL);
             case "money":
             case "m":
                 return new ViewAmountCommand(gameSystem.getPlayers());
             case "board":
             case "b":
-                return new ViewBoardCommand(gameSystem.getBoard());
+                return new ViewBoardCommand(gameSystem.getBoard(), gameSystem.getLocation());
             case "cheat":
                 if ("-lm".equalsIgnoreCase(tokens.get(1))) {
-                    return new ReduceMoneyCommand(new LoseMoneyEffect("Cheat", gameSystem.getEffectObservers(), gameSystem.getCurrentPlayer(),
+                    return new ReduceMoneyCommand(
+                            new LoseMoneyEffect("Cheat",
+                            gameSystem.getEffectObservers(), gameSystem.getCurrentPlayer(),
                             Integer.parseInt(tokens.get(2))));
                 }
         }

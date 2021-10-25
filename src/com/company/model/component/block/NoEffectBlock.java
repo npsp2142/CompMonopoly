@@ -27,6 +27,6 @@ public class NoEffectBlock extends Block {
 
     @Override
     public String getDescription() {
-        return this + " - No Effect";
+        return "No Effect";
     }
 }

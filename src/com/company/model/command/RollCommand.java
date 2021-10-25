@@ -6,15 +6,16 @@ import com.company.model.effect.MoveEffect;
 
 public class RollCommand implements Command {
     private final MoveEffect moveEffect;
-
-    public RollCommand(MoveEffect moveEffect) {
+    private final GameSystem gameSystem;
+    public RollCommand(MoveEffect moveEffect, GameSystem gameSystem) {
         this.moveEffect = moveEffect;
+        this.gameSystem = gameSystem;
     }
 
     @Override
     public void execute() {
         moveEffect.onLand();
-        GameSystem.instance.endTurn();
+        gameSystem.endTurn();
     }
 
     @Override

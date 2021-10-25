@@ -55,6 +55,5 @@ public abstract class ConditionalBlock extends Block {
 
     @Override
     public String getDescription() {
-        return blockA.getDescription() + "\n" + blockB.getDescription();
-    }
+        return "Either " + blockA.getDescription() + " or " + blockB.getDescription();    }
 }
