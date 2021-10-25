@@ -1,16 +1,13 @@
 package com.company;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameController;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
-import com.company.model.block.*;
+import com.company.model.component.block.*;
 import com.company.model.command.CommandFactory;
 import com.company.model.component.*;
-import com.company.model.observer.BlockObserver;
-import com.company.model.observer.LocationBlockObserver;
-import com.company.model.observer.MoneyObserver;
-import com.company.model.observer.PlayerObserver;
+import com.company.model.observer.*;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,12 +16,13 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Main {
-    public static GameApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
+    public static CompMonopolyApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
         Random random = new Random(System.currentTimeMillis());
 
         ArrayList<Player> players = new ArrayList<>();
         Dice dice = new Dice(random, 4);
         ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
+
         Player playerA = new Player(
                 "Player A",
                 Player.Status.HEALTHY,
@@ -44,6 +42,7 @@ public class Main {
 
 
         ArrayList<BlockObserver> blockObservers = new ArrayList<>();
+
         // Add all property
         Property central = new Property("Central", 800, 90);
         Property wanChai = new Property("Wan Chai", 700, 65);
@@ -57,6 +56,7 @@ public class Main {
         Property saiKung = new Property("Sai Kung", 400, 10);
         Property yuenLong = new Property("Yuen Long", 400, 25);
         Property taiO = new Property("Tai O", 600, 25);
+
         ArrayList<Property> properties = new ArrayList<>();
         properties.add(central);
         properties.add(wanChai);
@@ -71,25 +71,28 @@ public class Main {
         properties.add(yuenLong);
         properties.add(taiO);
 
-        GoBlock goBlock = new GoBlock("Go", blockObservers);
-        PropertyBlock centralBlock = new PropertyBlock(central.getName(), blockObservers, central);
-        PropertyBlock wanChaiBlock = new PropertyBlock(wanChai.getName(), blockObservers, wanChai);
-        PropertyBlock stanleyBlock = new PropertyBlock(stanley.getName(), blockObservers, stanley);
-        PropertyBlock shekOBlock = new PropertyBlock(shekO.getName(), blockObservers, shekO);
-        PropertyBlock mongKokBlock = new PropertyBlock(mongKok.getName(), blockObservers, mongKok);
-        PropertyBlock tsingYiBlock = new PropertyBlock(tsingYi.getName(), blockObservers, tsingYi);
-        PropertyBlock shatinBlock = new PropertyBlock(shatin.getName(), blockObservers, shatin);
-        PropertyBlock tuenMunBlock = new PropertyBlock(tuenMun.getName(), blockObservers, shatin);
-        PropertyBlock taiPoBlock = new PropertyBlock(taiPo.getName(), blockObservers, taiPo);
-        PropertyBlock saiKungBlock = new PropertyBlock(saiKung.getName(), blockObservers, saiKung);
-        PropertyBlock yuenLongBlock = new PropertyBlock(yuenLong.getName(), blockObservers, yuenLong);
-        PropertyBlock taiOBlock = new PropertyBlock(taiO.getName(), blockObservers, taiO);
-        ChanceBlock chanceOneBlock = new ChanceBlock("Chance 1", blockObservers, random);
-        ChanceBlock chanceTwoBlock = new ChanceBlock("Chance 2", blockObservers, random);
-        ChanceBlock chanceThreeBlock = new ChanceBlock("Chance 3", blockObservers, random);
-        NoEffectBlock freeParkingBlock = new NoEffectBlock("Free Parking", blockObservers);
-        NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers);
-        IncomeTaxBlock incomeTaxBlock = new IncomeTaxBlock("Income Tax", blockObservers);
+        ArrayList<EffectObserver> effectObservers = new ArrayList<>();
+        effectObservers.add(new EffectDisplay(System.out));
+
+        GoBlock goBlock = new GoBlock("Go", blockObservers, effectObservers);
+        PropertyBlock centralBlock = new PropertyBlock(central.getName(), blockObservers,effectObservers,  central);
+        PropertyBlock wanChaiBlock = new PropertyBlock(wanChai.getName(), blockObservers, effectObservers, wanChai);
+        PropertyBlock stanleyBlock = new PropertyBlock(stanley.getName(), blockObservers, effectObservers, stanley);
+        PropertyBlock shekOBlock = new PropertyBlock(shekO.getName(), blockObservers,effectObservers,  shekO);
+        PropertyBlock mongKokBlock = new PropertyBlock(mongKok.getName(), blockObservers,effectObservers,  mongKok);
+        PropertyBlock tsingYiBlock = new PropertyBlock(tsingYi.getName(), blockObservers,effectObservers,  tsingYi);
+        PropertyBlock shatinBlock = new PropertyBlock(shatin.getName(), blockObservers,effectObservers,  shatin);
+        PropertyBlock tuenMunBlock = new PropertyBlock(tuenMun.getName(), blockObservers, effectObservers, shatin);
+        PropertyBlock taiPoBlock = new PropertyBlock(taiPo.getName(), blockObservers,effectObservers,  taiPo);
+        PropertyBlock saiKungBlock = new PropertyBlock(saiKung.getName(), blockObservers,effectObservers,  saiKung);
+        PropertyBlock yuenLongBlock = new PropertyBlock(yuenLong.getName(), blockObservers,effectObservers,  yuenLong);
+        PropertyBlock taiOBlock = new PropertyBlock(taiO.getName(), blockObservers,effectObservers,  taiO);
+        ChanceBlock chanceOneBlock = new ChanceBlock("Chance 1", blockObservers, effectObservers, random);
+        ChanceBlock chanceTwoBlock = new ChanceBlock("Chance 2", blockObservers, effectObservers, random);
+        ChanceBlock chanceThreeBlock = new ChanceBlock("Chance 3", blockObservers, effectObservers, random);
+        NoEffectBlock freeParkingBlock = new NoEffectBlock("Free Parking", blockObservers, effectObservers);
+        NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers, effectObservers);
+        IncomeTaxBlock incomeTaxBlock = new IncomeTaxBlock("Income Tax", blockObservers, effectObservers);
 
 
         Board board = new Board(goBlock);
@@ -99,13 +102,12 @@ public class Main {
         HashMap<Player, Integer> roundCounter = new HashMap<>();
         roundCounter.put(playerA, 0);
         roundCounter.put(playerB, 0);
-        InJailBlock inJailBlock = new InJailBlock("In Jail", blockObservers, location, roundCounter);
+        InJailBlock inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers,location, roundCounter);
 
         JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
-                blockObservers, justVisitingBlock, inJailBlock);
+                blockObservers, effectObservers, justVisitingBlock, inJailBlock);
 
-        GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", blockObservers, location, justVisitingOrInJailBlock);
-
+        GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", blockObservers, effectObservers, location, justVisitingOrInJailBlock);
 
         board.addBlock(goBlock);
         board.addBlock(centralBlock);
@@ -150,22 +152,22 @@ public class Main {
         board.addPath(chanceThreeBlock, taiOBlock);
         board.addPath(taiOBlock, goBlock);
 
-        LocationBlockObserver locationBlockObserver = new LocationBlockObserver(new HashMap<>());
+        LocationObserver locationObserver = new LocationObserver(new HashMap<>());
         MoneyObserver moneyObserver = new MoneyObserver(new HashMap<>());
-        blockObservers.add(locationBlockObserver);
+        blockObservers.add(locationObserver);
         playerObservers.add(moneyObserver);
 
-        GameSystem gameSystem = new GameSystem(board, players, properties, location);
+        GameSystem gameSystem = new GameSystem(board, players, properties, effectObservers, location);
         CommandFactory factory = new CommandFactory(gameSystem);
         new GameController(inputStream);
         new GameDisplay(outputStream);
 
-        return new GameApplication(factory, GameApplication.Status.MENU);
+        return new CompMonopolyApplication(factory, CompMonopolyApplication.Status.MENU);
     }
 
     public static void main(String[] args) {
         Player.NEED_PROMPT = true;
-        GameApplication gameApplication = createGameApplication(System.in, System.out);
-        gameApplication.run();
+        CompMonopolyApplication compMonopolyApplication = createGameApplication(System.in, System.out);
+        compMonopolyApplication.run();
     }
 }

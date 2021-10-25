@@ -1,4 +1,4 @@
-package com.company.model.block;
+package com.company.model.component.block;
 
 import com.company.model.component.Player;
 import com.company.model.effect.OnEnterEffect;

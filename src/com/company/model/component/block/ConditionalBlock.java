@@ -1,19 +1,23 @@
-package com.company.model.block;
+package com.company.model.component.block;
 
 import com.company.model.component.Player;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
 import com.company.model.observer.BlockObserver;
+import com.company.model.observer.EffectObserver;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class ConditionalBlock extends Block {
     private final Block blockA;
     private final Block blockB;
 
     // BlockA true, BlockB false
-    public ConditionalBlock(String name, ArrayList<BlockObserver> blockObservers, Block blockA, Block blockB) {
-        super(name, blockObservers);
+    public ConditionalBlock(String name,
+                            ArrayList<BlockObserver> blockObservers,
+                            List<EffectObserver> effectObservers, Block blockA, Block blockB) {
+        super(name, blockObservers, effectObservers);
         this.blockA = blockA;
         this.blockB = blockB;
     }

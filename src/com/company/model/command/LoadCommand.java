@@ -1,6 +1,6 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameSystem;
 
 public class LoadCommand implements Command {
@@ -16,6 +16,6 @@ public class LoadCommand implements Command {
     }
 
     public boolean isValid() {
-        return GameApplication.instance.getStatus() == GameApplication.Status.MENU;
+        return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU;
     }
 }

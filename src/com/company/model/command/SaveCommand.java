@@ -1,6 +1,6 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameSystem;
 
 public class SaveCommand implements Command {
@@ -13,11 +13,11 @@ public class SaveCommand implements Command {
     @Override
     public void execute() {
         gameSystem.saveGame();
-        GameApplication.instance.quitGame();
+        CompMonopolyApplication.instance.quitGame();
     }
 
     @Override
     public boolean isValid() {
-        return GameApplication.instance.getStatus() == GameApplication.Status.PLAYING;
+        return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.PLAYING;
     }
 }

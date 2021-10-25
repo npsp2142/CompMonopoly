@@ -1,4 +1,4 @@
-package com.company.model;
+package com.company.model.data;
 
 import com.company.model.data.LocationDatum;
 import com.company.model.data.PlayerDatum;
@@ -7,16 +7,16 @@ import com.company.model.data.PropertyDatum;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SaveSystem implements Serializable {
+public class GameData implements Serializable {
     private final ArrayList<PlayerDatum> playerData;
     private final ArrayList<PropertyDatum> propertyData;
     private final LocationDatum locationDatum;
     private final Integer round;
     private final PlayerDatum currentPlayer;
 
-    public SaveSystem(ArrayList<PlayerDatum> playerData,
-                      ArrayList<PropertyDatum> propertyDatumArrayList,
-                      LocationDatum locationDatum, Integer round, PlayerDatum currentPlayer) {
+    public GameData(ArrayList<PlayerDatum> playerData,
+                    ArrayList<PropertyDatum> propertyDatumArrayList,
+                    LocationDatum locationDatum, Integer round, PlayerDatum currentPlayer) {
         this.playerData = playerData;
         this.propertyData = propertyDatumArrayList;
         this.locationDatum = locationDatum;

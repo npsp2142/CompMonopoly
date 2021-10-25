@@ -1,6 +1,6 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.effect.LoseMoneyEffect;
 
 public class ReduceMoneyCommand implements Command {
@@ -17,6 +17,6 @@ public class ReduceMoneyCommand implements Command {
 
     @Override
     public boolean isValid() {
-        return GameApplication.instance.getStatus() == GameApplication.Status.PLAYING;
+        return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.PLAYING;
     }
 }

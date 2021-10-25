@@ -1,7 +1,7 @@
 package com.company.model.component;
 
 import com.company.model.GameDisplay;
-import com.company.model.block.Block;
+import com.company.model.component.block.Block;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
 
@@ -41,11 +41,10 @@ public class Location implements Serializable {
             onEnterEffect.onEnter();
         }
 
-        currentBlock.notifySubscribers(player);
+        currentBlock.notifyBlockSubscribers(player);
         location.replace(player, location.get(player), currentBlock);
         OnLandEffect effect = currentBlock.createOnLandEffect(player);
         effect.onLand();
-        GameDisplay.infoMessage(effect.getDescription());
     }
 
     public Block getCurrentLocation(Player player) {
@@ -53,7 +52,7 @@ public class Location implements Serializable {
     }
 
     public void moveTo(Player player, Block block, boolean isTrigger) {
-        block.notifySubscribers(player);
+        block.notifyBlockSubscribers(player);
         if (isTrigger) {
             block.createOnLandEffect(player).onLand();
         }
@@ -69,7 +68,7 @@ public class Location implements Serializable {
     }
 
     public void moveTo(Player player, Block block) {
-        block.notifySubscribers(player);
+        block.notifyBlockSubscribers(player);
         location.replace(player, block);
     }
 
@@ -80,4 +79,7 @@ public class Location implements Serializable {
         }
     }
 
+    public Block getStartBlock() {
+        return board.getStartBlock();
+    }
 }

@@ -1,15 +1,15 @@
 package com.company.model.observer;
 
 import com.company.model.GameDisplay;
-import com.company.model.block.Block;
+import com.company.model.component.block.Block;
 import com.company.model.component.Player;
 
 import java.util.Map;
 
-public class LocationBlockObserver implements BlockObserver {
+public class LocationObserver implements BlockObserver {
     public final Map<Player, Block> location;
 
-    public LocationBlockObserver(Map<Player, Block> location) {
+    public LocationObserver(Map<Player, Block> location) {
         this.location = location;
     }
 

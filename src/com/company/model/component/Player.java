@@ -1,7 +1,7 @@
 package com.company.model.component;
 
 import com.company.model.GameController;
-import com.company.model.block.Block;
+import com.company.model.component.block.Block;
 import com.company.model.observer.PlayerObserver;
 
 import java.io.Serializable;

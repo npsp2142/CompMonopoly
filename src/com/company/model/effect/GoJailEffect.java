@@ -1,11 +1,15 @@
 package com.company.model.effect;
 
+import com.company.model.observer.EffectObserver;
+
+import java.util.List;
+
 public class GoJailEffect extends Effect implements OnLandEffect {
     final SetGroundedEffect setGroundedEffect;
     final TeleportEffect teleportEffect;
 
-    public GoJailEffect(String name, SetGroundedEffect setGroundedEffect, TeleportEffect teleportEffect) {
-        super(name);
+    public GoJailEffect(String name, List<EffectObserver> effectObservers, SetGroundedEffect setGroundedEffect, TeleportEffect teleportEffect) {
+        super(name, effectObservers);
         this.setGroundedEffect = setGroundedEffect;
         this.teleportEffect = teleportEffect;
     }
@@ -14,12 +18,11 @@ public class GoJailEffect extends Effect implements OnLandEffect {
     public void onLand() {
         setGroundedEffect.onLand();
         teleportEffect.onLand();
+        notifyEffectSubscribers();
     }
 
     @Override
     public String getDescription() {
-        return String.format("%s: Go jail", this) + "\n" +
-                setGroundedEffect.getDescription() + "\n" +
-                teleportEffect.getDescription();
+        return String.format("%s: Go jail", getColoredName());
     }
 }

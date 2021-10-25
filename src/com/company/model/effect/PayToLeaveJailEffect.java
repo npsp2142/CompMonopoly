@@ -1,7 +1,9 @@
 package com.company.model.effect;
 
 import com.company.model.component.Player;
+import com.company.model.observer.EffectObserver;
 
+import java.util.List;
 import java.util.Map;
 
 public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
@@ -11,12 +13,12 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
     private final MoveEffect moveEffect;
     private final Map<Player, Integer> roundCounter;
 
-    public PayToLeaveJailEffect(String name,
+    public PayToLeaveJailEffect(String name, List<EffectObserver> effectObservers,
                                 Player player, LoseMoneyEffect loseMoneyEffect,
                                 CureEffect cureEffect,
                                 MoveEffect moveEffect,
                                 Map<Player, Integer> roundCounter) {
-        super(name);
+        super(name, effectObservers);
         this.player = player;
         this.loseMoneyEffect = loseMoneyEffect;
         this.cureEffect = cureEffect;
@@ -26,6 +28,7 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
 
     @Override
     public void onLand() {
+        notifyEffectSubscribers();
         loseMoneyEffect.onLand();
         cureEffect.onLand();
         roundCounter.replace(player, 0);
@@ -34,8 +37,6 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
 
     @Override
     public String getDescription() {
-        return loseMoneyEffect.getDescription() + "\n" +
-                cureEffect.getDescription() + "\n" +
-                moveEffect;
+        return getColoredName() + ": You are grounded.";
     }
 }

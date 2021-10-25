@@ -1,6 +1,6 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 import com.company.model.effect.LoseMoneyEffect;
@@ -15,37 +15,36 @@ public class CommandFactory {
     public CommandFactory(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
     }
-
-    public Command make(ArrayList<String> tokens) {
-        if (GameApplication.instance.getStatus() == GameApplication.Status.MENU) {
+    public Command make(ArrayList<String> tokens)
+    {
+        if (CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU) {
             switch (tokens.get(0).toLowerCase()) {
                 case "start":
-                    return new StartCommand(GameApplication.instance);
-                case "save":
-                    return new SaveCommand(gameSystem);
+                    return new StartCommand(CompMonopolyApplication.instance);
                 case "load":
                     return new LoadCommand(gameSystem);
                 case "quit":
-                    return new QuitCommand(GameApplication.instance);
+                    return new QuitCommand(CompMonopolyApplication.instance);
             }
             return null;
         }
+
         switch (tokens.get(0).toLowerCase()) {
             case "start":
-                return new StartCommand(GameApplication.instance);
+                return new StartCommand(CompMonopolyApplication.instance);
             case "save":
                 return new SaveCommand(gameSystem);
             case "load":
                 return new LoadCommand(gameSystem);
             case "quit":
-                return new QuitCommand(GameApplication.instance);
+                return new QuitCommand(CompMonopolyApplication.instance);
             case "location":
             case "loc":
                 return new ViewLocationCommand(gameSystem.getPlayerLocation(), gameSystem.getPlayers());
             case "roll":
             case "r":
                 return new RollCommand(
-                        new MoveEffect("Roll",
+                        new MoveEffect("Roll To Move",gameSystem.getEffectObservers(),
                                 gameSystem.getCurrentPlayer(),
                                 gameSystem.getCurrentPlayer().roll(2),
                                 gameSystem.getPlayerLocation()));
@@ -82,7 +81,7 @@ public class CommandFactory {
                 return new ViewBoardCommand(gameSystem.getBoard());
             case "cheat":
                 if ("-lm".equalsIgnoreCase(tokens.get(1))) {
-                    return new ReduceMoneyCommand(new LoseMoneyEffect("Cheat", gameSystem.getCurrentPlayer(),
+                    return new ReduceMoneyCommand(new LoseMoneyEffect("Cheat", gameSystem.getEffectObservers(), gameSystem.getCurrentPlayer(),
                             Integer.parseInt(tokens.get(2))));
                 }
         }

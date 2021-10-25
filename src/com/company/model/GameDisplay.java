@@ -59,6 +59,10 @@ public class GameDisplay {
         instance.getPrintStream().println(builder);
     }
 
+    /**
+     * ---------------------------------------------------------
+     * @param title words is this title Bar
+     */
     public static void titleBar(String title) {
         int star_width = (TERMINAL_WIDTH - title.length() - 2) / 2;
         StringBuilder builder = new StringBuilder();
@@ -75,7 +79,7 @@ public class GameDisplay {
     }
 
     public static void printCommandPrompt() {
-        switch (GameApplication.instance.getStatus()) {
+        switch (CompMonopolyApplication.instance.getStatus()) {
             case PLAYING:
                 instance.getPrintStream().print(ANSI.ANSI_GREEN + GameSystem.instance.getCurrentPlayer() + ANSI.ANSI_RESET);
                 instance.getPrintStream().print(ANSI.ANSI_BLUE + " > " + ANSI.ANSI_RESET);

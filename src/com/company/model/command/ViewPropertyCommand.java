@@ -1,10 +1,10 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
-import com.company.model.block.Block;
-import com.company.model.block.PropertyBlock;
+import com.company.model.component.block.Block;
+import com.company.model.component.block.PropertyBlock;
 import com.company.model.component.Board;
 import com.company.model.component.Player;
 
@@ -52,7 +52,7 @@ public class ViewPropertyCommand implements Command {
 
     @Override
     public boolean isValid() {
-        return GameApplication.instance.getStatus() == GameApplication.Status.PLAYING;
+        return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.PLAYING;
     }
 
     public enum Mode {

@@ -3,16 +3,15 @@ package com.company.model;
 import com.company.model.command.Command;
 import com.company.model.command.CommandFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameApplication {
-    public static GameApplication instance;
+public class CompMonopolyApplication {
+    public static CompMonopolyApplication instance;
     private final CommandFactory commandFactory;
     private boolean isExitApp;
     private Status status;
 
-    public GameApplication(
+    public CompMonopolyApplication(
             CommandFactory commandFactory,
             Status status) {
         instance = this;
@@ -38,7 +37,6 @@ public class GameApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void beforeRun() {
@@ -51,11 +49,16 @@ public class GameApplication {
         return commandFactory.make(tokens);
     }
 
+    public Command getCommand(String string) {
+        ArrayList<String> tokens = GameController.instance.getArguments(string);
+        return commandFactory.make(tokens);
+    }
+
     public void closeApplication() {
         isExitApp = true;
     }
 
-    public GameApplication.Status getStatus() {
+    public CompMonopolyApplication.Status getStatus() {
         return status;
     }
 

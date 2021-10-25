@@ -1,6 +1,7 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
+import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 import com.company.model.effect.MoveEffect;
 
@@ -19,6 +20,6 @@ public class RollCommand implements Command {
 
     @Override
     public boolean isValid() {
-        return GameApplication.instance.getStatus() == GameApplication.Status.PLAYING;
+        return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.PLAYING;
     }
 }

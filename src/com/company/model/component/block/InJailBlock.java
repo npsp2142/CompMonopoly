@@ -1,11 +1,13 @@
-package com.company.model.block;
+package com.company.model.component.block;
 
 import com.company.model.component.Location;
 import com.company.model.component.Player;
 import com.company.model.effect.*;
 import com.company.model.observer.BlockObserver;
+import com.company.model.observer.EffectObserver;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class InJailBlock extends Block {
@@ -15,9 +17,10 @@ public class InJailBlock extends Block {
 
     public InJailBlock(String name,
                        ArrayList<BlockObserver> blockObservers,
+                       List<EffectObserver> effectObservers,
                        Location location,
                        Map<Player, Integer> roundCounter) {
-        super(name, blockObservers);
+        super(name, blockObservers, effectObservers);
         this.location = location;
         this.roundCounter = roundCounter;
     }
@@ -30,28 +33,28 @@ public class InJailBlock extends Block {
 
         if (response == Player.Response.YES) {
             return new PayToLeaveJailEffect(
-                    String.format("Pay To Leave %d", FINE),
-                    player, new LoseMoneyEffect("Pay Fine", player, FINE),
-                    new CureEffect("You are free", player),
-                    new MoveEffect("Roll To Move", player, player.roll(2), location),
+                    String.format("Pay To Leave %d", FINE), getEffectObservers(),
+                    player, new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
+                    new CureEffect("You are free",getEffectObservers(), player),
+                    new MoveEffect("Roll To Move", getEffectObservers(),player, player.roll(2), location),
                     roundCounter
             );
         }
         int[] dices = player.roll(2);
         return new RollToLeaveJailEffect(
-                "Roll To Leave",
+                "Roll To Leave", getEffectObservers(),
                 player,
                 dices,
-                new MoveEffect("You are free", player, player.roll(2), location),
-                new CureEffect("You can move", player),
-                new LoseMoneyEffect("Pay Fine", player, FINE),
+                new MoveEffect("You are free",getEffectObservers(), player, player.roll(2), location),
+                new CureEffect("You can move",getEffectObservers(), player),
+                new LoseMoneyEffect("Pay Fine",getEffectObservers(), player, FINE),
                 roundCounter
         );
     }
 
     @Override
     public OnEnterEffect createOnEnterEffect(Player player) {
-        return new NoEffect();
+        return new NoEffect(getEffectObservers());
     }
 
 

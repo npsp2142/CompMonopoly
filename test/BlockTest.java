@@ -1,10 +1,11 @@
 import com.company.Main;
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
-import com.company.model.block.*;
+import com.company.model.component.block.*;
 import com.company.model.component.*;
 import com.company.model.effect.MoveEffect;
 import com.company.model.observer.BlockObserver;
+import com.company.model.observer.EffectObserver;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -27,6 +28,7 @@ public class BlockTest {
     Player playerA;
     HashMap<Player,Integer> inJailRoundCounter;
     ArrayList<BlockObserver> blockObservers;
+    ArrayList<EffectObserver> effectObservers;
 
     @BeforeEach
     void setUp() {
@@ -44,23 +46,23 @@ public class BlockTest {
         );
         players.add(playerA);
 
-        goBlock = new GoBlock("Go", blockObservers);
+        goBlock = new GoBlock("Go", blockObservers, effectObservers);
 
         board = new Board(goBlock);
         location = new Location(board, players);
 
-        centralBlock = new PropertyBlock("Central", blockObservers,
+        centralBlock = new PropertyBlock("Central", blockObservers, effectObservers,
                 new Property("Central", 800, 90));
-        wanChaiBlock = new PropertyBlock("Wan Chai", blockObservers,
+        wanChaiBlock = new PropertyBlock("Wan Chai", blockObservers, effectObservers,
                 new Property("Wan Chai", 700, 65));
-        justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers);
+        justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers, effectObservers);
         inJailRoundCounter = new HashMap<>();
         inJailRoundCounter.put(playerA,0);
-        inJailBlock = new InJailBlock("In Jail", blockObservers, location,inJailRoundCounter);
-        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(blockObservers,
+        inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers, location,inJailRoundCounter);
+        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(blockObservers, effectObservers,
                 justVisitingBlock, inJailBlock
         );
-        goToJailBlock = new GoToJailBlock("Go To Jail",blockObservers, location,justVisitingOrInJailBlock);
+        goToJailBlock = new GoToJailBlock("Go To Jail",blockObservers, effectObservers, location,justVisitingOrInJailBlock);
 
 
 
@@ -119,15 +121,15 @@ public class BlockTest {
         location.moveStep(playerA, 1);
         assert (inJailRoundCounter.get(playerA) == 0);
 
-        effect = new MoveEffect("",playerA,playerA.roll(2), location);
+        effect = new MoveEffect("",effectObservers,playerA,playerA.roll(2), location);
         effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 1);
 
-        effect = new MoveEffect("",playerA, playerA.roll(2), location);
+        effect = new MoveEffect("",effectObservers,playerA, playerA.roll(2), location);
         effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 2);
 
-        effect = new MoveEffect("",playerA, playerA.roll(2), location);
+        effect = new MoveEffect("",effectObservers,playerA, playerA.roll(2), location);
         effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 0);
     }
@@ -139,8 +141,8 @@ public class BlockTest {
         InputStream input = new ByteArrayInputStream(data);
 
         FileOutputStream fileOutputStream = new FileOutputStream("tmp/output.txt");
-        GameApplication gameApplication = Main.createGameApplication(input,fileOutputStream);
-        gameApplication.run();
+        CompMonopolyApplication compMonopolyApplication = Main.createGameApplication(input,fileOutputStream);
+        compMonopolyApplication.run();
         GameDisplay.flush();
     }
 

@@ -1,7 +1,9 @@
 package com.company.model.effect;
 
 import com.company.model.component.Player;
+import com.company.model.observer.EffectObserver;
 
+import java.util.List;
 import java.util.Map;
 
 public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Describable {
@@ -13,14 +15,14 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
     private final LoseMoneyEffect loseMoneyEffect;
     private final Map<Player, Integer> roundCounter;
 
-    public RollToLeaveJailEffect(String name,
+    public RollToLeaveJailEffect(String name, List<EffectObserver> effectObservers,
                                  Player player,
                                  int[] dices,
                                  MoveEffect moveEffect,
                                  CureEffect cureEffect,
                                  LoseMoneyEffect loseMoneyEffect,
                                  Map<Player, Integer> roundCounter) {
-        super(name);
+        super(name, effectObservers);
         this.player = player;
         this.dices = dices;
         this.moveEffect = moveEffect;
@@ -31,6 +33,7 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
 
     @Override
     public void onLand() {
+        notifyEffectSubscribers();
         if (canRollToLeave()) {
             cureEffect.onLand();
             roundCounter.replace(player, 0);
@@ -42,7 +45,6 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
             roundCounter.replace(player, roundCounter.get(player) + 1);
             return;
         }
-
         cureEffect.onLand();
         loseMoneyEffect.onLand();
         roundCounter.replace(player, 0);
@@ -51,16 +53,17 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
 
     @Override
     public String getDescription() {
-        if (canRollToLeave()) {
-            return String.format("%s: %s can move\n", this, player) +
-                    moveEffect.getDescription();
-        }
-
-        if (roundCounter.get(player) < 3) {
-            return String.format("%s: %s remain %s round to leave", this, player, MAX_STAY - roundCounter.get(player));
-        }
-
-        return "";
+        return String.format("%s: Try to leave fail by rolling",getColoredName());
+//        if (canRollToLeave()) {
+//            return String.format("%s: %s can move\n", this, player) +
+//                    moveEffect.getDescription();
+//        }
+//
+//        if (roundCounter.get(player) < 3) {
+//            return String.format("%s: %s remain %s round to leave", this, player, MAX_STAY - roundCounter.get(player));
+//        }
+//
+//        return "";
     }
 
     private boolean canRollToLeave() {

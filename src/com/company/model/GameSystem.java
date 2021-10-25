@@ -1,17 +1,16 @@
 package com.company.model;
 
-import com.company.model.component.*;
-import com.company.model.data.BlockDatum;
-import com.company.model.data.LocationDatum;
-import com.company.model.data.PlayerDatum;
-import com.company.model.data.PropertyDatum;
+import com.company.model.component.Board;
+import com.company.model.component.Location;
+import com.company.model.component.Player;
+import com.company.model.component.Property;
+import com.company.model.data.GameData;
+import com.company.model.data.GameDataFactory;
 import com.company.model.effect.BankruptEffect;
-import com.company.model.observer.PlayerObserver;
+import com.company.model.observer.EffectObserver;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 
 public class GameSystem {
@@ -19,9 +18,11 @@ public class GameSystem {
     public static final int MAX_TURN = 100;
     public static final String DEFAULT_NAME = "tmp\\save_file.txt";
     public static GameSystem instance;
+
     private final Board board;
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
+    private final ArrayList<EffectObserver> effectObservers;
     private final Location location;
     private Player currentPlayer;
     private int round;
@@ -29,10 +30,11 @@ public class GameSystem {
     public GameSystem(Board board,
                       ArrayList<Player> players,
                       ArrayList<Property> properties,
-                      Location location) {
+                      ArrayList<EffectObserver> effectObservers, Location location) {
         this.board = board;
         this.players = players;
         this.properties = properties;
+        this.effectObservers = effectObservers;
         this.location = location;
         round = 0;
         if (instance == null) {
@@ -62,7 +64,7 @@ public class GameSystem {
     }
 
     public void onGameStart() {
-        GameApplication.instance.setStatus(GameApplication.Status.PLAYING);
+        CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
         location.setStartLocation(board.getStartBlock());
         currentPlayer = players.get(0);
         reload();
@@ -108,7 +110,7 @@ public class GameSystem {
     private void onEndTurn() {
         boolean canEndTurn = false;
         if (currentPlayer.getAmount() < 0) {
-            new BankruptEffect("Bankrupt", currentPlayer, properties).onLand();
+            new BankruptEffect("Bankrupt", effectObservers, currentPlayer, properties).onLand();
         }
 
         if (NEED_ASK_END_TURN) {
@@ -156,13 +158,13 @@ public class GameSystem {
                 }
             }
             GameDisplay.titleBar("Game Over!");
-            GameApplication.instance.setStatus(GameApplication.Status.MENU);
+            CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.MENU);
             return;
         }
         if (isGameTooLong()) {
             GameDisplay.titleBar("Game Over!");
             GameDisplay.titleBar("Tie!");
-            GameApplication.instance.setStatus(GameApplication.Status.MENU);
+            CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.MENU);
         }
 
     }
@@ -189,36 +191,12 @@ public class GameSystem {
             e.printStackTrace();
         }
 
-
-        ArrayList<PlayerDatum> playerData = new ArrayList<>();
-        HashMap<Player, PlayerDatum> playerDatumHashMap = new HashMap<>();
-        for (Player player : players) {
-            PlayerDatum saveData = new PlayerDatum(player.getName(), player.getStatus(), player.getAmount());
-            playerData.add(saveData);
-            playerDatumHashMap.put(player, saveData);
-        }
-
-        ArrayList<PropertyDatum> propertyData = new ArrayList<>();
-        for (Property property : properties) {
-            if (property.getOwner() == null) {
-                continue;
-            }
-            PropertyDatum propertyDatum = new PropertyDatum(property.getName(), playerDatumHashMap.get(property.getOwner()));
-            propertyData.add(propertyDatum);
-        }
-
-        HashMap<PlayerDatum, BlockDatum> playerDatumBlockDatumHashMap = new HashMap<>();
-        LocationDatum locationDatum = new LocationDatum(playerDatumBlockDatumHashMap);
-        for (Player player : players) {
-            BlockDatum blockDatum = new BlockDatum(location.getCurrentLocation(player).getName());
-            playerDatumBlockDatumHashMap.put(playerDatumHashMap.get(player), blockDatum);
-        }
-        SaveSystem saveSystem = new SaveSystem(playerData, propertyData, locationDatum, round, playerDatumHashMap.get(currentPlayer));
+        GameDataFactory gameDataFactory = new GameDataFactory(players,properties,location,round,currentPlayer);
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(saveSystem);
+            objectOutputStream.writeObject(gameDataFactory.make());
             objectOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -226,63 +204,37 @@ public class GameSystem {
     }
 
     public void loadGame() {
-        SaveSystem saveSystem = null;
+        GameData gameData = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(DEFAULT_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            saveSystem = (SaveSystem) objectInputStream.readObject();
-
+            gameData = (GameData) objectInputStream.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        if (saveSystem == null) {
+        if (gameData == null) {
             return;
         }
+        GameDataFactory gameDataFactory = new GameDataFactory(players,properties,location,round,currentPlayer);
+        gameDataFactory.load(this,gameData);
+    }
 
-        ArrayList<PlayerDatum> playerData = saveSystem.getPlayerData();
-        ArrayList<PropertyDatum> propertyData = saveSystem.getPropertyData();
-        LocationDatum locationDatum = saveSystem.getLocationDatum();
+    public void setRound(int round) {
+        this.round = round;
+    }
 
-        HashMap<PlayerDatum, Player> map = new HashMap<>();
-        Random random = new Random(System.currentTimeMillis());
-        Dice dice = new Dice(random, 4);
-        ArrayList<PlayerObserver> observers = new ArrayList<>();
-        players.clear();
-        // player
-        for (PlayerDatum playerDatum : playerData) {
-            Player player = new Player(playerDatum.getName(), playerDatum.getStatus(), playerDatum.getAmount(),
-                    dice,
-                    observers);
-            players.add(player);
-            map.put(playerDatum, player);
-        }
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 
-        // properties
-        for (Property property : properties) {
-            property.reload();
-        }
-        for (PropertyDatum propertyDatum : propertyData) {
-            for (Property property : properties) {
-                if (property.getName().equals(propertyDatum.getName())) {
-                    property.setOwner(map.get(propertyDatum.getOwner()));
-                }
-            }
-        }
-
-        // location
-        for (PlayerDatum datum : locationDatum.getLocation().keySet()) {
-            location.setStartLocation(board.getStartBlock());
-            location.moveTo(map.get(datum), locationDatum.getLocation().get(datum).getName());
-        }
-
-        round = saveSystem.getRound();
-        currentPlayer = map.get(saveSystem.getCurrentPlayer());
+    public ArrayList<EffectObserver> getEffectObservers() {
+        return effectObservers;
     }
 
     public void onGameLoad() {
         GameDisplay.titleBar(String.format("ROUND %d", round));
         onTurnStart();
-        GameApplication.instance.setStatus(GameApplication.Status.PLAYING);
+        CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
     }
 }

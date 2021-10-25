@@ -1,14 +1,14 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 
 public class StartCommand implements Command {
-    private final GameApplication gameApplication;
+    private final CompMonopolyApplication compMonopolyApplication;
 
-    public StartCommand(GameApplication gameApplication) {
-        this.gameApplication = gameApplication;
+    public StartCommand(CompMonopolyApplication compMonopolyApplication) {
+        this.compMonopolyApplication = compMonopolyApplication;
     }
 
     @Override
@@ -19,6 +19,6 @@ public class StartCommand implements Command {
 
     @Override
     public boolean isValid() {
-        return gameApplication.getStatus() == GameApplication.Status.MENU;
+        return compMonopolyApplication.getStatus() == CompMonopolyApplication.Status.MENU;
     }
 }

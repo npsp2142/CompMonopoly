@@ -1,6 +1,6 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.component.Player;
 
 public class GiveYesRespondCommand implements Command {
@@ -17,7 +17,7 @@ public class GiveYesRespondCommand implements Command {
 
     @Override
     public boolean isValid() {
-        return GameApplication.instance.getStatus() == GameApplication.Status.MENU;
+        return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU;
     }
 }
 

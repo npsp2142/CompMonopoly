@@ -1,18 +1,18 @@
 package com.company.model.command;
 
-import com.company.model.GameApplication;
+import com.company.model.CompMonopolyApplication;
 
 public class QuitCommand implements Command {
-    private final GameApplication gameApplication;
+    private final CompMonopolyApplication compMonopolyApplication;
 
-    public QuitCommand(GameApplication gameApplication) {
-        this.gameApplication = gameApplication;
+    public QuitCommand(CompMonopolyApplication compMonopolyApplication) {
+        this.compMonopolyApplication = compMonopolyApplication;
     }
 
     @Override
     public void execute() {
         System.out.println("Goodbye! See you next time!");
-        gameApplication.closeApplication();
+        compMonopolyApplication.closeApplication();
     }
 
     @Override
