@@ -1,7 +1,7 @@
 package com.company.model.effect;
 
-import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
 import com.company.model.component.block.Block;
 import com.company.model.observer.EffectObserver;
 
@@ -24,12 +24,12 @@ public class TeleportEffect extends Effect implements OnLandEffect {
 
     @Override
     public void onLand() {
-        playerLocation.moveTo(player, block, triggerOnLand);
         notifyEffectSubscribers();
+        playerLocation.moveTo(player, block, triggerOnLand);
     }
 
 
     public String getDescription() {
-        return String.format("%s: %s teleport to %s", getColoredName(), player, block);
+        return String.format("%s teleport to %s", player, block);
     }
 }

@@ -21,6 +21,6 @@ public class LoseMoneyEffect extends Effect implements OnLandEffect {
     }
 
     public String getDescription() {
-        return String.format("%s: %s lose %d HKD", getColoredName(), player, amount);
+        return String.format("%s lose %d HKD", player, amount);
     }
 }

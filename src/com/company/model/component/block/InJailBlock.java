@@ -1,7 +1,7 @@
 package com.company.model.component.block;
 
-import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
 import com.company.model.effect.*;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
@@ -34,7 +34,8 @@ public class InJailBlock extends Block {
         if (response == Player.Response.YES) {
             return new PayToLeaveJailEffect(
                     String.format("Pay To Leave %d", FINE), getEffectObservers(),
-                    player, new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
+                    player,
+                    new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
                     new CureEffect("You are free", getEffectObservers(), player),
                     new MoveEffect("Roll To Move", getEffectObservers(), player, player.roll(2), playerLocation),
                     roundCounter
@@ -45,10 +46,17 @@ public class InJailBlock extends Block {
                 "Roll To Leave", getEffectObservers(),
                 player,
                 dices,
+                roundCounter,
                 new MoveEffect("You are free", getEffectObservers(), player, player.roll(2), playerLocation),
                 new CureEffect("You can move", getEffectObservers(), player),
-                new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
-                roundCounter
+                new PayToLeaveJailEffect(
+                        String.format("Pay To Leave %d", FINE), getEffectObservers(),
+                        player,
+                        new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
+                        new CureEffect("You are free", getEffectObservers(), player),
+                        new MoveEffect("Roll To Move", getEffectObservers(), player, player.roll(2), playerLocation),
+                        roundCounter
+                )
         );
     }
 

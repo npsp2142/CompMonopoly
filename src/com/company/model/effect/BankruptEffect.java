@@ -31,6 +31,6 @@ public class BankruptEffect extends Effect implements OnLandEffect {
     }
 
     public String getDescription() {
-        return String.format("%s - Trigger when no money in Turn End. Sell property to back healthy.", getColoredName());
+        return String.format("%s has no money in Turn End. Sell property to back healthy.", player);
     }
 }

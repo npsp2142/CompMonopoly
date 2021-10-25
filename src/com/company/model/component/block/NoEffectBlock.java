@@ -17,12 +17,12 @@ public class NoEffectBlock extends Block {
 
     @Override
     public OnLandEffect createOnLandEffect(Player player) {
-        return new NoEffect(getName(), getEffectObservers());
+        return new NoEffect(getEffectObservers(), getName());
     }
 
     @Override
     public OnEnterEffect createOnEnterEffect(Player player) {
-        return new NoEffect(getName(), getEffectObservers());
+        return new NoEffect(getEffectObservers(), getName());
     }
 
     @Override

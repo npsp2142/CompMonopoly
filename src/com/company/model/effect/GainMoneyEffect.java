@@ -27,6 +27,6 @@ public class GainMoneyEffect extends Effect implements OnLandEffect, OnEnterEffe
     }
 
     public String getDescription() {
-        return String.format("%s: %s gain %d HKD", getColoredName(), player, amount);
+        return String.format("%s gain %d HKD", player, amount);
     }
 }

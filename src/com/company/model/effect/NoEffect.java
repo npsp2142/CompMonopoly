@@ -13,9 +13,9 @@ public class NoEffect extends Effect implements OnLandEffect, OnEnterEffect {
         description = DEFAULT_NAME;
     }
 
-    public NoEffect(String name, List<EffectObserver> effectObservers) {
-        super(name, effectObservers);
-        description = DEFAULT_NAME;
+    public NoEffect(List<EffectObserver> effectObservers, String description) {
+        super(DEFAULT_NAME, effectObservers);
+        this.description = description;
     }
 
     @Override
@@ -28,6 +28,6 @@ public class NoEffect extends Effect implements OnLandEffect, OnEnterEffect {
     }
 
     public String getDescription() {
-        return String.format("%s: %s", getColoredName(), description);
+        return String.format("%s", description);
     }
 }

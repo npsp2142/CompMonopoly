@@ -19,7 +19,7 @@ public class PropertyBlock extends Block {
     public OnLandEffect createOnLandEffect(Player player) {
         if (hasNoOwner()) {
             if (player.getAmount() < property.getPrice()) {
-                return new NoEffect("No Money buy", getEffectObservers());
+                return new NoEffect(getEffectObservers(), "No Money buy");
             }
             Player.Response response = player.getResponse("Buy Property?");
             if (response == Player.Response.YES) {
@@ -29,10 +29,10 @@ public class PropertyBlock extends Block {
                         property,
                         new LoseMoneyEffect("Pay Ownership Fee", getEffectObservers(), player, property.getPrice()));
             }
-            return new NoEffect("This Time No Buy", getEffectObservers());
+            return new NoEffect(getEffectObservers(), "This Time No Buy");
         }
         if (property.getOwner() == player) {
-            return new NoEffect("You are owner", getEffectObservers());
+            return new NoEffect(getEffectObservers(), "You are owner");
         }
         return new PayRentEffect("Pay Rent", getEffectObservers(),
                 new GainMoneyEffect("Get Rent", getEffectObservers(), property.getOwner(), property.getRent()),

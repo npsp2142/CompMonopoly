@@ -5,6 +5,7 @@ import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 import com.company.model.effect.LoseMoneyEffect;
 import com.company.model.effect.MoveEffect;
+import com.company.model.effect.TeleportEffect;
 
 import java.util.ArrayList;
 
@@ -80,12 +81,30 @@ public class CommandFactory {
             case "b":
                 return new ViewBoardCommand(gameSystem.getBoard(), gameSystem.getLocation());
             case "cheat":
-                if ("-lm".equalsIgnoreCase(tokens.get(1))) {
-                    return new ReduceMoneyCommand(
-                            new LoseMoneyEffect("Cheat",
-                            gameSystem.getEffectObservers(), gameSystem.getCurrentPlayer(),
-                            Integer.parseInt(tokens.get(2))));
+                switch (tokens.get(1).toLowerCase()) {
+                    case "-lm":
+                        return new ReduceMoneyCommand(
+                                new LoseMoneyEffect("Cheat",
+                                        gameSystem.getEffectObservers(), gameSystem.getCurrentPlayer(),
+                                        Integer.parseInt(tokens.get(2))));
+                    case "-t":
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (String token : tokens.subList(2, tokens.size())) {
+                            stringBuilder.append(token).append(" ");
+                        }
+                        stringBuilder.setLength(stringBuilder.length() - 1);
+                        return new TeleportCommand(
+                                new TeleportEffect(
+                                        "Cheat",
+                                        gameSystem.getEffectObservers(),
+                                        gameSystem.getCurrentPlayer(),
+                                        gameSystem.getLocation(),
+                                        gameSystem.getBoard().findBlock(stringBuilder.toString()),
+                                        true
+                                )
+                        );
                 }
+
         }
         return null;
     }

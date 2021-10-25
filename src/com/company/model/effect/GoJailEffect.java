@@ -16,12 +16,12 @@ public class GoJailEffect extends Effect implements OnLandEffect {
 
     @Override
     public void onLand() {
+        notifyEffectSubscribers();
         setGroundedEffect.onLand();
         teleportEffect.onLand();
-        notifyEffectSubscribers();
     }
 
     public String getDescription() {
-        return String.format("%s: Go jail", getColoredName());
+        return "Go to jail immediately";
     }
 }

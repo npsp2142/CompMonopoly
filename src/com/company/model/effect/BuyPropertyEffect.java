@@ -26,6 +26,6 @@ public class BuyPropertyEffect extends Effect implements OnLandEffect {
     }
 
     public String getDescription() {
-        return String.format("%s: %s buy %s", getColoredName(), player.getName(), property.getName());
+        return String.format("%s buy %s", player.getName(), property.getName());
     }
 }

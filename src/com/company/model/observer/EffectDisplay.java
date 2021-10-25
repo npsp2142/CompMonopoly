@@ -23,7 +23,7 @@ public class EffectDisplay implements EffectObserver {
      */
     @Override
     public void update(Effect effect) {
-        instance.getPrintStream().println("[Info] " + effect.getDescription());
+        instance.getPrintStream().println("[Info] " + effect.getColoredName() + " - " + effect.getDescription());
     }
 
     public PrintStream getPrintStream() {

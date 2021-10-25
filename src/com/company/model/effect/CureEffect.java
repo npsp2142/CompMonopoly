@@ -20,6 +20,6 @@ public class CureEffect extends Effect implements OnLandEffect {
     }
 
     public String getDescription() {
-        return String.format("%s: You are healthy", getColoredName());
+        return "You are healthy";
     }
 }

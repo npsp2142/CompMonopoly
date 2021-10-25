@@ -20,6 +20,6 @@ public class SetGroundedEffect extends Effect implements OnLandEffect {
     }
 
     public String getDescription() {
-        return String.format("%s: %s cannot move", this, player);
+        return String.format("%s cannot move", player);
     }
 }

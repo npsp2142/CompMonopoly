@@ -1,7 +1,7 @@
 package com.company.model.component.block;
 
-import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
 import com.company.model.effect.*;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
@@ -40,6 +40,6 @@ public class GoToJailBlock extends Block {
 
     @Override
     public String getDescription() {
-        return String.format("Go to %s and immediately end turn", justVisitingOrInJailBlock);
+        return String.format("Go to %s and immediately end turn", justVisitingOrInJailBlock.getColoredName());
     }
 }

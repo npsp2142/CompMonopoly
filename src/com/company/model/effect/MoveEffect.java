@@ -1,7 +1,7 @@
 package com.company.model.effect;
 
-import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
 import com.company.model.component.block.Block;
 import com.company.model.observer.EffectObserver;
 
@@ -35,6 +35,9 @@ public class MoveEffect extends Effect implements OnLandEffect, Describable {
     }
 
     public String getDescription() {
-        return String.format("%s: Move board", getColoredName());
+        if (player.getStatus().equals(Player.Status.GROUNDED)) {
+            return "Move not allowed";
+        }
+        return String.format("Move %s steps", Arrays.stream(steps).sum());
     }
 }
