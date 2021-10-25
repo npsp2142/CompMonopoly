@@ -31,14 +31,14 @@ public class PlayerFactory {
         return players;
     }
 
-    public Player make(String name){
+    public Player make(String name) {
         Player player = new Player(name, random, playerObservers);
         player.setAmount(amount);
         player.setStatus(status);
         return player;
     }
 
-    public Player make(String name, Player.Status status, int amount){
+    public Player make(String name, Player.Status status, int amount) {
         Player player = new Player(name, random, playerObservers);
         player.setAmount(amount);
         player.setStatus(status);

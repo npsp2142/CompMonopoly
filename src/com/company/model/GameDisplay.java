@@ -90,7 +90,7 @@ public class GameDisplay {
     public static void printCommandPrompt() {
         switch (CompMonopolyApplication.instance.getStatus()) {
             case PLAYING:
-                if(instance.gameSystem == null)return;
+                if (instance.gameSystem == null) return;
                 instance.getPrintStream().print(ANSI.ANSI_GREEN + instance.gameSystem.getCurrentPlayer() + ANSI.ANSI_RESET);
                 instance.getPrintStream().print(ANSI.ANSI_BLUE + " > " + ANSI.ANSI_RESET);
                 break;

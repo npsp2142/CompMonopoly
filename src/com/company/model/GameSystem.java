@@ -1,8 +1,8 @@
 package com.company.model;
 
 import com.company.model.component.Board;
-import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
 import com.company.model.component.Property;
 import com.company.model.data.GameData;
 import com.company.model.data.GameDataFactory;

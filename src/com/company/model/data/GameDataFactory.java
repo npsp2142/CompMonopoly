@@ -2,8 +2,8 @@ package com.company.model.data;
 
 import com.company.model.GameSystem;
 import com.company.model.PlayerFactory;
-import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
 import com.company.model.component.Property;
 import com.company.model.observer.PlayerObserver;
 
@@ -65,11 +65,11 @@ public class GameDataFactory {
         ArrayList<PlayerObserver> observers = new ArrayList<>();
         players.clear();
 
-        PlayerFactory playerFactory = new PlayerFactory(random,observers, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
+        PlayerFactory playerFactory = new PlayerFactory(random, observers, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
 
         // player
         for (PlayerDatum playerDatum : playerData) {
-            Player player = playerFactory.make(playerDatum.getName(),playerDatum.getStatus(),playerDatum.getAmount());
+            Player player = playerFactory.make(playerDatum.getName(), playerDatum.getStatus(), playerDatum.getAmount());
             players.add(player);
             map.put(playerDatum, player);
         }

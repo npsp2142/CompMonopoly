@@ -1,9 +1,12 @@
 package com.company;
 
 import com.company.model.*;
-import com.company.model.component.block.*;
 import com.company.model.command.CommandFactory;
-import com.company.model.component.*;
+import com.company.model.component.Board;
+import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
+import com.company.model.component.Property;
+import com.company.model.component.block.*;
 import com.company.model.observer.*;
 
 import java.io.InputStream;
@@ -20,7 +23,7 @@ public class Main {
         names.add("Player A");
         names.add("Player B");
         ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
-        PlayerFactory playerFactory = new PlayerFactory(random,playerObservers,Player.Status.HEALTHY,Player.DEFAULT_AMOUNT);
+        PlayerFactory playerFactory = new PlayerFactory(random, playerObservers, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
         ArrayList<Player> players = playerFactory.make(names);
 
         ArrayList<BlockObserver> blockObservers = new ArrayList<>();
@@ -57,18 +60,18 @@ public class Main {
         effectObservers.add(new EffectDisplay(System.out));
 
         GoBlock goBlock = new GoBlock("Go", blockObservers, effectObservers);
-        PropertyBlock centralBlock = new PropertyBlock(central.getName(), blockObservers,effectObservers,  central);
+        PropertyBlock centralBlock = new PropertyBlock(central.getName(), blockObservers, effectObservers, central);
         PropertyBlock wanChaiBlock = new PropertyBlock(wanChai.getName(), blockObservers, effectObservers, wanChai);
         PropertyBlock stanleyBlock = new PropertyBlock(stanley.getName(), blockObservers, effectObservers, stanley);
-        PropertyBlock shekOBlock = new PropertyBlock(shekO.getName(), blockObservers,effectObservers,  shekO);
-        PropertyBlock mongKokBlock = new PropertyBlock(mongKok.getName(), blockObservers,effectObservers,  mongKok);
-        PropertyBlock tsingYiBlock = new PropertyBlock(tsingYi.getName(), blockObservers,effectObservers,  tsingYi);
-        PropertyBlock shatinBlock = new PropertyBlock(shatin.getName(), blockObservers,effectObservers,  shatin);
+        PropertyBlock shekOBlock = new PropertyBlock(shekO.getName(), blockObservers, effectObservers, shekO);
+        PropertyBlock mongKokBlock = new PropertyBlock(mongKok.getName(), blockObservers, effectObservers, mongKok);
+        PropertyBlock tsingYiBlock = new PropertyBlock(tsingYi.getName(), blockObservers, effectObservers, tsingYi);
+        PropertyBlock shatinBlock = new PropertyBlock(shatin.getName(), blockObservers, effectObservers, shatin);
         PropertyBlock tuenMunBlock = new PropertyBlock(tuenMun.getName(), blockObservers, effectObservers, shatin);
-        PropertyBlock taiPoBlock = new PropertyBlock(taiPo.getName(), blockObservers,effectObservers,  taiPo);
-        PropertyBlock saiKungBlock = new PropertyBlock(saiKung.getName(), blockObservers,effectObservers,  saiKung);
-        PropertyBlock yuenLongBlock = new PropertyBlock(yuenLong.getName(), blockObservers,effectObservers,  yuenLong);
-        PropertyBlock taiOBlock = new PropertyBlock(taiO.getName(), blockObservers,effectObservers,  taiO);
+        PropertyBlock taiPoBlock = new PropertyBlock(taiPo.getName(), blockObservers, effectObservers, taiPo);
+        PropertyBlock saiKungBlock = new PropertyBlock(saiKung.getName(), blockObservers, effectObservers, saiKung);
+        PropertyBlock yuenLongBlock = new PropertyBlock(yuenLong.getName(), blockObservers, effectObservers, yuenLong);
+        PropertyBlock taiOBlock = new PropertyBlock(taiO.getName(), blockObservers, effectObservers, taiO);
         ChanceBlock chanceOneBlock = new ChanceBlock("Chance 1", blockObservers, effectObservers, random);
         ChanceBlock chanceTwoBlock = new ChanceBlock("Chance 2", blockObservers, effectObservers, random);
         ChanceBlock chanceThreeBlock = new ChanceBlock("Chance 3", blockObservers, effectObservers, random);

@@ -2,8 +2,8 @@ package com.company.model.command;
 
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
-import com.company.model.component.PlayerLocation;
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
 
 import java.util.ArrayList;
 

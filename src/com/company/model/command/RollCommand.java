@@ -7,6 +7,7 @@ import com.company.model.effect.MoveEffect;
 public class RollCommand implements Command {
     private final MoveEffect moveEffect;
     private final GameSystem gameSystem;
+
     public RollCommand(MoveEffect moveEffect, GameSystem gameSystem) {
         this.moveEffect = moveEffect;
         this.gameSystem = gameSystem;
