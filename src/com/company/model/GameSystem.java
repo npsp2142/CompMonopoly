@@ -5,13 +5,10 @@ import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.Property;
 import com.company.model.component.block.Block;
-import com.company.model.data.GameData;
-import com.company.model.data.GameDataFactory;
 import com.company.model.effect.AbandonPropertyEffect;
 import com.company.model.effect.BankruptEffect;
-import com.company.model.observer.BlockObserver;
-import com.company.model.observer.EffectObserver;
-import com.company.model.observer.PlayerObserver;
+import com.company.model.observer.*;
+import com.company.model.save.GameSave;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -116,9 +113,6 @@ public class GameSystem {
     }
 
     public void endTurn() {
-        for (Player player : players) { // Print money and location change per player in this turn.
-            player.notifySubscribers();
-        }
         onEndTurn();
         currentPlayer = getNextPlayer();
         if (checkEndGame()) { // If game end
@@ -214,13 +208,15 @@ public class GameSystem {
             e.printStackTrace();
         }
 
-        GameDataFactory gameDataFactory = new GameDataFactory(
+        GameSaveFactory gameSaveFactory = new GameSaveFactory(
                 players, properties, playerLocation, round, currentPlayer, random);
+        gameSaveFactory.setBlockVisitObserver((BlockVisitObserver) blockObservers.get(BlockVisitObserver.DEFAULT_NAME));
+        gameSaveFactory.setPathObserver((PathObserver) playerObservers.get(PathObserver.DEFAULT_NAME));
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(gameDataFactory.make());
+            objectOutputStream.writeObject(gameSaveFactory.make());
             GameDisplay.infoMessage("File written - " + DEFAULT_NAME);
             objectOutputStream.close();
         } catch (IOException e) {
@@ -229,20 +225,22 @@ public class GameSystem {
     }
 
     public void loadGame() {
-        GameData gameData = null;
+        GameSave save = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(DEFAULT_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            gameData = (GameData) objectInputStream.readObject();
+            save = (GameSave) objectInputStream.readObject();
             GameDisplay.infoMessage("Game Save File loaded - " + DEFAULT_NAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        if (gameData == null) {
+        if (save == null) {
             return;
         }
-        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, playerLocation, round, currentPlayer, random);
-        gameDataFactory.load(this, gameData);
+        GameSaveFactory gameSaveFactory =
+                new GameSaveFactory(players, properties, playerLocation, round, currentPlayer, random);
+
+        gameSaveFactory.load(this, save);
     }
 
     public void setRound(int round) {
@@ -260,4 +258,9 @@ public class GameSystem {
     public Map<String, PlayerObserver> getPlayerObservers() {
         return playerObservers;
     }
+
+    public Map<String, BlockObserver> getBlockObservers() {
+        return blockObservers;
+    }
+
 }

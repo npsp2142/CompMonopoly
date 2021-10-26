@@ -29,7 +29,7 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
     public void notifyBlockSubscribers(Player player) {
         for (String name : blockObservers.keySet()
         ) {
-            blockObservers.get(name).update(this, player);
+            blockObservers.get(name).update(this);
         }
     }
 

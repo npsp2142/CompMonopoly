@@ -30,7 +30,6 @@ public class PlayerLocation implements Serializable {
             }
             location.replace(player, startBlock);
         }
-
     }
 
     public void moveStep(Player player, int step) {
@@ -79,5 +78,9 @@ public class PlayerLocation implements Serializable {
 
     public Block getStartBlock() {
         return startBlock;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 }

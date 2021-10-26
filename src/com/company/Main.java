@@ -137,11 +137,12 @@ public class Main {
         PathObserver pathObserver = new PathObserver(playerLocation, goBlock);
         playerObservers.put(PathObserver.DEFAULT_NAME, pathObserver);
 
-
         Map<String, BlockObserver> blockObservers = new HashMap<>();
-        //BlockVisitObserver blockVisitObserver = new BlockVisitObserver();
+        BlockVisitObserver blockVisitObserver = new BlockVisitObserver();
+        blockObservers.put(BlockVisitObserver.DEFAULT_NAME, blockVisitObserver);
 
         GameSystem gameSystem = new GameSystem(board, players, properties, effectObservers, blockObservers, playerObservers, playerLocation);
+        gameSystem.setRandom(random);
         CommandFactory factory = new CommandFactory(gameSystem);
         new GameController(inputStream);
         new GameDisplay(outputStream, gameSystem);

@@ -1,15 +1,15 @@
-package com.company.model.data;
+package com.company.model.save;
 
 import com.company.model.component.Player;
 
 import java.io.Serializable;
 
-public class PlayerDatum implements Serializable {
+public class PlayerSave implements Serializable {
     private final String name;
     private final Player.Status status;
     private final Integer amount;
 
-    public PlayerDatum(String name, Player.Status status, int amount) {
+    public PlayerSave(String name, Player.Status status, int amount) {
         this.name = name;
         this.status = status;
         this.amount = amount;

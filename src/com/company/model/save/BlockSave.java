@@ -1,11 +1,11 @@
-package com.company.model.data;
+package com.company.model.save;
 
 import java.io.Serializable;
 
-public class BlockDatum implements Serializable {
+public class BlockSave implements Serializable {
     private final String name;
 
-    public BlockDatum(String name) {
+    public BlockSave(String name) {
         this.name = name;
     }
 

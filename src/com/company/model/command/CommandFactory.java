@@ -5,6 +5,7 @@ import com.company.model.GameSystem;
 import com.company.model.effect.LoseMoneyEffect;
 import com.company.model.effect.MoveEffect;
 import com.company.model.effect.TeleportEffect;
+import com.company.model.observer.BlockVisitObserver;
 import com.company.model.observer.PathObserver;
 
 import java.util.ArrayList;
@@ -62,11 +63,14 @@ public class CommandFactory {
                 return new GiveNoResponseCommand(gameSystem.getCurrentPlayer());
             case "help":
                 return new HelpCommand();
-            case "info":
+            case "view":
                 if (tokens.size() != 2) {
                     return new EmptyCommand();
                 }
                 switch (tokens.get(1).toLowerCase()) {
+                    case "-vc": // visit count
+                        return new ViewBlockVisitCountCommand((BlockVisitObserver)
+                                gameSystem.getBlockObservers().get(BlockVisitObserver.DEFAULT_NAME));
                     case "-path":
                         return new ViewPathCommand(
                                 (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME));

@@ -26,16 +26,15 @@ public class PathObserver implements PlayerObserver {
         for (Player player : paths.keySet()) {
             GameDisplay.titleBar(player.getName());
             List<Block> path = paths.get(player);
-            for (Block block : path) {
-                GameDisplay.infoMessage(
-                        String.format("Round %d: %s", path.indexOf(block), block.getColoredName()));
+            for (int i = 0; i < path.size(); i++) {
+                GameDisplay.infoMessage(String.format("Round %d: %s", i, path.get(i).getColoredName()));
             }
         }
     }
 
     @Override
     public void update(Player player) {
-        Block block = player.getCurrentLocation(playerLocation);
+        Block currentLocation = player.getCurrentLocation(playerLocation);
         if (!paths.containsKey(player)) {
             GameDisplay.infoMessage(String.format("%s is at %s", player, start.getColoredName()));
             List<Block> path = new ArrayList<>();
@@ -44,16 +43,18 @@ public class PathObserver implements PlayerObserver {
             return;
         }
         List<Block> path = paths.get(player);
-        if (path.get(path.size() - 1).equals(block)) {
-            GameDisplay.infoMessage(String.format("%s stay at %s", player, block.getColoredName()));
-            path.add(block);
+        if (path.get(path.size() - 1).equals(currentLocation)) {
+            GameDisplay.infoMessage(String.format("%s stay at %s", player, currentLocation.getColoredName()));
+            path.add(currentLocation);
             return;
         }
         GameDisplay.infoMessage(
                 String.format("%s move from %s to %s", player, path.get(path.size() - 1).getColoredName(),
-                        block.getColoredName()));
-        path.add(block);
+                        currentLocation.getColoredName()));
+        path.add(currentLocation);
     }
 
-
+    public Map<Player, List<Block>> getPaths() {
+        return paths;
+    }
 }
