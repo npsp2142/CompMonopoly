@@ -41,7 +41,7 @@ public class PlayerLocation implements Serializable {
             onEnterEffect.onEnter();
         }
 
-        currentBlock.notifyBlockSubscribers(player);
+        currentBlock.notifyBlockSubscribers();
         location.replace(player, location.get(player), currentBlock);
         OnLandEffect effect = currentBlock.createOnLandEffect(player);
         effect.onLand();
@@ -52,7 +52,7 @@ public class PlayerLocation implements Serializable {
     }
 
     public void moveTo(Player player, Block block, boolean isTrigger) {
-        block.notifyBlockSubscribers(player);
+        block.notifyBlockSubscribers();
         if (isTrigger) {
             block.createOnLandEffect(player).onLand();
         }
@@ -68,7 +68,7 @@ public class PlayerLocation implements Serializable {
     }
 
     public void moveTo(Player player, Block block) {
-        block.notifyBlockSubscribers(player);
+        block.notifyBlockSubscribers();
         location.replace(player, block);
     }
 

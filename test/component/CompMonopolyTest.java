@@ -19,7 +19,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CompMonopolyTest {
     Board board;
@@ -49,7 +48,7 @@ public class CompMonopolyTest {
         GameSystem gameSystem = new GameSystem(board,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                new HashMap<>(), new HashMap<>(), new HashMap<>(), new PlayerLocation(board, new ArrayList<>(), startBlock)
+                new PlayerLocation(board, new ArrayList<>(), startBlock)
         );
         CompMonopolyApplication compMonopolyApplication = new CompMonopolyApplication(new CommandFactory(gameSystem), CompMonopolyApplication.Status.MENU);
         assert (compMonopolyApplication.getCommand() instanceof StartCommand);

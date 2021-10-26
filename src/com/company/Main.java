@@ -129,19 +129,24 @@ public class Main {
         board.addPath(chanceThreeBlock, taiOBlock);
         board.addPath(taiOBlock, goBlock);
 
+
+        GameSystem gameSystem = new GameSystem(board, players, properties, playerLocation);
+
         Map<String, EffectObserver> effectObservers = new HashMap<>();
         effectObservers.put(EffectDisplay.DEFAULT_NAME, new EffectDisplay(System.out));
+        gameSystem.setEffectObservers(effectObservers);
 
         MoneyObserver moneyObserver = new MoneyObserver(new HashMap<>());
         playerObservers.put(MoneyObserver.DEFAULT_NAME, moneyObserver);
         PathObserver pathObserver = new PathObserver(playerLocation, goBlock);
         playerObservers.put(PathObserver.DEFAULT_NAME, pathObserver);
+        gameSystem.setPlayerObservers(playerObservers);
 
         Map<String, BlockObserver> blockObservers = new HashMap<>();
         BlockVisitObserver blockVisitObserver = new BlockVisitObserver();
         blockObservers.put(BlockVisitObserver.DEFAULT_NAME, blockVisitObserver);
+        gameSystem.setBlockObservers(blockObservers);
 
-        GameSystem gameSystem = new GameSystem(board, players, properties, effectObservers, blockObservers, playerObservers, playerLocation);
         gameSystem.setRandom(random);
         CommandFactory factory = new CommandFactory(gameSystem);
         new GameController(inputStream);

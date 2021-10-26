@@ -1,7 +1,6 @@
 package com.company.model.component.block;
 
 import com.company.model.ANSI;
-import com.company.model.component.Player;
 import com.company.model.effect.Describable;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
@@ -26,7 +25,7 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
         effectObservers = new HashMap<>();
     }
 
-    public void notifyBlockSubscribers(Player player) {
+    public void notifyBlockSubscribers() {
         for (String name : blockObservers.keySet()
         ) {
             blockObservers.get(name).update(this);

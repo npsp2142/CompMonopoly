@@ -56,10 +56,12 @@ public class GameController {
         return tokens;
     }
 
-    public ArrayList<String> getArguments(String string) {
-        ArrayList<String> tokens = new ArrayList<>();
-        String[] token = string.split("\\s");
-        Collections.addAll(tokens, token);
-        return tokens;
-    }
+// --Commented out by Inspection START (26/10/2021 23:15):
+//    public ArrayList<String> getArguments(String string) {
+//        ArrayList<String> tokens = new ArrayList<>();
+//        String[] token = string.split("\\s");
+//        Collections.addAll(tokens, token);
+//        return tokens;
+//    }
+// --Commented out by Inspection STOP (26/10/2021 23:15)
 }

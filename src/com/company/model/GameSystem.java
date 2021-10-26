@@ -23,26 +23,22 @@ public class GameSystem {
     private final Board board;
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
-    private final Map<String, EffectObserver> effectObservers;
-    private final Map<String, BlockObserver> blockObservers;
-    private final Map<String, PlayerObserver> playerObservers;
+
     private final PlayerLocation playerLocation;
     private Player currentPlayer;
     private int round;
     private Random random;
+    private Map<String, EffectObserver> effectObservers;
+    private Map<String, BlockObserver> blockObservers;
+    private Map<String, PlayerObserver> playerObservers;
 
     public GameSystem(Board board,
                       ArrayList<Player> players,
                       ArrayList<Property> properties,
-                      Map<String, EffectObserver> effectObservers,
-                      Map<String, BlockObserver> blockObservers,
-                      Map<String, PlayerObserver> playerObservers, PlayerLocation playerLocation) {
+                      PlayerLocation playerLocation) {
         this.board = board;
         this.players = players;
         this.properties = properties;
-        this.effectObservers = effectObservers;
-        this.blockObservers = blockObservers;
-        this.playerObservers = playerObservers;
         this.playerLocation = playerLocation;
         round = 0;
     }
@@ -251,6 +247,10 @@ public class GameSystem {
         return effectObservers;
     }
 
+    public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
+        this.effectObservers = effectObservers;
+    }
+
     public void setRandom(Random random) {
         this.random = random;
     }
@@ -259,8 +259,15 @@ public class GameSystem {
         return playerObservers;
     }
 
+    public void setPlayerObservers(Map<String, PlayerObserver> playerObservers) {
+        this.playerObservers = playerObservers;
+    }
+
     public Map<String, BlockObserver> getBlockObservers() {
         return blockObservers;
     }
 
+    public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
+        this.blockObservers = blockObservers;
+    }
 }
