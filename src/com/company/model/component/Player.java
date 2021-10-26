@@ -5,7 +5,7 @@ import com.company.model.component.block.Block;
 import com.company.model.observer.PlayerObserver;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Player {
@@ -14,19 +14,16 @@ public class Player {
     public static boolean NEED_PROMPT = false;
 
     private final String name;
-    private final Random random;
-    private final List<PlayerObserver> playerObservers;
 
+    private Random random;
+    private Map<String, PlayerObserver> playerObservers;
     private Status status;
     private int amount;
     private Response response;
 
-    public Player(String name, Random random, List<PlayerObserver> playerObservers) {
+    public Player(String name) {
         this.name = name;
-        this.random = random;
-        this.playerObservers = playerObservers;
     }
-
 
     @Override
     public String toString() {
@@ -61,12 +58,6 @@ public class Player {
         return name;
     }
 
-// --Commented out by Inspection START (24/10/2021 17:19):
-//    public void addSubscriber(PlayerObserver playerObserver){
-//        playerObservers.add(playerObserver);
-//    }
-// --Commented out by Inspection STOP (24/10/2021 17:19)
-
     public Block getCurrentLocation(PlayerLocation playerLocation) {
         return playerLocation.getCurrentLocation(this);
     }
@@ -81,13 +72,15 @@ public class Player {
     }
 
     public void notifySubscribers() {
-        for (PlayerObserver playerObserver : playerObservers
-        ) {
-            playerObserver.update(this);
+        if (playerObservers == null) {
+            return;
+        }
+        for (String name : playerObservers.keySet()) {
+            playerObservers.get(name).update(this);
         }
     }
 
-    public void reload() {
+    public void reset() {
         status = Status.HEALTHY;
         amount = DEFAULT_AMOUNT;
     }
@@ -107,6 +100,15 @@ public class Player {
     public void setResponse(Response response) {
         this.response = response;
     }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public void setPlayerObservers(Map<String, PlayerObserver> playerObservers) {
+        this.playerObservers = playerObservers;
+    }
+
 
     /**
      *

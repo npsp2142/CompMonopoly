@@ -2,11 +2,7 @@ package com.company.model.component.block;
 
 import com.company.model.component.Player;
 import com.company.model.effect.*;
-import com.company.model.observer.BlockObserver;
-import com.company.model.observer.EffectObserver;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class ChanceBlock extends Block {
@@ -17,25 +13,35 @@ public class ChanceBlock extends Block {
     private final Random random;
 
     public ChanceBlock(String name,
-                       ArrayList<BlockObserver> blockObservers,
-                       List<EffectObserver> effectObservers, Random random) {
-        super(name, blockObservers, effectObservers);
+                       Random random) {
+        super(name);
         this.random = random;
     }
 
     public OnLandEffect createOnLandEffect(Player player) {
         boolean isAdd = random.nextFloat() < PROBABILITY_ADD;
         if (isAdd) {
-            return new GainMoneyEffect(DEFAULT_EFFECT_NAME, getEffectObservers(), player, (random.nextInt() % MAX_ADD + 1) / 10 * 10);
+            GainMoneyEffect gainMoneyEffect = new GainMoneyEffect(
+                    DEFAULT_EFFECT_NAME,
+                    player,
+                    (random.nextInt() % MAX_ADD + 1) / 10 * 10
+            );
+            gainMoneyEffect.setEffectObservers(getEffectObservers());
+            return gainMoneyEffect;
         } else {
-            return new LoseMoneyEffect(DEFAULT_EFFECT_NAME, getEffectObservers(), player, (random.nextInt() % MAX_REDUCE + 1) / 10 * 10);
+            LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect(
+                    DEFAULT_EFFECT_NAME,
+                    player,
+                    (random.nextInt() % MAX_REDUCE + 1) / 10 * 10
+            );
+            loseMoneyEffect.setEffectObservers(getEffectObservers());
+            return loseMoneyEffect;
         }
-
     }
 
     @Override
     public OnEnterEffect createOnEnterEffect(Player player) {
-        return new NoEffect(getEffectObservers());
+        return new NoEffect();
     }
 
     @Override

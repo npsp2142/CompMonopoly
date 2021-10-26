@@ -1,11 +1,11 @@
 package com.company.model.command;
 
 import com.company.model.CompMonopolyApplication;
-import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 import com.company.model.effect.LoseMoneyEffect;
 import com.company.model.effect.MoveEffect;
 import com.company.model.effect.TeleportEffect;
+import com.company.model.observer.PathObserver;
 
 import java.util.ArrayList;
 
@@ -41,14 +41,21 @@ public class CommandFactory {
                 return new QuitCommand(CompMonopolyApplication.instance);
             case "location":
             case "loc":
-                return new ViewLocationCommand(gameSystem.getLocation(), gameSystem.getPlayers());
+                PathObserver blockVisitObserver =
+                        (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME);
+                if (blockVisitObserver == null) {
+                    return null;
+                }
+                return new ViewPathCommand(blockVisitObserver);
             case "roll":
             case "r":
-                return new RollCommand(
-                        new MoveEffect("Roll To Move", gameSystem.getEffectObservers(),
+                MoveEffect moveEffect =
+                        new MoveEffect("Roll To Move",
                                 gameSystem.getCurrentPlayer(),
                                 gameSystem.getCurrentPlayer().roll(2),
-                                gameSystem.getLocation()), gameSystem);
+                                gameSystem.getLocation());
+                moveEffect.setEffectObservers(gameSystem.getEffectObservers());
+                return new RollCommand(moveEffect, gameSystem);
             case "y":
                 return new GiveYesRespondCommand(gameSystem.getCurrentPlayer());
             case "n":
@@ -57,13 +64,12 @@ public class CommandFactory {
                 return new HelpCommand();
             case "info":
                 if (tokens.size() != 2) {
-                    GameDisplay.usageMessage("info [-location/-property]");
                     return new EmptyCommand();
                 }
                 switch (tokens.get(1).toLowerCase()) {
-                    case "-location":
-                    case "-l":
-                        return new ViewLocationCommand(gameSystem.getLocation(), gameSystem.getPlayers());
+                    case "-path":
+                        return new ViewPathCommand(
+                                (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME));
                     case "-property":
                     case "-p":
                         return new ViewPropertyCommand(gameSystem.getCurrentPlayer(), gameSystem.getBoard(),
@@ -83,26 +89,29 @@ public class CommandFactory {
             case "cheat":
                 switch (tokens.get(1).toLowerCase()) {
                     case "-lm":
-                        return new ReduceMoneyCommand(
-                                new LoseMoneyEffect("Cheat",
-                                        gameSystem.getEffectObservers(), gameSystem.getCurrentPlayer(),
-                                        Integer.parseInt(tokens.get(2))));
+                        LoseMoneyEffect loseMoneyEffect =
+                                new LoseMoneyEffect(
+                                        "Cheat",
+                                        gameSystem.getCurrentPlayer(),
+                                        Integer.parseInt(tokens.get(2))
+                                );
+                        loseMoneyEffect.setEffectObservers(gameSystem.getEffectObservers());
+                        return new ReduceMoneyCommand(loseMoneyEffect);
                     case "-t":
                         StringBuilder stringBuilder = new StringBuilder();
                         for (String token : tokens.subList(2, tokens.size())) {
                             stringBuilder.append(token).append(" ");
                         }
                         stringBuilder.setLength(stringBuilder.length() - 1);
-                        return new TeleportCommand(
-                                new TeleportEffect(
-                                        "Cheat",
-                                        gameSystem.getEffectObservers(),
-                                        gameSystem.getCurrentPlayer(),
-                                        gameSystem.getLocation(),
-                                        gameSystem.getBoard().findBlock(stringBuilder.toString()),
-                                        true
-                                )
+                        TeleportEffect teleportEffect = new TeleportEffect(
+                                "Cheat",
+                                gameSystem.getCurrentPlayer(),
+                                gameSystem.getLocation(),
+                                gameSystem.getBoard().findBlock(stringBuilder.toString()),
+                                true
                         );
+                        teleportEffect.setEffectObservers(gameSystem.getEffectObservers());
+                        return new TeleportCommand(teleportEffect);
                 }
 
         }

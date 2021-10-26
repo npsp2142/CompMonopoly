@@ -49,10 +49,12 @@ public class CompMonopolyApplication {
         return commandFactory.make(tokens);
     }
 
-    public Command getCommand(String string) {
-        ArrayList<String> tokens = GameController.instance.getArguments(string);
-        return commandFactory.make(tokens);
-    }
+// --Commented out by Inspection START (26/10/2021 17:53):
+//    public Command getCommand(String string) {
+//        ArrayList<String> tokens = GameController.instance.getArguments(string);
+//        return commandFactory.make(tokens);
+//    }
+// --Commented out by Inspection STOP (26/10/2021 17:53)
 
     public void closeApplication() {
         isExitApp = true;

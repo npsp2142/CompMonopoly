@@ -25,7 +25,6 @@ public class Board {
         Block destinationBlock = findBlock(destination);
         if (destinationBlock == null)
             return;
-
         addPath(startBlock, destinationBlock);
     }
 
@@ -52,4 +51,7 @@ public class Board {
         return getNextBlock(block);
     }
 
+    public ArrayList<Block> getBlocks() {
+        return blocks;
+    }
 }

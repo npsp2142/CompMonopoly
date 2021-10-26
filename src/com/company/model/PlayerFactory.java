@@ -1,24 +1,19 @@
 package com.company.model;
 
 import com.company.model.component.Player;
-import com.company.model.observer.PlayerObserver;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class PlayerFactory {
     private final Random random;
-    private final List<PlayerObserver> playerObservers;
     private final Player.Status status;
     private final int amount;
 
     public PlayerFactory(Random random,
-                         List<PlayerObserver> playerObservers,
                          Player.Status status,
                          int amount) {
         this.random = random;
-        this.playerObservers = playerObservers;
         this.status = status;
         this.amount = amount;
     }
@@ -32,16 +27,18 @@ public class PlayerFactory {
     }
 
     public Player make(String name) {
-        Player player = new Player(name, random, playerObservers);
+        Player player = new Player(name);
         player.setAmount(amount);
         player.setStatus(status);
+        player.setRandom(random);
         return player;
     }
 
     public Player make(String name, Player.Status status, int amount) {
-        Player player = new Player(name, random, playerObservers);
+        Player player = new Player(name);
         player.setAmount(amount);
         player.setStatus(status);
+        player.setRandom(random);
         return player;
     }
 }

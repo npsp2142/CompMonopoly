@@ -1,15 +1,11 @@
 package com.company.model.effect;
 
-import com.company.model.observer.EffectObserver;
-
-import java.util.List;
-
 public class PayRentEffect extends Effect implements OnLandEffect {
     final GainMoneyEffect gainMoneyEffect;
     final LoseMoneyEffect loseMoneyEffect;
 
-    public PayRentEffect(String name, List<EffectObserver> effectObservers, GainMoneyEffect gainMoneyEffect, LoseMoneyEffect loseMoneyEffect) {
-        super(name, effectObservers);
+    public PayRentEffect(String name, GainMoneyEffect gainMoneyEffect, LoseMoneyEffect loseMoneyEffect) {
+        super(name);
         this.gainMoneyEffect = gainMoneyEffect;
         this.loseMoneyEffect = loseMoneyEffect;
     }

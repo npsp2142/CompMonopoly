@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Main {
@@ -22,11 +23,10 @@ public class Main {
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");
         names.add("Player B");
-        ArrayList<PlayerObserver> playerObservers = new ArrayList<>();
-        PlayerFactory playerFactory = new PlayerFactory(random, playerObservers, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
+        names.add("Player C");
+        Map<String, PlayerObserver> playerObservers = new HashMap<>();
+        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
         ArrayList<Player> players = playerFactory.make(names);
-
-        ArrayList<BlockObserver> blockObservers = new ArrayList<>();
 
         // Add all property
         Property central = new Property("Central", 800, 90);
@@ -56,28 +56,25 @@ public class Main {
         properties.add(yuenLong);
         properties.add(taiO);
 
-        ArrayList<EffectObserver> effectObservers = new ArrayList<>();
-        effectObservers.add(new EffectDisplay(System.out));
-
-        GoBlock goBlock = new GoBlock("Go", blockObservers, effectObservers);
-        PropertyBlock centralBlock = new PropertyBlock(central.getName(), blockObservers, effectObservers, central);
-        PropertyBlock wanChaiBlock = new PropertyBlock(wanChai.getName(), blockObservers, effectObservers, wanChai);
-        PropertyBlock stanleyBlock = new PropertyBlock(stanley.getName(), blockObservers, effectObservers, stanley);
-        PropertyBlock shekOBlock = new PropertyBlock(shekO.getName(), blockObservers, effectObservers, shekO);
-        PropertyBlock mongKokBlock = new PropertyBlock(mongKok.getName(), blockObservers, effectObservers, mongKok);
-        PropertyBlock tsingYiBlock = new PropertyBlock(tsingYi.getName(), blockObservers, effectObservers, tsingYi);
-        PropertyBlock shatinBlock = new PropertyBlock(shatin.getName(), blockObservers, effectObservers, shatin);
-        PropertyBlock tuenMunBlock = new PropertyBlock(tuenMun.getName(), blockObservers, effectObservers, shatin);
-        PropertyBlock taiPoBlock = new PropertyBlock(taiPo.getName(), blockObservers, effectObservers, taiPo);
-        PropertyBlock saiKungBlock = new PropertyBlock(saiKung.getName(), blockObservers, effectObservers, saiKung);
-        PropertyBlock yuenLongBlock = new PropertyBlock(yuenLong.getName(), blockObservers, effectObservers, yuenLong);
-        PropertyBlock taiOBlock = new PropertyBlock(taiO.getName(), blockObservers, effectObservers, taiO);
-        ChanceBlock chanceOneBlock = new ChanceBlock("Chance 1", blockObservers, effectObservers, random);
-        ChanceBlock chanceTwoBlock = new ChanceBlock("Chance 2", blockObservers, effectObservers, random);
-        ChanceBlock chanceThreeBlock = new ChanceBlock("Chance 3", blockObservers, effectObservers, random);
-        NoEffectBlock freeParkingBlock = new NoEffectBlock("Free Parking", blockObservers, effectObservers);
-        NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting", blockObservers, effectObservers);
-        IncomeTaxBlock incomeTaxBlock = new IncomeTaxBlock("Income Tax", blockObservers, effectObservers);
+        GoBlock goBlock = new GoBlock("Go");
+        PropertyBlock centralBlock = new PropertyBlock(central.getName(), central);
+        PropertyBlock wanChaiBlock = new PropertyBlock(wanChai.getName(), wanChai);
+        PropertyBlock stanleyBlock = new PropertyBlock(stanley.getName(), stanley);
+        PropertyBlock shekOBlock = new PropertyBlock(shekO.getName(), shekO);
+        PropertyBlock mongKokBlock = new PropertyBlock(mongKok.getName(), mongKok);
+        PropertyBlock tsingYiBlock = new PropertyBlock(tsingYi.getName(), tsingYi);
+        PropertyBlock shatinBlock = new PropertyBlock(shatin.getName(), shatin);
+        PropertyBlock tuenMunBlock = new PropertyBlock(tuenMun.getName(), shatin);
+        PropertyBlock taiPoBlock = new PropertyBlock(taiPo.getName(), taiPo);
+        PropertyBlock saiKungBlock = new PropertyBlock(saiKung.getName(), saiKung);
+        PropertyBlock yuenLongBlock = new PropertyBlock(yuenLong.getName(), yuenLong);
+        PropertyBlock taiOBlock = new PropertyBlock(taiO.getName(), taiO);
+        ChanceBlock chanceOneBlock = new ChanceBlock("Chance 1", random);
+        ChanceBlock chanceTwoBlock = new ChanceBlock("Chance 2", random);
+        ChanceBlock chanceThreeBlock = new ChanceBlock("Chance 3", random);
+        NoEffectBlock freeParkingBlock = new NoEffectBlock("Free Parking");
+        NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting");
+        IncomeTaxBlock incomeTaxBlock = new IncomeTaxBlock("Income Tax");
 
         Board board = new Board();
         PlayerLocation playerLocation = new PlayerLocation(board, players, goBlock);
@@ -85,12 +82,10 @@ public class Main {
         HashMap<Player, Integer> roundCounter = new HashMap<>();
         roundCounter.put(players.get(0), 0);
         roundCounter.put(players.get(1), 0);
-        InJailBlock inJailBlock = new InJailBlock("In Jail", blockObservers, effectObservers, playerLocation, roundCounter);
-
-        JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
-                blockObservers, effectObservers, justVisitingBlock, inJailBlock);
-
-        GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", blockObservers, effectObservers, playerLocation, justVisitingOrInJailBlock);
+        roundCounter.put(players.get(2), 0);
+        InJailBlock inJailBlock = new InJailBlock("In Jail", playerLocation, roundCounter);
+        JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, inJailBlock);
+        GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", playerLocation, justVisitingOrInJailBlock);
 
         board.addBlock(goBlock);
         board.addBlock(centralBlock);
@@ -113,7 +108,6 @@ public class Main {
         board.addBlock(justVisitingOrInJailBlock);
         board.addBlock(goToJailBlock);
 
-
         board.addPath(goBlock, centralBlock);
         board.addPath(centralBlock, wanChaiBlock);
         board.addPath(wanChaiBlock, incomeTaxBlock);
@@ -135,12 +129,19 @@ public class Main {
         board.addPath(chanceThreeBlock, taiOBlock);
         board.addPath(taiOBlock, goBlock);
 
-        LocationObserver locationObserver = new LocationObserver(new HashMap<>());
-        MoneyObserver moneyObserver = new MoneyObserver(new HashMap<>());
-        blockObservers.add(locationObserver);
-        playerObservers.add(moneyObserver);
+        Map<String, EffectObserver> effectObservers = new HashMap<>();
+        effectObservers.put(EffectDisplay.DEFAULT_NAME, new EffectDisplay(System.out));
 
-        GameSystem gameSystem = new GameSystem(board, players, properties, effectObservers, playerLocation);
+        MoneyObserver moneyObserver = new MoneyObserver(new HashMap<>());
+        playerObservers.put(MoneyObserver.DEFAULT_NAME, moneyObserver);
+        PathObserver pathObserver = new PathObserver(playerLocation, goBlock);
+        playerObservers.put(PathObserver.DEFAULT_NAME, pathObserver);
+
+
+        Map<String, BlockObserver> blockObservers = new HashMap<>();
+        //BlockVisitObserver blockVisitObserver = new BlockVisitObserver();
+
+        GameSystem gameSystem = new GameSystem(board, players, properties, effectObservers, blockObservers, playerObservers, playerLocation);
         CommandFactory factory = new CommandFactory(gameSystem);
         new GameController(inputStream);
         new GameDisplay(outputStream, gameSystem);

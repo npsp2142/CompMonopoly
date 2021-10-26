@@ -1,36 +1,29 @@
 package com.company.model.effect;
 
 import com.company.model.component.Player;
-import com.company.model.component.Property;
-import com.company.model.observer.EffectObserver;
 
 import java.util.List;
 
 public class BankruptEffect extends Effect implements OnLandEffect {
     private final Player player;
-    private final List<Property> properties;
+    private final List<AbandonPropertyEffect> abandonPropertyEffects;
 
-    public BankruptEffect(String name, List<EffectObserver> effectObservers, Player player, List<Property> properties) {
-        super(name, effectObservers);
+    public BankruptEffect(String name, Player player, List<AbandonPropertyEffect> abandonPropertyEffects) {
+        super(name);
         this.player = player;
-        this.properties = properties;
+        this.abandonPropertyEffects = abandonPropertyEffects;
     }
 
     @Override
     public void onLand() {
-        player.setBankruptStatus();
-        for (Property property : properties) {
-            if (property.getOwner() == null) {
-                continue;
-            }
-            if (property.getOwner().equals(player)) {
-                property.setOwner(null);
-            }
-        }
         notifyEffectSubscribers();
+        player.setBankruptStatus();
+        for (AbandonPropertyEffect abandonPropertyEffect : abandonPropertyEffects) {
+            abandonPropertyEffect.onLand();
+        }
     }
 
     public String getDescription() {
-        return String.format("%s has no money in Turn End. Sell property to back healthy.", player);
+        return String.format("%s has no money in Turn End.", player);
     }
 }

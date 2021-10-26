@@ -18,4 +18,5 @@ public class PropertyDatum implements Serializable {
     public PlayerDatum getOwner() {
         return owner;
     }
+
 }

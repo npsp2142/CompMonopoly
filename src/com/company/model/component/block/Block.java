@@ -6,7 +6,8 @@ import com.company.model.effect.Describable;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,34 +17,28 @@ import java.util.List;
  */
 public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
     private final String name;
-    private final List<BlockObserver> blockObservers;
-    private final List<EffectObserver> effectObservers;
+    private Map<String, BlockObserver> blockObservers;
+    private Map<String, EffectObserver> effectObservers;
 
-    public Block(String name, List<BlockObserver> blockObservers, List<EffectObserver> effectObservers) {
+    public Block(String name) {
         this.name = name;
-        this.blockObservers = blockObservers;
-        this.effectObservers = effectObservers;
+        blockObservers = new HashMap<>();
+        effectObservers = new HashMap<>();
     }
 
-// --Commented out by Inspection START (24/10/2021 17:13):
-//    public void addSubscriber(BlockObserver blockObserver){
-//        blockObservers.add(blockObserver);
-//    }
-// --Commented out by Inspection STOP (24/10/2021 17:13)
-
     public void notifyBlockSubscribers(Player player) {
-        for (BlockObserver blockObserver : blockObservers
+        for (String name : blockObservers.keySet()
         ) {
-            blockObserver.update(this, player);
+            blockObservers.get(name).update(this, player);
         }
     }
 
-    public String getName() {
-        return name;
+    public Map<String, EffectObserver> getEffectObservers() {
+        return effectObservers;
     }
 
-    public List<EffectObserver> getEffectObservers() {
-        return effectObservers;
+    public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
+        this.effectObservers = effectObservers;
     }
 
     @Override
@@ -51,7 +46,20 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
         return name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getColoredName() {
         return ANSI.ANSI_PURPLE + name + ANSI.ANSI_RESET;
     }
+
+    public Map<String, BlockObserver> getBlockObservers() {
+        return blockObservers;
+    }
+
+    public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
+        this.blockObservers = blockObservers;
+    }
+
 }

@@ -26,4 +26,5 @@ public class PlayerDatum implements Serializable {
     public Integer getAmount() {
         return amount;
     }
+
 }

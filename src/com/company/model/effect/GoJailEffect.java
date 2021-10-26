@@ -1,15 +1,11 @@
 package com.company.model.effect;
 
-import com.company.model.observer.EffectObserver;
-
-import java.util.List;
-
 public class GoJailEffect extends Effect implements OnLandEffect {
     final SetGroundedEffect setGroundedEffect;
     final TeleportEffect teleportEffect;
 
-    public GoJailEffect(String name, List<EffectObserver> effectObservers, SetGroundedEffect setGroundedEffect, TeleportEffect teleportEffect) {
-        super(name, effectObservers);
+    public GoJailEffect(String name, SetGroundedEffect setGroundedEffect, TeleportEffect teleportEffect) {
+        super(name);
         this.setGroundedEffect = setGroundedEffect;
         this.teleportEffect = teleportEffect;
     }

@@ -12,7 +12,7 @@ public class Property {
         this.rent = rent;
     }
 
-    public void reload() {
+    public void reset() {
         owner = null;
     }
 

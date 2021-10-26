@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class EffectDisplay implements EffectObserver {
+    public static final String DEFAULT_NAME = "Effect Display";
     private static EffectDisplay instance;
     private final PrintStream printStream;
 

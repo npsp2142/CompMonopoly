@@ -5,7 +5,6 @@ import com.company.model.PlayerFactory;
 import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.Property;
-import com.company.model.observer.PlayerObserver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,13 +17,22 @@ public class GameDataFactory {
     private final PlayerLocation playerLocation;
     private final Integer round;
     private final Player currentPlayer;
+    private final Random random;
 
-    public GameDataFactory(ArrayList<Player> players, ArrayList<Property> properties, PlayerLocation playerLocation, Integer round, Player currentPlayer) {
+    public GameDataFactory(
+            ArrayList<Player> players,
+            ArrayList<Property> properties,
+            PlayerLocation playerLocation,
+            Integer round,
+            Player currentPlayer,
+            Random random
+    ) {
         this.players = players;
         this.properties = properties;
         this.playerLocation = playerLocation;
         this.round = round;
         this.currentPlayer = currentPlayer;
+        this.random = random;
     }
 
     public GameData make() {
@@ -51,7 +59,7 @@ public class GameDataFactory {
             BlockDatum blockDatum = new BlockDatum(playerLocation.getCurrentLocation(player).getName());
             playerDatumBlockDatumHashMap.put(playerDatumHashMap.get(player), blockDatum);
         }
-        return new GameData(playerData, propertyData, locationDatum, round, playerDatumHashMap.get(currentPlayer));
+        return new GameData(playerData, propertyData, locationDatum, round, playerDatumHashMap.get(currentPlayer), random);
     }
 
     public void load(GameSystem gameSystem, GameData gameData) {
@@ -62,24 +70,22 @@ public class GameDataFactory {
         // TODO: Add random in Game Data
         HashMap<PlayerDatum, Player> map = new HashMap<>();
         Random random = new Random(System.currentTimeMillis());
-        ArrayList<PlayerObserver> observers = new ArrayList<>();
         players.clear();
 
-        PlayerFactory playerFactory = new PlayerFactory(random, observers, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
+        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
 
-        // player
-        for (PlayerDatum playerDatum : playerData) {
+        for (PlayerDatum playerDatum : playerData) {  // Load every player in save file
             Player player = playerFactory.make(playerDatum.getName(), playerDatum.getStatus(), playerDatum.getAmount());
             players.add(player);
             map.put(playerDatum, player);
         }
 
         // properties
-        for (Property property : properties) {
-            property.reload();
+        for (Property property : properties) { // Clear all owner
+            property.reset();
         }
 
-        for (PropertyDatum propertyDatum : propertyData) {
+        for (PropertyDatum propertyDatum : propertyData) { // Load every property in save file
             for (Property property : properties) {
                 if (property.getName().equals(propertyDatum.getName())) {
                     property.setOwner(map.get(propertyDatum.getOwner()));
@@ -88,12 +94,13 @@ public class GameDataFactory {
         }
 
         // location
-        for (PlayerDatum datum : locationDatum.getLocation().keySet()) {
+        for (PlayerDatum datum : locationDatum.getLocation().keySet()) { // Move every player to the destination.
             playerLocation.setStartLocation();
             playerLocation.moveTo(map.get(datum), locationDatum.getLocation().get(datum).getName());
         }
 
         gameSystem.setCurrentPlayer(map.get(gameData.getCurrentPlayer()));
         gameSystem.setRound(gameData.getRound());
+        gameSystem.setRandom(gameData.getRandom());
     }
 }

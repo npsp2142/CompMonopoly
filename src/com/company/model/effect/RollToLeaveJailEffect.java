@@ -1,9 +1,7 @@
 package com.company.model.effect;
 
 import com.company.model.component.Player;
-import com.company.model.observer.EffectObserver;
 
-import java.util.List;
 import java.util.Map;
 
 public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Describable {
@@ -16,13 +14,13 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
     private final CureEffect cureEffect;
     private final PayToLeaveJailEffect payToLeaveJailEffect;
 
-    public RollToLeaveJailEffect(String name, List<EffectObserver> effectObservers,
+    public RollToLeaveJailEffect(String name,
                                  Player player,
                                  int[] dices,
                                  Map<Player, Integer> roundCounter, MoveEffect moveEffect,
                                  CureEffect cureEffect,
                                  PayToLeaveJailEffect payToLeaveJailEffect) {
-        super(name, effectObservers);
+        super(name);
         this.player = player;
         this.dices = dices;
         this.roundCounter = roundCounter;

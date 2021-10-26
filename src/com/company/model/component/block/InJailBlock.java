@@ -3,11 +3,7 @@ package com.company.model.component.block;
 import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.effect.*;
-import com.company.model.observer.BlockObserver;
-import com.company.model.observer.EffectObserver;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class InJailBlock extends Block {
@@ -16,11 +12,9 @@ public class InJailBlock extends Block {
     private final Map<Player, Integer> roundCounter;
 
     public InJailBlock(String name,
-                       ArrayList<BlockObserver> blockObservers,
-                       List<EffectObserver> effectObservers,
                        PlayerLocation playerLocation,
                        Map<Player, Integer> roundCounter) {
-        super(name, blockObservers, effectObservers);
+        super(name);
         this.playerLocation = playerLocation;
         this.roundCounter = roundCounter;
     }
@@ -32,37 +26,49 @@ public class InJailBlock extends Block {
                 FINE));
 
         if (response == Player.Response.YES) {
-            return new PayToLeaveJailEffect(
-                    String.format("Pay To Leave %d", FINE), getEffectObservers(),
+            LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay Fine", player, FINE);
+            CureEffect cureEffect = new CureEffect("You are free", player);
+            MoveEffect moveEffect = new MoveEffect("Roll To Move", player, player.roll(2), playerLocation);
+
+            loseMoneyEffect.setEffectObservers(getEffectObservers());
+            cureEffect.setEffectObservers(getEffectObservers());
+            moveEffect.setEffectObservers(getEffectObservers());
+
+            PayToLeaveJailEffect payToLeaveJailEffect = new PayToLeaveJailEffect(
+                    String.format("Pay To Leave %d", FINE),
                     player,
-                    new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
-                    new CureEffect("You are free", getEffectObservers(), player),
-                    new MoveEffect("Roll To Move", getEffectObservers(), player, player.roll(2), playerLocation),
+                    loseMoneyEffect,
+                    cureEffect,
+                    moveEffect,
                     roundCounter
             );
+            payToLeaveJailEffect.setEffectObservers(getEffectObservers());
+
+            return payToLeaveJailEffect;
         }
         int[] dices = player.roll(2);
-        return new RollToLeaveJailEffect(
-                "Roll To Leave", getEffectObservers(),
-                player,
-                dices,
-                roundCounter,
-                new MoveEffect("You are free", getEffectObservers(), player, player.roll(2), playerLocation),
-                new CureEffect("You can move", getEffectObservers(), player),
-                new PayToLeaveJailEffect(
-                        String.format("Pay To Leave %d", FINE), getEffectObservers(),
-                        player,
-                        new LoseMoneyEffect("Pay Fine", getEffectObservers(), player, FINE),
-                        new CureEffect("You are free", getEffectObservers(), player),
-                        new MoveEffect("Roll To Move", getEffectObservers(), player, player.roll(2), playerLocation),
-                        roundCounter
-                )
-        );
+
+
+        LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay Fine", player, FINE);
+        CureEffect cureEffect = new CureEffect("You can move", player);
+        MoveEffect moveEffect = new MoveEffect("You are free", player, player.roll(2), playerLocation);
+        PayToLeaveJailEffect payToLeaveJailEffect = new PayToLeaveJailEffect(
+                String.format("Pay To Leave %d", FINE), player, loseMoneyEffect, cureEffect, moveEffect, roundCounter);
+        RollToLeaveJailEffect rollToLeaveJailEffect = new RollToLeaveJailEffect(
+                "Roll To Leave", player, dices, roundCounter, moveEffect, cureEffect, payToLeaveJailEffect);
+
+        loseMoneyEffect.setEffectObservers(getEffectObservers());
+        cureEffect.setEffectObservers(getEffectObservers());
+        moveEffect.setEffectObservers(getEffectObservers());
+        payToLeaveJailEffect.setEffectObservers(getEffectObservers());
+        rollToLeaveJailEffect.setEffectObservers(getEffectObservers());
+
+        return rollToLeaveJailEffect;
     }
 
     @Override
     public OnEnterEffect createOnEnterEffect(Player player) {
-        return new NoEffect(getEffectObservers());
+        return new NoEffect();
     }
 
 

@@ -36,9 +36,6 @@ public class GameDisplay {
         instance.getPrintStream().println("[Info] " + message);
     }
 
-    public static void usageMessage(String message) {
-        instance.getPrintStream().println("[Usage] " + message);
-    }
 
     public static void promptMessage(String message) {
         instance.getPrintStream().print("[Prompt] " + message + " [y/n] ");
@@ -73,7 +70,7 @@ public class GameDisplay {
      * @param title words is this title Bar
      */
     public static void titleBar(String title) {
-        int star_width = (TERMINAL_WIDTH - title.length() - 2) / 2;
+        int star_width = (TERMINAL_WIDTH - title.length()) / 2;
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < star_width; i++) {
             builder.append(DIVIDER_SYMBOL);
@@ -84,6 +81,7 @@ public class GameDisplay {
         for (int i = 0; i < star_width; i++) {
             builder.append(DIVIDER_SYMBOL);
         }
+        builder.setLength(TERMINAL_WIDTH);
         instance.getPrintStream().println(builder);
     }
 
@@ -104,9 +102,4 @@ public class GameDisplay {
         return printStream;
     }
 
-// --Commented out by Inspection START (25/10/2021 21:47):
-//    public void setGameSystem(GameSystem gameSystem) {
-//        this.gameSystem = gameSystem;
-//    }
-// --Commented out by Inspection STOP (25/10/2021 21:47)
 }

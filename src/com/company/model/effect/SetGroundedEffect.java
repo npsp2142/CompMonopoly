@@ -1,15 +1,12 @@
 package com.company.model.effect;
 
 import com.company.model.component.Player;
-import com.company.model.observer.EffectObserver;
-
-import java.util.List;
 
 public class SetGroundedEffect extends Effect implements OnLandEffect {
     private final Player player;
 
-    public SetGroundedEffect(String name, List<EffectObserver> effectObservers, Player player) {
-        super(name, effectObservers);
+    public SetGroundedEffect(String name, Player player) {
+        super(name);
         this.player = player;
     }
 

@@ -2,17 +2,14 @@ package com.company.model.effect;
 
 import com.company.model.component.Player;
 import com.company.model.component.Property;
-import com.company.model.observer.EffectObserver;
-
-import java.util.List;
 
 public class BuyPropertyEffect extends Effect implements OnLandEffect {
     private final Player player;
     private final Property property;
     private final LoseMoneyEffect loseMoneyEffect;
 
-    public BuyPropertyEffect(String name, List<EffectObserver> effectObservers, Player player, Property property, LoseMoneyEffect loseMoneyEffect) {
-        super(name, effectObservers);
+    public BuyPropertyEffect(String name, Player player, Property property, LoseMoneyEffect loseMoneyEffect) {
+        super(name);
         this.player = player;
         this.property = property;
         this.loseMoneyEffect = loseMoneyEffect;

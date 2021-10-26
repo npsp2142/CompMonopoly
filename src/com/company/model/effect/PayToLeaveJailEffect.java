@@ -1,9 +1,7 @@
 package com.company.model.effect;
 
 import com.company.model.component.Player;
-import com.company.model.observer.EffectObserver;
 
-import java.util.List;
 import java.util.Map;
 
 public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
@@ -13,12 +11,12 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
     private final MoveEffect moveEffect;
     private final Map<Player, Integer> roundCounter;
 
-    public PayToLeaveJailEffect(String name, List<EffectObserver> effectObservers,
+    public PayToLeaveJailEffect(String name,
                                 Player player, LoseMoneyEffect loseMoneyEffect,
                                 CureEffect cureEffect,
                                 MoveEffect moveEffect,
                                 Map<Player, Integer> roundCounter) {
-        super(name, effectObservers);
+        super(name);
         this.player = player;
         this.loseMoneyEffect = loseMoneyEffect;
         this.cureEffect = cureEffect;

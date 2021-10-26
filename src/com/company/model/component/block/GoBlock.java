@@ -5,28 +5,25 @@ import com.company.model.effect.GainMoneyEffect;
 import com.company.model.effect.NoEffect;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
-import com.company.model.observer.BlockObserver;
-import com.company.model.observer.EffectObserver;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GoBlock extends Block {
 
     public static final int SALARY = 1500;
     public static final String DEFAULT_NAME = "Go Effect";
 
-    public GoBlock(String name, ArrayList<BlockObserver> blockObservers, List<EffectObserver> effectObservers) {
-        super(name, blockObservers, effectObservers);
+    public GoBlock(String name) {
+        super(name);
     }
 
     public OnEnterEffect createOnEnterEffect(Player player) {
-        return new GainMoneyEffect(DEFAULT_NAME, getEffectObservers(), player, SALARY);
+        GainMoneyEffect gainMoneyEffect = new GainMoneyEffect(DEFAULT_NAME, player, SALARY);
+        gainMoneyEffect.setEffectObservers(getEffectObservers());
+        return gainMoneyEffect;
     }
 
     @Override
     public OnLandEffect createOnLandEffect(Player player) {
-        return new NoEffect(getEffectObservers());
+        return new NoEffect();
     }
 
     @Override

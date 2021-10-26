@@ -3,9 +3,6 @@ package com.company.model.effect;
 import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.block.Block;
-import com.company.model.observer.EffectObserver;
-
-import java.util.List;
 
 public class TeleportEffect extends Effect implements OnLandEffect {
     private final Player player;
@@ -13,9 +10,9 @@ public class TeleportEffect extends Effect implements OnLandEffect {
     private final Block block;
     private final boolean triggerOnLand;
 
-    public TeleportEffect(String name, List<EffectObserver> effectObservers,
+    public TeleportEffect(String name,
                           Player player, PlayerLocation playerLocation, Block block, boolean triggerOnLand) {
-        super(name, effectObservers);
+        super(name);
         this.player = player;
         this.playerLocation = playerLocation;
         this.block = block;

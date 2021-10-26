@@ -4,36 +4,48 @@ import com.company.model.component.Board;
 import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.Property;
+import com.company.model.component.block.Block;
 import com.company.model.data.GameData;
 import com.company.model.data.GameDataFactory;
+import com.company.model.effect.AbandonPropertyEffect;
 import com.company.model.effect.BankruptEffect;
+import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
+import com.company.model.observer.PlayerObserver;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Random;
 
 
 public class GameSystem {
-    public static final boolean NEED_ASK_END_TURN = false;
     public static final int MAX_TURN = 100;
     public static final String DEFAULT_NAME = "tmp\\save_file.txt";
 
     private final Board board;
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
-    private final ArrayList<EffectObserver> effectObservers;
+    private final Map<String, EffectObserver> effectObservers;
+    private final Map<String, BlockObserver> blockObservers;
+    private final Map<String, PlayerObserver> playerObservers;
     private final PlayerLocation playerLocation;
     private Player currentPlayer;
     private int round;
+    private Random random;
 
     public GameSystem(Board board,
                       ArrayList<Player> players,
                       ArrayList<Property> properties,
-                      ArrayList<EffectObserver> effectObservers, PlayerLocation playerLocation) {
+                      Map<String, EffectObserver> effectObservers,
+                      Map<String, BlockObserver> blockObservers,
+                      Map<String, PlayerObserver> playerObservers, PlayerLocation playerLocation) {
         this.board = board;
         this.players = players;
         this.properties = properties;
         this.effectObservers = effectObservers;
+        this.blockObservers = blockObservers;
+        this.playerObservers = playerObservers;
         this.playerLocation = playerLocation;
         round = 0;
     }
@@ -64,10 +76,28 @@ public class GameSystem {
 
     public void onGameStart() {
         CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
+        setObservers();
         playerLocation.setStartLocation();
         currentPlayer = players.get(0);
-        reload();
+        reset();
         onRoundStart();
+    }
+
+    public void onGameLoad() {
+        CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
+        GameDisplay.titleBar(String.format("ROUND %d", round));
+        setObservers();
+        onTurnStart();
+    }
+
+    private void setObservers() {
+        for (Block block : board.getBlocks()) {
+            block.setBlockObservers(blockObservers);
+            block.setEffectObservers(effectObservers);
+        }
+        for (Player player : players) {
+            player.setPlayerObservers(playerObservers);
+        }
     }
 
     private void onRoundStart() {
@@ -86,44 +116,39 @@ public class GameSystem {
     }
 
     public void endTurn() {
-        for (Player player : players) {
+        for (Player player : players) { // Print money and location change per player in this turn.
             player.notifySubscribers();
         }
         onEndTurn();
         currentPlayer = getNextPlayer();
-        if (checkEndGame()) {
+        if (checkEndGame()) { // If game end
             onGameEnd();
             return;
         }
-
-        if (currentPlayer.equals(players.get(0))) {
+        if (currentPlayer.equals(players.get(0))) { // If round end
             onRoundStart();
             return;
         }
-
-
         onTurnStart();
-
     }
 
     private void onEndTurn() {
-        boolean canEndTurn = false;
-        if (currentPlayer.getAmount() < 0) {
-            new BankruptEffect("Bankrupt", effectObservers, currentPlayer, properties).onLand();
-        }
-
-        if (NEED_ASK_END_TURN) {
-            while (!canEndTurn) {
-                Player.Response response = null;
-                while (response == null) {
-                    response = GameController.instance.getResponse("End Turn? [y]");
+        if (currentPlayer.getAmount() < 0) { // If player no money
+            ArrayList<AbandonPropertyEffect> abandonPropertyEffects = new ArrayList<>();
+            for (Property property : properties) { // Set the properties owned by the bankrupted to null
+                if (property.getOwner() == null) {
+                    continue;
                 }
-                if (response == Player.Response.YES) {
-                    canEndTurn = true;
+                if (property.getOwner().equals(currentPlayer)) {
+                    AbandonPropertyEffect abandonPropertyEffect = new AbandonPropertyEffect("Bankrupt", property);
+                    abandonPropertyEffect.setEffectObservers(getEffectObservers());
+                    abandonPropertyEffects.add(abandonPropertyEffect);
                 }
             }
+            BankruptEffect bankruptEffect = new BankruptEffect("Bankrupt", currentPlayer, abandonPropertyEffects);
+            bankruptEffect.setEffectObservers(getEffectObservers());
+            bankruptEffect.onLand();
         }
-
     }
 
     private boolean checkEndGame() {
@@ -136,7 +161,7 @@ public class GameSystem {
 
     private boolean isAllOtherPlayerBankrupt() {
         int count = 0;
-        for (Player player : players) {
+        for (Player player : players) { // Count the number of player bankrupt
             if (player.getStatus().equals(Player.Status.BANKRUPT)) {
                 count += 1;
             }
@@ -168,13 +193,12 @@ public class GameSystem {
 
     }
 
-    private void reload() {
-        for (Player player :
-                players) {
-            player.reload();
+    private void reset() {
+        for (Player player : players) {
+            player.reset();
         }
         for (Property property : properties) {
-            property.reload();
+            property.reset();
         }
         round = 0;
         playerLocation.reload();
@@ -184,18 +208,20 @@ public class GameSystem {
         try {
             File file = new File(DEFAULT_NAME);
             if (file.createNewFile()) {
-                System.out.println("File created - " + DEFAULT_NAME);
+                GameDisplay.infoMessage("File created - " + DEFAULT_NAME);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, playerLocation, round, currentPlayer);
+        GameDataFactory gameDataFactory = new GameDataFactory(
+                players, properties, playerLocation, round, currentPlayer, random);
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(gameDataFactory.make());
+            GameDisplay.infoMessage("File written - " + DEFAULT_NAME);
             objectOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -208,13 +234,14 @@ public class GameSystem {
             FileInputStream fileInputStream = new FileInputStream(DEFAULT_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             gameData = (GameData) objectInputStream.readObject();
+            GameDisplay.infoMessage("Game Save File loaded - " + DEFAULT_NAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         if (gameData == null) {
             return;
         }
-        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, playerLocation, round, currentPlayer);
+        GameDataFactory gameDataFactory = new GameDataFactory(players, properties, playerLocation, round, currentPlayer, random);
         gameDataFactory.load(this, gameData);
     }
 
@@ -222,13 +249,15 @@ public class GameSystem {
         this.round = round;
     }
 
-    public ArrayList<EffectObserver> getEffectObservers() {
+    public Map<String, EffectObserver> getEffectObservers() {
         return effectObservers;
     }
 
-    public void onGameLoad() {
-        GameDisplay.titleBar(String.format("ROUND %d", round));
-        onTurnStart();
-        CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public Map<String, PlayerObserver> getPlayerObservers() {
+        return playerObservers;
     }
 }
