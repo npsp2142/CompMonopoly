@@ -5,12 +5,13 @@ import com.company.model.effect.OnEnterEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GoBlockTest {
 
     GoBlock goBlock;
     Player playerA;
+
     @BeforeEach
     void setUp() {
         goBlock = new GoBlock("GO");

@@ -6,7 +6,7 @@ import com.company.model.effect.OnLandEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ConditionalBlockTest {
 
@@ -14,17 +14,6 @@ class ConditionalBlockTest {
     Player playerA;
     Property central;
     Property wanChai;
-    private static class TwoPropertyConditionalBlock extends ConditionalBlock{
-
-        private TwoPropertyConditionalBlock(PropertyBlock central, PropertyBlock wanChai) {
-            super("Two Property", central,wanChai);
-        }
-
-        @Override
-        public boolean GoTo(Player player) {
-            return player.getStatus() == Player.Status.HEALTHY;
-        }
-    }
 
     @BeforeEach
     void setUp() {
@@ -34,8 +23,8 @@ class ConditionalBlockTest {
         wanChai = new Property("Wan Chai", 700, 65);
         central.setOwner(playerB);
         wanChai.setOwner(playerB);
-        PropertyBlock centralBlock = new PropertyBlock("Central",central);
-        PropertyBlock wanChaiBlock = new PropertyBlock("Central",wanChai);
+        PropertyBlock centralBlock = new PropertyBlock("Central", central);
+        PropertyBlock wanChaiBlock = new PropertyBlock("Central", wanChai);
         conditionalBlock = new TwoPropertyConditionalBlock(centralBlock, wanChaiBlock);
     }
 
@@ -47,7 +36,7 @@ class ConditionalBlockTest {
         playerA.setStatus(Player.Status.HEALTHY);
         OnLandEffect onLandEffect = conditionalBlock.createOnLandEffect(playerA);
         onLandEffect.onLand();
-        assertEquals( central.getRent(),playerA.getAmount());
+        assertEquals(-central.getRent(), playerA.getAmount());
     }
 
     /**
@@ -58,7 +47,19 @@ class ConditionalBlockTest {
         playerA.setStatus(Player.Status.GROUNDED);
         OnLandEffect onLandEffect = conditionalBlock.createOnLandEffect(playerA);
         onLandEffect.onLand();
-        assertEquals(wanChai.getRent(),playerA.getAmount());
+        assertEquals(-wanChai.getRent(), playerA.getAmount());
+    }
+
+    private static class TwoPropertyConditionalBlock extends ConditionalBlock {
+
+        private TwoPropertyConditionalBlock(PropertyBlock central, PropertyBlock wanChai) {
+            super("Two Property", central, wanChai);
+        }
+
+        @Override
+        public boolean GoTo(Player player) {
+            return player.getStatus() == Player.Status.HEALTHY;
+        }
     }
 
 }
