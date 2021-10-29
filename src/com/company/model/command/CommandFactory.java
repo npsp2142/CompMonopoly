@@ -68,16 +68,12 @@ public class CommandFactory {
                     return new EmptyCommand();
                 }
                 switch (tokens.get(1).toLowerCase()) {
-                    case "-vc": // visit count
+                    case "-bvc": // visit count
                         return new ViewBlockVisitCountCommand((BlockVisitObserver)
                                 gameSystem.getBlockObservers().get(BlockVisitObserver.DEFAULT_NAME));
                     case "-path":
                         return new ViewPathCommand(
                                 (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME));
-                    case "-property":
-                    case "-p":
-                        return new ViewPropertyCommand(gameSystem.getCurrentPlayer(), gameSystem.getBoard(),
-                                gameSystem.getLocation(), ViewPropertyCommand.Mode.ALL);
                 }
                 break;
             case "property":

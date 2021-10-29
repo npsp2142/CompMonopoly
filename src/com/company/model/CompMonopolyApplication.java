@@ -12,11 +12,10 @@ public class CompMonopolyApplication {
     private Status status;
 
     public CompMonopolyApplication(
-            CommandFactory commandFactory,
-            Status status) {
+            CommandFactory commandFactory) {
         instance = this;
         this.commandFactory = commandFactory;
-        this.status = status;
+        this.status = Status.MENU;
     }
 
     public void run() {

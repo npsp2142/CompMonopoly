@@ -1,5 +1,7 @@
-package component;
+package componentTest;
 
+import com.company.Main;
+import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.PlayerFactory;
 import com.company.model.component.Board;
@@ -11,11 +13,15 @@ import com.company.model.effect.MoveEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class JailTest {
+public class BlockSystemTest {
     Board board;
     PlayerLocation playerLocation;
     ArrayList<Player> players;
@@ -26,6 +32,7 @@ public class JailTest {
     InJailBlock inJailBlock;
     GoToJailBlock goToJailBlock;
     JustVisitingOrInJailBlock justVisitingOrInJailBlock;
+    Player playerA;
     HashMap<Player, Integer> inJailRoundCounter;
 
     @BeforeEach
@@ -33,15 +40,16 @@ public class JailTest {
 
         new GameDisplay(System.out);
 
-        players = new ArrayList<>();
-        Random random = new Random(4);
+
+        Random random = new Random(3);
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");
         PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
         players = playerFactory.make(names);
+        playerA = players.get(0);
 
         goBlock = new GoBlock("Go");
-        Player playerA = players.get(0);
+
         Block startBlock = goBlock;
         board = new Board();
         playerLocation = new PlayerLocation(board, players, startBlock);
@@ -59,7 +67,6 @@ public class JailTest {
         );
         goToJailBlock = new GoToJailBlock("Go To Jail", playerLocation, justVisitingOrInJailBlock);
 
-
         board.addBlock(goBlock);
         board.addBlock(centralBlock);
         board.addBlock(wanChaiBlock);
@@ -73,22 +80,72 @@ public class JailTest {
         board.addPath(justVisitingOrInJailBlock, goBlock);
 
         playerLocation.setStartLocation();
+    }
+
+    @Test
+    public void MoveStepTest() {
+        playerLocation.moveStep(playerA, 3);
+        assert (playerA.getCurrentLocation(playerLocation).equals(wanChaiBlock));
+    }
+
+    @Test
+    public void MoveToBlockTest() {
+        playerLocation.moveTo(playerA, justVisitingOrInJailBlock, true);
+        assert (playerA.getCurrentLocation(playerLocation).equals(justVisitingOrInJailBlock));
+    }
+
+
+    @Test
+    public void GoToJail() {
+        Player.NEED_PROMPT = false;
+        playerA.setResponse(Player.Response.YES);
+        playerLocation.moveStep(playerA, 1);
+        Block block = playerA.getCurrentLocation(playerLocation);
+        assert (block.equals(justVisitingOrInJailBlock));
 
     }
 
     @Test
-    public void RollToLeaveJailAtFirstRound() {
+    public void SetInJail() {
+        Player.NEED_PROMPT = false;
+        playerA.setResponse(Player.Response.YES);
+        playerLocation.moveStep(playerA, 1);
+        assert (playerA.getStatus().equals(Player.Status.GROUNDED));
+
+    }
+
+    @Test
+    public void InJail() {
         new GameDisplay(System.out);
         MoveEffect effect;
         Player.NEED_PROMPT = false;
-        Player playerA = players.get(0);
         playerA.setResponse(Player.Response.NO);
         playerLocation.moveStep(playerA, 1);
         assert (inJailRoundCounter.get(playerA) == 0);
 
         effect = new MoveEffect("", playerA, playerA.roll(2), playerLocation);
         effect.onLand();
+        assert (inJailRoundCounter.get(playerA) == 1);
+
+        effect = new MoveEffect("", playerA, playerA.roll(2), playerLocation);
+        effect.onLand();
+        assert (inJailRoundCounter.get(playerA) == 2);
+
+        effect = new MoveEffect("", playerA, playerA.roll(2), playerLocation);
+        effect.onLand();
         assert (inJailRoundCounter.get(playerA) == 0);
+    }
+
+    @Test
+    public void Test() throws IOException {
+        byte[] data = "123,456,789,123,456,789\n".getBytes();
+
+        InputStream input = new ByteArrayInputStream(data);
+
+        FileOutputStream fileOutputStream = new FileOutputStream("tmp/output.txt");
+        CompMonopolyApplication compMonopolyApplication = Main.createGameApplication(input, fileOutputStream);
+        compMonopolyApplication.run();
+        GameDisplay.flush();
     }
 
 

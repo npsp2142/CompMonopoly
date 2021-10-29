@@ -53,10 +53,6 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
         return ANSI.ANSI_PURPLE + name + ANSI.ANSI_RESET;
     }
 
-    public Map<String, BlockObserver> getBlockObservers() {
-        return blockObservers;
-    }
-
     public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
         this.blockObservers = blockObservers;
     }

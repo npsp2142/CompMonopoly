@@ -15,6 +15,12 @@ public class Board {
     }
 
     public void addPath(Block start, Block destination) {
+        if (!blocks.contains(start)) {
+            return;
+        }
+        if (!blocks.contains(destination)) {
+            return;
+        }
         board.put(start, destination);
     }
 

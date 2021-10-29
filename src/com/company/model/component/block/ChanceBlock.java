@@ -46,6 +46,7 @@ public class ChanceBlock extends Block {
 
     @Override
     public String getDescription() {
-        return String.format("Maximum Gain: %d - Maximum Lost: %d - Probability of Gain: %2.0f %%", MAX_ADD, MAX_REDUCE, PROBABILITY_ADD * 100);
+        return String.format("Maximum Gain: %d - Maximum Lost: %d - Probability of Gain: %2.0f %%",
+                MAX_ADD, MAX_REDUCE, PROBABILITY_ADD * 100);
     }
 }

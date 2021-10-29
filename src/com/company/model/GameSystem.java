@@ -23,11 +23,12 @@ public class GameSystem {
     private final Board board;
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
-
     private final PlayerLocation playerLocation;
+
     private Player currentPlayer;
     private int round;
     private Random random;
+
     private Map<String, EffectObserver> effectObservers;
     private Map<String, BlockObserver> blockObservers;
     private Map<String, PlayerObserver> playerObservers;
@@ -243,16 +244,16 @@ public class GameSystem {
         this.round = round;
     }
 
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
     public Map<String, EffectObserver> getEffectObservers() {
         return effectObservers;
     }
 
     public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
         this.effectObservers = effectObservers;
-    }
-
-    public void setRandom(Random random) {
-        this.random = random;
     }
 
     public Map<String, PlayerObserver> getPlayerObservers() {

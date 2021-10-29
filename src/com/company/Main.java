@@ -152,7 +152,7 @@ public class Main {
         new GameController(inputStream);
         new GameDisplay(outputStream, gameSystem);
 
-        return new CompMonopolyApplication(factory, CompMonopolyApplication.Status.MENU);
+        return new CompMonopolyApplication(factory);
     }
 
     public static void main(String[] args) {

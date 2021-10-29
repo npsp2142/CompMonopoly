@@ -135,34 +135,48 @@ public class GameSaveFactory {
         gameSystem.setRound(gameSave.getRound());
         gameSystem.setRandom(gameSave.getRandom());
 
-        if (gameSave.getBlockVisit() != null) {
-            Map<BlockSave, Integer> blockSaveIntegerMap = gameSave.getBlockVisit();
-            BlockVisitObserver blockVisitObserver = new BlockVisitObserver();
-            for (BlockSave blockSave : blockSaveIntegerMap.keySet()) {
+        loadBlockObservers(gameSystem, gameSave);
+        loadPlayerObservers(gameSystem, gameSave, playerSavePlayerHashMap);
+    }
+
+    private void loadBlockObservers(GameSystem gameSystem, GameSave gameSave) {
+        if (gameSave.getBlockVisit() == null) {
+            return;
+        }
+        if (gameSystem.getBlockObservers() == null) {
+            return;
+        }
+        Map<BlockSave, Integer> blockSaveIntegerMap = gameSave.getBlockVisit();
+        BlockVisitObserver blockVisitObserver = new BlockVisitObserver();
+        for (BlockSave blockSave : blockSaveIntegerMap.keySet()) {
+            Block block = gameSystem.getBoard().findBlock(blockSave.getName());
+            blockVisitObserver.getCounter().put(block, blockSaveIntegerMap.get(blockSave));
+        }
+
+        gameSystem.getBlockObservers().clear();
+        gameSystem.getBlockObservers().put(BlockVisitObserver.DEFAULT_NAME, blockVisitObserver);
+    }
+
+    private void loadPlayerObservers(GameSystem gameSystem, GameSave gameSave, Map<PlayerSave, Player> playerSavePlayerMap) {
+        if (gameSave.getPath() == null) {
+            return;
+        }
+        if (gameSystem.getPlayerObservers() == null) {
+            return;
+        }
+        Map<PlayerSave, List<BlockSave>> playerSaveListMap = gameSave.getPath();
+        PathObserver pathObserver = new PathObserver(playerLocation, playerLocation.getStartBlock());
+        for (PlayerSave playerSave : playerSaveListMap.keySet()) {
+            Player player = playerSavePlayerMap.get(playerSave);
+            List<Block> path = new ArrayList<>();
+            for (BlockSave blockSave : playerSaveListMap.get(playerSave)) {
                 Block block = gameSystem.getBoard().findBlock(blockSave.getName());
-                blockVisitObserver.getCounter().put(block, blockSaveIntegerMap.get(blockSave));
+                path.add(block);
             }
-
-            gameSystem.getBlockObservers().clear();
-            gameSystem.getBlockObservers().put(BlockVisitObserver.DEFAULT_NAME, blockVisitObserver);
+            pathObserver.getPaths().put(player, path);
         }
-
-        if (gameSave.getPath() != null) {
-            Map<PlayerSave, List<BlockSave>> playerSaveListMap = gameSave.getPath();
-            PathObserver pathObserver = new PathObserver(playerLocation, playerLocation.getStartBlock());
-            for (PlayerSave playerSave : playerSaveListMap.keySet()) {
-                Player player = playerSavePlayerHashMap.get(playerSave);
-                List<Block> path = new ArrayList<>();
-                for (BlockSave blockSave : playerSaveListMap.get(playerSave)) {
-                    Block block = gameSystem.getBoard().findBlock(blockSave.getName());
-                    path.add(block);
-                }
-                pathObserver.getPaths().put(player, path);
-            }
-            gameSystem.getPlayerObservers().clear();
-            gameSystem.getPlayerObservers().put(PathObserver.DEFAULT_NAME, pathObserver);
-        }
-
+        gameSystem.getPlayerObservers().clear();
+        gameSystem.getPlayerObservers().put(PathObserver.DEFAULT_NAME, pathObserver);
     }
 
     public void setBlockVisitObserver(BlockVisitObserver blockVisitObserver) {
