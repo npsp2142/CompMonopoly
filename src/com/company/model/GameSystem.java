@@ -44,44 +44,13 @@ public class GameSystem {
         round = 0;
     }
 
-    public PlayerLocation getLocation() {
-        return playerLocation;
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public Player getNextPlayer() {
-        return players.get((players.indexOf(currentPlayer) + 1) % players.size());
-    }
-
-    public void onGameStart() {
+    public void startGame() {
         CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
         setObservers();
         playerLocation.setStartLocation();
         currentPlayer = players.get(0);
         reset();
         onRoundStart();
-    }
-
-    public void onGameLoad() {
-        CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
-        GameDisplay.titleBar(String.format("ROUND %d", round));
-        setObservers();
-        onTurnStart();
     }
 
     private void setObservers() {
@@ -111,11 +80,11 @@ public class GameSystem {
 
     public void endTurn() {
         onEndTurn();
-        currentPlayer = getNextPlayer();
         if (checkEndGame()) { // If game end
             onGameEnd();
             return;
         }
+        currentPlayer = getNextPlayer();
         if (currentPlayer.equals(players.get(0))) { // If round end
             onRoundStart();
             return;
@@ -238,6 +207,38 @@ public class GameSystem {
                 new GameSaveFactory(players, properties, playerLocation, round, currentPlayer, random);
 
         gameSaveFactory.load(this, save);
+        onGameLoad();
+    }
+
+    private void onGameLoad() {
+        CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
+        GameDisplay.titleBar(String.format("ROUND %d", round));
+        setObservers();
+        onTurnStart();
+    }
+
+    public PlayerLocation getLocation() {
+        return playerLocation;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public Player getNextPlayer() {
+        return players.get((players.indexOf(currentPlayer) + 1) % players.size());
     }
 
     public void setRound(int round) {

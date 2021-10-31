@@ -2,6 +2,7 @@ package com.company.model.command;
 
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameSystem;
+import com.company.model.component.block.Block;
 import com.company.model.effect.LoseMoneyEffect;
 import com.company.model.effect.MoveEffect;
 import com.company.model.effect.TeleportEffect;
@@ -18,6 +19,13 @@ public class CommandFactory {
         this.gameSystem = gameSystem;
     }
 
+
+    /**
+     * Make Command instances based on a list of tokens. Use the Command instance to control the gameSystem.
+     *
+     * @param tokens the tokens that specify which command to be made
+     * @return a command that control the game system
+     */
     public Command make(ArrayList<String> tokens) {
         if (CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU) {
             switch (tokens.get(0).toLowerCase()) {
@@ -65,7 +73,8 @@ public class CommandFactory {
                 return new HelpCommand();
             case "view":
                 if (tokens.size() != 2) {
-                    return new EmptyCommand();
+                    String description = "Usage: view [-bvc/path]";
+                    return new EmptyCommand(description);
                 }
                 switch (tokens.get(1).toLowerCase()) {
                     case "-bvc": // visit count
@@ -98,20 +107,29 @@ public class CommandFactory {
                         loseMoneyEffect.setEffectObservers(gameSystem.getEffectObservers());
                         return new ReduceMoneyCommand(loseMoneyEffect);
                     case "-t":
+                        // Join tokens
                         StringBuilder stringBuilder = new StringBuilder();
                         for (String token : tokens.subList(2, tokens.size())) {
                             stringBuilder.append(token).append(" ");
                         }
                         stringBuilder.setLength(stringBuilder.length() - 1);
+
+                        // Find Block
+                        Block block = gameSystem.getBoard().findBlock(stringBuilder.toString());
+                        if (block == null) {
+                            return new EmptyCommand("Block not found");
+                        }
+
+                        // Create Effect
                         TeleportEffect teleportEffect = new TeleportEffect(
                                 "Cheat",
                                 gameSystem.getCurrentPlayer(),
                                 gameSystem.getLocation(),
-                                gameSystem.getBoard().findBlock(stringBuilder.toString()),
+                                block,
                                 true
                         );
                         teleportEffect.setEffectObservers(gameSystem.getEffectObservers());
-                        return new TeleportCommand(teleportEffect);
+                        return new TeleportCommand(teleportEffect, gameSystem);
                 }
 
         }

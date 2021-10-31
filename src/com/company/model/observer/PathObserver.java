@@ -13,13 +13,16 @@ import java.util.Map;
 public class PathObserver implements PlayerObserver {
     public static final String DEFAULT_NAME = "Block Visit Observer";
     private final PlayerLocation playerLocation;
-    private final Block start;
     private final Map<Player, List<Block>> paths;
 
     public PathObserver(PlayerLocation playerLocation, Block start) {
         this.playerLocation = playerLocation;
         this.paths = new HashMap<>();
-        this.start = start;
+        for (Player player : playerLocation.getPlayers()) {
+            List<Block> path = new ArrayList<>();
+            paths.put(player, path);
+            paths.get(player).add(start);
+        }
     }
 
     public void view() {
@@ -36,10 +39,6 @@ public class PathObserver implements PlayerObserver {
     public void update(Player player) {
         Block currentLocation = player.getCurrentLocation(playerLocation);
         if (!paths.containsKey(player)) {
-            GameDisplay.infoMessage(String.format("%s is at %s", player, start.getColoredName()));
-            List<Block> path = new ArrayList<>();
-            paths.put(player, path);
-            paths.get(player).add(start);
             return;
         }
         List<Block> path = paths.get(player);

@@ -19,8 +19,8 @@ public class CompMonopolyApplication {
     }
 
     public void run() {
+        beforeRun();
         try {
-            beforeRun();
             while (!isExitApp) {
                 Command command = getCommand();
                 if (command == null) {
@@ -74,6 +74,4 @@ public class CompMonopolyApplication {
     public enum Status {
         MENU, PLAYING,
     }
-
-
 }

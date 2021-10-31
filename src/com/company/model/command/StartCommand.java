@@ -16,7 +16,7 @@ public class StartCommand implements Command {
     @Override
     public void execute() {
         GameDisplay.titleBar("GAME START!");
-        gameSystem.onGameStart();
+        gameSystem.startGame();
     }
 
     @Override

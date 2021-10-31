@@ -53,10 +53,10 @@ public class PlayerLocation implements Serializable {
 
     public void moveTo(Player player, Block block, boolean isTrigger) {
         block.notifyBlockSubscribers();
+        location.replace(player, block);
         if (isTrigger) {
             block.createOnLandEffect(player).onLand();
         }
-        location.replace(player, block);
     }
 
     public void moveTo(Player player, String name) {

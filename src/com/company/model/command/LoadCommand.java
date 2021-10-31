@@ -12,7 +12,6 @@ public class LoadCommand implements Command {
 
     public void execute() {
         gameSystem.loadGame();
-        gameSystem.onGameLoad();
     }
 
     public boolean isValid() {
