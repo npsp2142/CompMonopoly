@@ -20,7 +20,7 @@ class BankruptEffectTest {
      */
     @Test
     void onLand() {
-        assertEquals(Player.Status.HEALTHY,player.getStatus());
-        assertEquals(Player.Status.BANKRUPT,player.getStatus());
+        assertEquals(Player.Status.HEALTHY,player.getStatus());//Test if the player is bankrupt
+        assertEquals(Player.Status.BANKRUPT,player.getStatus());//Test if the player is bankrupt
     }
 }
