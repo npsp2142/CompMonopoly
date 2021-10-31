@@ -213,10 +213,8 @@ public class GameSystem {
         if (save == null) {
             return;
         }
-        GameSaveFactory gameSaveFactory =
-                new GameSaveFactory(players, properties, playerLocation, round, currentPlayer, random);
-
-        gameSaveFactory.load(this, save);
+        GameLoader gameLoader = new GameLoader(this, save);
+        gameLoader.load();
         onGameLoad();
     }
 
@@ -257,6 +255,10 @@ public class GameSystem {
 
     public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
         this.effectObservers = effectObservers;
+    }
+
+    public ArrayList<Property> getProperties() {
+        return properties;
     }
 
     public Map<String, PlayerObserver> getPlayerObservers() {

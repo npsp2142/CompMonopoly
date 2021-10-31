@@ -125,7 +125,7 @@ public class Player {
          */
         BANKRUPT,
         /**
-          Player cannot move
+         * Player cannot move
          */
         GROUNDED
     }

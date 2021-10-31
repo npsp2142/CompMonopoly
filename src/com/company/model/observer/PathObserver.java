@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PathObserver implements PlayerObserver {
-    public static final String DEFAULT_NAME = "Block Visit Observer";
+    public static final String DEFAULT_NAME = "Path Observer";
     private final PlayerLocation playerLocation;
     private final Map<Player, List<Block>> paths;
     private final Block start;
