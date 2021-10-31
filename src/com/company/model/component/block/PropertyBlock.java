@@ -44,7 +44,7 @@ public class PropertyBlock extends Block {
         GainMoneyEffect gainMoneyEffect = new GainMoneyEffect("Get Rent", property.getOwner(), property.getRent());
         gainMoneyEffect.setEffectObservers(getEffectObservers());
         LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay Rent", player, property.getRent());
-        gainMoneyEffect.setEffectObservers(getEffectObservers());
+        loseMoneyEffect.setEffectObservers(getEffectObservers());
         PayRentEffect payRentEffect = new PayRentEffect("Pay Rent", gainMoneyEffect, loseMoneyEffect);
         payRentEffect.setEffectObservers(getEffectObservers());
         return payRentEffect;

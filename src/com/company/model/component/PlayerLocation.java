@@ -73,6 +73,7 @@ public class PlayerLocation implements Serializable {
     }
 
     public void reload() {
+        location.clear();
         setStartLocation();
     }
 

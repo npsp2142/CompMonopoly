@@ -24,6 +24,9 @@ class ChanceBlockTest {
         player.setAmount(initialAmount);
     }
 
+    /**
+     * Unit test of ChanceBlock.createOnLandEffect()
+     */
     @Test
     void createOnLandEffect() {
         OnLandEffect onLandEffect = chanceBlock.createOnLandEffect(player);

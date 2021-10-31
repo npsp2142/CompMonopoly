@@ -29,6 +29,9 @@ class BoardTest {
         noEffectBlockD = new NoEffectBlock(nameD);
     }
 
+    /**
+     * Unit test of Board.addPath(Block start,Block destination)
+     */
     @Test
     void addPathByBlock() {
         board.addPath(noEffectBlockA, noEffectBlockB);
@@ -48,6 +51,9 @@ class BoardTest {
         assertSame(noEffectBlockC, board.getNextBlock(noEffectBlockB));
     }
 
+    /**
+     * Unit test of Board.addPath(String start, String destination)
+     */
     @Test
     void addPathByString() {
         board.addPath(nameA, nameB);
@@ -67,18 +73,27 @@ class BoardTest {
         assertSame(noEffectBlockC, board.getNextBlock(nameB));
     }
 
+    /**
+     * Unit test of Board.addBlock()
+     */
     @Test
     void addBlock() {
         board.addBlock(noEffectBlockA);
         assertSame(noEffectBlockA, board.getBlocks().get(0));
     }
 
+    /**
+     * Unit test of Board.findBlock()
+     */
     @Test
     void findBlock() {
         board.addBlock(noEffectBlockA);
         assertSame(noEffectBlockA, board.findBlock(nameA));
     }
 
+    /**
+     * Unit test of Board.getNextBlock(Block block)
+     */
     @Test
     void getNextBlock() {
         board.addBlock(noEffectBlockA);
@@ -93,6 +108,9 @@ class BoardTest {
         assertNull(board.getNextBlock(noEffectBlockD));
     }
 
+    /**
+     * Unit test of Board.getNextBlock(String name)
+     */
     @Test
     void getNextBlockByName() {
         board.addBlock(noEffectBlockA);

@@ -33,6 +33,11 @@ public class BlockVisitObserver implements BlockObserver {
         counter.put(block, counter.get(block) + 1);
     }
 
+    @Override
+    public void reset() {
+        counter.clear();
+    }
+
     public Map<Block, Integer> getCounter() {
         return counter;
     }

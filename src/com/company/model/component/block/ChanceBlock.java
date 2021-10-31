@@ -32,7 +32,7 @@ public class ChanceBlock extends Block {
             LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect(
                     DEFAULT_EFFECT_NAME,
                     player,
-                    (random.nextInt() % MAX_REDUCE + 1) / 10 * 10
+                    Math.abs((random.nextInt() % MAX_REDUCE + 1) / 10 * 10)
             );
             loseMoneyEffect.setEffectObservers(getEffectObservers());
             return loseMoneyEffect;

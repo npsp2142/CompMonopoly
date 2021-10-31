@@ -27,6 +27,11 @@ public class MoneyObserver implements PlayerObserver {
         }
     }
 
+    @Override
+    public void reset() {
+        money.clear();
+    }
+
     private void compare(Player player, int oldAmount, int newAmount) {
         int diff = newAmount - oldAmount;
         if (diff > 0) {

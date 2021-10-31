@@ -18,6 +18,9 @@ class GoBlockTest {
         playerA = new Player("Player A");
     }
 
+    /**
+     * Unit test of GoBlockTest.createOnEnterEffect()
+     */
     @Test
     void createOnEnterEffect() {
         OnEnterEffect onEnterEffect = goBlock.createOnEnterEffect(playerA);

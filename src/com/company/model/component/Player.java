@@ -111,19 +111,23 @@ public class Player {
 
 
     /**
-     *
+     * Each player status can trigger special effects.
      */
     public enum Status implements Serializable {
         /**
          * Player are healthy.
          */
-        HEALTHY
-        /*
-          Player cannot play
-         */, BANKRUPT
-        /*
+        HEALTHY,
+        /**
+         * Player has no money.
+         *
+         * @see com.company.model.effect.BankruptEffect
+         */
+        BANKRUPT,
+        /**
           Player cannot move
-         */, GROUNDED
+         */
+        GROUNDED
     }
 
     public enum Response {

@@ -19,6 +19,14 @@ public class InJailBlock extends Block {
         this.roundCounter = roundCounter;
     }
 
+    /**
+     * @param player the player steps on the block
+     * @return When the player response is yes, return the effect that the player pay to leave the jail.
+     * When the player response is yes, return the effect that the player attempts to roll to leave the jail.
+     * @see Player.Response
+     * @see PayToLeaveJailEffect
+     * @see RollToLeaveJailEffect
+     */
     @Override
     public OnLandEffect createOnLandEffect(Player player) {
         Player.Response response;

@@ -14,10 +14,12 @@ public class PathObserver implements PlayerObserver {
     public static final String DEFAULT_NAME = "Block Visit Observer";
     private final PlayerLocation playerLocation;
     private final Map<Player, List<Block>> paths;
+    private final Block start;
 
     public PathObserver(PlayerLocation playerLocation, Block start) {
         this.playerLocation = playerLocation;
         this.paths = new HashMap<>();
+        this.start = start;
         for (Player player : playerLocation.getPlayers()) {
             List<Block> path = new ArrayList<>();
             paths.put(player, path);
@@ -35,7 +37,6 @@ public class PathObserver implements PlayerObserver {
         }
     }
 
-    @Override
     public void update(Player player) {
         Block currentLocation = player.getCurrentLocation(playerLocation);
         if (!paths.containsKey(player)) {
@@ -51,6 +52,15 @@ public class PathObserver implements PlayerObserver {
                 String.format("%s move from %s to %s", player, path.get(path.size() - 1).getColoredName(),
                         currentLocation.getColoredName()));
         path.add(currentLocation);
+    }
+
+    public void reset() {
+        paths.clear();
+        for (Player player : playerLocation.getPlayers()) {
+            List<Block> path = new ArrayList<>();
+            paths.put(player, path);
+            paths.get(player).add(start);
+        }
     }
 
     public Map<Player, List<Block>> getPaths() {

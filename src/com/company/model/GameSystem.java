@@ -46,6 +46,7 @@ public class GameSystem {
 
     public void startGame() {
         CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
+        resetObservers();
         setObservers();
         playerLocation.setStartLocation();
         currentPlayer = players.get(0);
@@ -60,6 +61,15 @@ public class GameSystem {
         }
         for (Player player : players) {
             player.setPlayerObservers(playerObservers);
+        }
+    }
+
+    private void resetObservers() {
+        for (String observerName : blockObservers.keySet()) {
+            blockObservers.get(observerName).reset();
+        }
+        for (String observerName : playerObservers.keySet()) {
+            playerObservers.get(observerName).reset();
         }
     }
 
@@ -241,14 +251,6 @@ public class GameSystem {
         return players.get((players.indexOf(currentPlayer) + 1) % players.size());
     }
 
-    public void setRound(int round) {
-        this.round = round;
-    }
-
-    public void setRandom(Random random) {
-        this.random = random;
-    }
-
     public Map<String, EffectObserver> getEffectObservers() {
         return effectObservers;
     }
@@ -271,5 +273,13 @@ public class GameSystem {
 
     public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
         this.blockObservers = blockObservers;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
     }
 }
