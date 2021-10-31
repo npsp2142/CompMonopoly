@@ -8,8 +8,10 @@ import java.util.Map;
 
 public class InJailBlock extends Block {
     public static final int FINE = 150;
+    public static boolean IS_RANDOM = true;
     private final PlayerLocation playerLocation;
     private final Map<Player, Integer> roundCounter;
+    private int[] diceRolls;
 
     public InJailBlock(String name,
                        PlayerLocation playerLocation,
@@ -54,16 +56,18 @@ public class InJailBlock extends Block {
 
             return payToLeaveJailEffect;
         }
-        int[] dices = player.roll(2);
 
+        if (IS_RANDOM) {
+            diceRolls = player.roll(2);
+        }
 
         LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay Fine", player, FINE);
         CureEffect cureEffect = new CureEffect("You can move", player);
-        MoveEffect moveEffect = new MoveEffect("You are free", player, player.roll(2), playerLocation);
+        MoveEffect moveEffect = new MoveEffect("You are free", player, diceRolls, playerLocation);
         PayToLeaveJailEffect payToLeaveJailEffect = new PayToLeaveJailEffect(
                 String.format("Pay To Leave %d", FINE), player, loseMoneyEffect, cureEffect, moveEffect, roundCounter);
         RollToLeaveJailEffect rollToLeaveJailEffect = new RollToLeaveJailEffect(
-                "Roll To Leave", player, dices, roundCounter, moveEffect, cureEffect, payToLeaveJailEffect);
+                "Roll To Leave", player, diceRolls, roundCounter, moveEffect, cureEffect, payToLeaveJailEffect);
 
         loseMoneyEffect.setEffectObservers(getEffectObservers());
         cureEffect.setEffectObservers(getEffectObservers());
@@ -84,5 +88,9 @@ public class InJailBlock extends Block {
     public String getDescription() {
         return String.format("No Move %d at maximum - Pay Fine %d HKD if not roll to leave",
                 RollToLeaveJailEffect.MAX_STAY, FINE);
+    }
+
+    public void setDiceRolls(int[] diceRolls) {
+        this.diceRolls = diceRolls;
     }
 }
