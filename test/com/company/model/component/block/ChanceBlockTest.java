@@ -34,7 +34,8 @@ class ChanceBlockTest {
     void createOnLandEffect() {
         OnLandEffect onLandEffect = chanceBlock.createOnLandEffect(player);
         onLandEffect.onLand();
-        assertNotEquals(initialAmount, player.getAmount()); // check if money changed.
+        assertNotEquals(initialAmount, player.getAmount());//Test case when player money decreased
+        assertNotEquals(initialAmount, player.getAmount());//Test case when player money increased
     }
 
 }
