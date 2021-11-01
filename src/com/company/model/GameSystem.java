@@ -241,10 +241,6 @@ public class GameSystem {
         return currentPlayer;
     }
 
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
     public Player getNextPlayer() {
         return players.get((players.indexOf(currentPlayer) + 1) % players.size());
     }
@@ -253,16 +249,16 @@ public class GameSystem {
         return effectObservers;
     }
 
-    public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
-        this.effectObservers = effectObservers;
-    }
-
     public ArrayList<Property> getProperties() {
         return properties;
     }
 
     public Map<String, PlayerObserver> getPlayerObservers() {
         return playerObservers;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public void setPlayerObservers(Map<String, PlayerObserver> playerObservers) {
@@ -275,6 +271,10 @@ public class GameSystem {
 
     public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
         this.blockObservers = blockObservers;
+    }
+
+    public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
+        this.effectObservers = effectObservers;
     }
 
     public void setRound(int round) {
