@@ -10,7 +10,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
- *  Unit test for ChanceBlock.
+ * Unit test for ChanceBlock.
  */
 class ChanceBlockTest {
 
