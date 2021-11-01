@@ -71,7 +71,7 @@ class InJailBlockTest {
         // Pay to leave
         player.setResponse(Player.Response.YES); // Pay to lave
         inJailBlock.createOnLandEffect(player).onLand();
-        assertEquals(initialAmount - 150, player.getAmount());
+        assertEquals(initialAmount - InJailBlock.FINE, player.getAmount());
         assertEquals(Player.Status.HEALTHY, player.getStatus());
 
         // Roll to leave successful
@@ -83,7 +83,7 @@ class InJailBlockTest {
         assertEquals(Player.Status.HEALTHY, player.getStatus());
 
         // Roll to leave failed 3 times
-        player.setAmount(1500);
+        player.setAmount(initialAmount);
         player.setStatus(Player.Status.GROUNDED);
         player.setResponse(Player.Response.NO);
         rolls = new int[]{2, 3};
@@ -96,11 +96,11 @@ class InJailBlockTest {
         rolls = new int[]{2, 3};
         inJailBlock.setDiceRolls(rolls);
         inJailBlock.createOnLandEffect(player).onLand();
-        assertEquals(initialAmount - 150, player.getAmount());
+        assertEquals(initialAmount - InJailBlock.FINE, player.getAmount());
         assertEquals(Player.Status.HEALTHY, player.getStatus());
 
         // Roll to leave success at the 3rd time
-        player.setAmount(1500);
+        player.setAmount(initialAmount);
         player.setStatus(Player.Status.GROUNDED);
         player.setResponse(Player.Response.NO);
         rolls = new int[]{2, 3};
@@ -113,7 +113,7 @@ class InJailBlockTest {
         rolls = new int[]{2, 2};
         inJailBlock.setDiceRolls(rolls);
         inJailBlock.createOnLandEffect(player).onLand();
-        assertEquals(initialAmount , player.getAmount());
+        assertEquals(initialAmount, player.getAmount());
         assertEquals(Player.Status.HEALTHY, player.getStatus());
     }
 }
