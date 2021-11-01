@@ -1,45 +1,81 @@
 package com.company.model;
 
 import com.company.model.component.Player;
+import com.company.model.component.PlayerLocation;
+import com.company.model.component.block.GoBlock;
+import com.company.model.component.block.NoEffectBlock;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Test Case for GameSystemTest
- */
 class GameSystemTest {
-    private final ArrayList<Player> players;
-    private Player currentPlayer;
 
-    GameSystemTest(ArrayList<Player> players) {
-        this.players = players;
+    GameSystem gameSystem;
+    GoBlock goBlock;
+    PlayerLocation playerLocation;
+    Player playerA;
+    NoEffectBlock noEffectBlockB;
+    int customAmount;
+    CompMonopolyApplication compMonopolyApplication;
+
+    @BeforeEach
+    void setUp() {
+
     }
 
-    /**
-     * Test Case for GameSystemTest.startGame()
-     */
     @Test
     void startGame() {
-        assertEquals(CompMonopolyApplication.Status.PLAYING,CompMonopolyApplication.instance.getStatus());//Test Game status
+        gameSystem.startGame();
+        for (Player player : gameSystem.getPlayers()) {
+            assertEquals(Player.DEFAULT_AMOUNT, player.getAmount());
+            assertEquals(Player.Status.HEALTHY, player.getStatus());
+            assertEquals(goBlock, playerLocation.getCurrentLocation(player));
+        }
     }
 
-    /**
-     * Test Case for GameSystemTest.endTurn()
-     */
     @Test
     void endTurn() {
-        assertEquals(CompMonopolyApplication.Status.MENU,CompMonopolyApplication.instance.getStatus());// Test Game status when only 1 player left or 100 rounds ended.
-        assertEquals(players.get(0),currentPlayer );//Test if the player is the last player
+        int currentRound = gameSystem.getRound();
+        Player currentPlayer = gameSystem.getCurrentPlayer();
+        gameSystem.endTurn();
+        assertNotEquals(currentPlayer, gameSystem.getCurrentPlayer());
+        assertNotEquals(currentPlayer, gameSystem.getCurrentPlayer());
+        assertEquals(currentRound + 1, gameSystem.getRound());
     }
 
     @Test
-    void saveGame() {
+    void saveGame() throws IOException {
+        FileWriter fileWriter = new FileWriter(GameSystem.DEFAULT_FILE_NAME);
+        fileWriter.write(0);
+        playerLocation.moveTo(playerA, noEffectBlockB);
+        playerA.setAmount(customAmount);
+        playerA.setStatus(Player.Status.BANKRUPT);
+        gameSystem.saveGame();
+        FileReader fileReader = new FileReader(GameSystem.DEFAULT_FILE_NAME);
+        char[] chars = new char[1000];
+        assertTrue(fileReader.read(chars) <= 0); // test if write any
+        assertTrue(fileReader.read(chars) != 0);
     }
 
     @Test
-    void loadGame() {
+    void loadGame() throws IOException {
+        playerLocation.moveTo(playerA, noEffectBlockB);
+        playerA.setAmount(customAmount);
+        playerA.setStatus(Player.Status.BANKRUPT);
+        gameSystem.saveGame();
+        FileReader fileReader = new FileReader(GameSystem.DEFAULT_FILE_NAME);
+        char[] chars = new char[1000];
+        assertTrue(fileReader.read(chars) != 0);
+        gameSystem.loadGame();
+        Player loadedPlayer = gameSystem.getPlayers().get(0);
+        assertEquals(playerA.getAmount(), loadedPlayer.getAmount());
+        assertEquals(playerA.getStatus(), loadedPlayer.getStatus());
+        assertEquals(playerLocation.getCurrentLocation(playerA), playerLocation.getCurrentLocation(loadedPlayer));
+        assertEquals(CompMonopolyApplication.Status.PLAYING, compMonopolyApplication.getStatus());
     }
 }

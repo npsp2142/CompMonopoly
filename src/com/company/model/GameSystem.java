@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class GameSystem {
     public static final int MAX_TURN = 100;
-    public static final String DEFAULT_NAME = "tmp\\save_file.txt";
+    public static final String DEFAULT_FILE_NAME = "tmp\\save_file.txt";
 
     private final Board board;
     private final ArrayList<Player> players;
@@ -176,9 +176,9 @@ public class GameSystem {
 
     public void saveGame() {
         try {
-            File file = new File(DEFAULT_NAME);
+            File file = new File(DEFAULT_FILE_NAME);
             if (file.createNewFile()) {
-                GameDisplay.infoMessage("File created - " + DEFAULT_NAME);
+                GameDisplay.infoMessage("File created - " + DEFAULT_FILE_NAME);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -190,10 +190,10 @@ public class GameSystem {
         gameSaveFactory.setPathObserver((PathObserver) playerObservers.get(PathObserver.DEFAULT_NAME));
 
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_NAME);
+            FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_FILE_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(gameSaveFactory.make());
-            GameDisplay.infoMessage("File written - " + DEFAULT_NAME);
+            GameDisplay.infoMessage("File written - " + DEFAULT_FILE_NAME);
             objectOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -203,10 +203,10 @@ public class GameSystem {
     public void loadGame() {
         GameSave save = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream(DEFAULT_NAME);
+            FileInputStream fileInputStream = new FileInputStream(DEFAULT_FILE_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             save = (GameSave) objectInputStream.readObject();
-            GameDisplay.infoMessage("Game Save File loaded - " + DEFAULT_NAME);
+            GameDisplay.infoMessage("Game Save File loaded - " + DEFAULT_FILE_NAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -237,8 +237,20 @@ public class GameSystem {
         return board;
     }
 
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public Player getNextPlayer() {
@@ -249,16 +261,16 @@ public class GameSystem {
         return effectObservers;
     }
 
+    public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
+        this.effectObservers = effectObservers;
+    }
+
     public ArrayList<Property> getProperties() {
         return properties;
     }
 
     public Map<String, PlayerObserver> getPlayerObservers() {
         return playerObservers;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
     }
 
     public void setPlayerObservers(Map<String, PlayerObserver> playerObservers) {
@@ -271,14 +283,6 @@ public class GameSystem {
 
     public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
         this.blockObservers = blockObservers;
-    }
-
-    public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
-        this.effectObservers = effectObservers;
-    }
-
-    public void setRound(int round) {
-        this.round = round;
     }
 
     public void setRandom(Random random) {
