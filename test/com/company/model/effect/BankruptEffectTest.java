@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit Test case for BankruptEffect
  */
 class BankruptEffectTest {
-
+    Player player;
     @BeforeEach
     void setUp() {
     }
