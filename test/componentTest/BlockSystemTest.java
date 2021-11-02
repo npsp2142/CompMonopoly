@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Unit test of BlockSystem
+ */
 public class BlockSystemTest {
     Board board;
     PlayerLocation playerLocation;
@@ -35,6 +38,9 @@ public class BlockSystemTest {
     Player playerA;
     HashMap<Player, Integer> inJailRoundCounter;
 
+    /**
+     * Unit test of BlockSystem.setUp()
+     */
     @BeforeEach
     void setUp() {
 
@@ -82,12 +88,18 @@ public class BlockSystemTest {
         playerLocation.setStartLocation();
     }
 
+    /**
+     * Unit test of BlockSystem.MoveStepTest()
+     */
     @Test
     public void MoveStepTest() {
         playerLocation.moveStep(playerA, 3);
         assert (playerA.getCurrentLocation(playerLocation).equals(wanChaiBlock));
     }
 
+    /**
+     * Unit test of BlockSystem.MoveToBlockTest()
+     */
     @Test
     public void MoveToBlockTest() {
         playerLocation.moveTo(playerA, justVisitingOrInJailBlock, true);
@@ -95,6 +107,9 @@ public class BlockSystemTest {
     }
 
 
+    /**
+     * Unit test of BlockSystem.GoToJail()
+     */
     @Test
     public void GoToJail() {
         Player.NEED_PROMPT = false;
@@ -105,6 +120,9 @@ public class BlockSystemTest {
 
     }
 
+    /**
+     * Unit test of BlockSystem.SetInJail()
+     */
     @Test
     public void SetInJail() {
         Player.NEED_PROMPT = false;
@@ -114,6 +132,9 @@ public class BlockSystemTest {
 
     }
 
+    /**
+     * Unit test of BlockSystem.InJail()
+     */
     @Test
     public void InJail() {
         new GameDisplay(System.out);
@@ -136,6 +157,9 @@ public class BlockSystemTest {
         assert (inJailRoundCounter.get(playerA) == 0);
     }
 
+    /**
+     * throws IOException
+     */
     @Test
     public void Test() throws IOException {
         byte[] data = "123,456,789,123,456,789\n".getBytes();
