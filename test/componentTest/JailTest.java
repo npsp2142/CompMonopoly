@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Unit test of JailTest
+ */
 public class JailTest {
     Board board;
     PlayerLocation playerLocation;
@@ -28,6 +31,9 @@ public class JailTest {
     JustVisitingOrInJailBlock justVisitingOrInJailBlock;
     HashMap<Player, Integer> inJailRoundCounter;
 
+    /**
+     * Unit test of JailTest.setUp()
+     */
     @BeforeEach
     void setUp() {
 
@@ -76,6 +82,9 @@ public class JailTest {
 
     }
 
+    /**
+     * Unit test of JailTest.RollToLeaveJailAtFirstRound()
+     */
     @Test
     public void RollToLeaveJailAtFirstRound() {
         new GameDisplay(System.out);

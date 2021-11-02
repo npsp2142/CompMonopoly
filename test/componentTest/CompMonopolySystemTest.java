@@ -7,9 +7,15 @@ import com.company.model.component.block.PropertyBlock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit test of CompMonopolySystemTest
+ */
 public class CompMonopolySystemTest {
     Board board;
 
+    /**
+     * Unit test of CompMonopolySystemTest.MakeBoardTest()
+     */
     @Test
     void MakeBoardTest() {
         Block block1 = new PropertyBlock("Tai O", new Property("Tai O", 600, 25));
