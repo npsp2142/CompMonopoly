@@ -25,7 +25,7 @@ public class Main {
         names.add("Player B");
         names.add("Player C");
         Map<String, PlayerObserver> playerObservers = new HashMap<>();
-        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
+        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
         ArrayList<Player> players = playerFactory.make(names);
 
         // Add all property

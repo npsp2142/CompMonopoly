@@ -40,6 +40,7 @@ class BoardTest {
         board.addPath(noEffectBlockA, noEffectBlockB);
         board.addPath(noEffectBlockB, noEffectBlockC);
         board.addPath(noEffectBlockC, noEffectBlockA);
+        // Test that Board.addPath() method will not add path,when the node is not found.
         assertNull(board.getNextBlock(noEffectBlockC));
         assertNull(board.getNextBlock(noEffectBlockA));
         assertNull(board.getNextBlock(noEffectBlockB));
@@ -49,6 +50,7 @@ class BoardTest {
         board.addPath(noEffectBlockA, noEffectBlockB);
         board.addPath(noEffectBlockB, noEffectBlockC);
         board.addPath(noEffectBlockC, noEffectBlockA);
+        // Test that Board.addPath() method can make a circular path.
         assertSame(noEffectBlockA, board.getNextBlock(noEffectBlockC));
         assertSame(noEffectBlockB, board.getNextBlock(noEffectBlockA));
         assertSame(noEffectBlockC, board.getNextBlock(noEffectBlockB));
@@ -62,6 +64,7 @@ class BoardTest {
         board.addPath(nameA, nameB);
         board.addPath(nameB, nameC);
         board.addPath(nameC, nameA);
+        // Test that Board.addPath() method will not add path,when the node is not found.
         assertNull(board.getNextBlock(noEffectBlockC));
         assertNull(board.getNextBlock(noEffectBlockA));
         assertNull(board.getNextBlock(noEffectBlockB));
@@ -71,6 +74,7 @@ class BoardTest {
         board.addPath(nameA, nameB);
         board.addPath(nameB, nameC);
         board.addPath(nameC, nameA);
+        // Test that Board.addPath() method can make a circular path.
         assertSame(noEffectBlockA, board.getNextBlock(nameC));
         assertSame(noEffectBlockB, board.getNextBlock(nameA));
         assertSame(noEffectBlockC, board.getNextBlock(nameB));
@@ -82,6 +86,7 @@ class BoardTest {
     @Test
     void addBlock() {
         board.addBlock(noEffectBlockA);
+        // Test if the block is added to the board.
         assertSame(noEffectBlockA, board.getBlocks().get(0));
     }
 
@@ -91,6 +96,7 @@ class BoardTest {
     @Test
     void findBlock() {
         board.addBlock(noEffectBlockA);
+        // Test if the method can use a name to return a block with the same name.
         assertSame(noEffectBlockA, board.findBlock(nameA));
     }
 
@@ -105,9 +111,11 @@ class BoardTest {
         board.addPath(noEffectBlockA, noEffectBlockB);
         board.addPath(noEffectBlockB, noEffectBlockC);
         board.addPath(noEffectBlockC, noEffectBlockA);
+        // Test if the method can return the next block.
         assertSame(noEffectBlockA, board.getNextBlock(noEffectBlockC));
         assertSame(noEffectBlockB, board.getNextBlock(noEffectBlockA));
         assertSame(noEffectBlockC, board.getNextBlock(noEffectBlockB));
+        // Test if the method should return null, when the input block does not exist.
         assertNull(board.getNextBlock(noEffectBlockD));
     }
 
@@ -122,9 +130,11 @@ class BoardTest {
         board.addPath(noEffectBlockA, noEffectBlockB);
         board.addPath(noEffectBlockB, noEffectBlockC);
         board.addPath(noEffectBlockC, noEffectBlockA);
+        // Test if the method can return the next block by name.
         assertSame(noEffectBlockA, board.getNextBlock(nameC));
         assertSame(noEffectBlockB, board.getNextBlock(nameA));
         assertSame(noEffectBlockC, board.getNextBlock(nameB));
+        // Test if the method should return null, when the name of the corresponding block does not exist.
         assertNull(board.getNextBlock(nameD));
     }
 

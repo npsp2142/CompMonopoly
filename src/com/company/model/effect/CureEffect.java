@@ -13,7 +13,7 @@ public class CureEffect extends Effect implements OnLandEffect {
     @Override
     public void onLand() {
         notifyEffectSubscribers();
-        player.setStatus(Player.Status.HEALTHY);
+        player.setStatus(Player.Status.NORMAL);
     }
 
     public String getDescription() {

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Unit tests of GoBlock
+ */
 class GoBlockTest {
 
     GoBlock goBlock;
@@ -19,7 +22,7 @@ class GoBlockTest {
     }
 
     /**
-     * Unit test of GoBlockTest.createOnEnterEffect()
+     * Unit test of GoBlock.createOnEnterEffect()
      */
     @Test
     void createOnEnterEffect() {

@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Unit tests of ConditionalBlock
+ */
 class ConditionalBlockTest {
 
     ConditionalBlock conditionalBlock;
@@ -33,7 +36,7 @@ class ConditionalBlockTest {
      */
     @Test
     void goToTestTrue() {
-        playerA.setStatus(Player.Status.HEALTHY);
+        playerA.setStatus(Player.Status.NORMAL);
         OnLandEffect onLandEffect = conditionalBlock.createOnLandEffect(playerA);
         onLandEffect.onLand();
         assertEquals(-central.getRent(), playerA.getAmount());
@@ -58,7 +61,7 @@ class ConditionalBlockTest {
 
         @Override
         public boolean GoTo(Player player) {
-            return player.getStatus() == Player.Status.HEALTHY;
+            return player.getStatus() == Player.Status.NORMAL;
         }
     }
 

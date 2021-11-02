@@ -9,7 +9,7 @@ public class JustVisitingOrInJailBlock extends ConditionalBlock {
 
     @Override
     public boolean GoTo(Player player) {
-        return player.getStatus() == Player.Status.HEALTHY;
+        return player.getStatus() == Player.Status.NORMAL;
     }
 
 

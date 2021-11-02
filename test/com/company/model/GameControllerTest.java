@@ -4,10 +4,11 @@ import com.company.model.component.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
- * Test Case for GameControllerTest
+ * Unit tests for GameControllerTest
  */
 class GameControllerTest {
     Player player;
@@ -17,12 +18,12 @@ class GameControllerTest {
     }
 
     /**
-     * Test Case for GameControllerTest.getResponse()
+     * Unit test for GameControllerTest.getResponse()
      */
     @Test
     void getResponse() {
-        assertEquals(Player.Response.YES, player.getResponse("Yes"));// Test response is yes
-        assertEquals(Player.Response.NO, player.getResponse("No"));// Test response is no
-        assertNull(player.getResponse("Unknown Response"));// Test response is error
+        assertEquals(Player.Response.YES, player.getResponse("Yes")); // Test response is yes
+        assertEquals(Player.Response.NO, player.getResponse("No")); // Test response is no
+        assertNull(player.getResponse("Unknown Response")); // Test response is error
     }
 }

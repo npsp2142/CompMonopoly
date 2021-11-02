@@ -146,7 +146,7 @@ public class GameSystem {
     private void onGameEnd() {
         if (isAllOtherPlayerBankrupt()) {
             for (Player player : players) {
-                if (player.getStatus().equals(Player.Status.HEALTHY)) {
+                if (player.getStatus().equals(Player.Status.NORMAL)) {
                     GameDisplay.titleBar(String.format("%s is the winner", player.getName()));
                     break;
                 }

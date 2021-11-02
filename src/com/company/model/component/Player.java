@@ -81,7 +81,7 @@ public class Player {
     }
 
     public void reset() {
-        status = Status.HEALTHY;
+        status = Status.NORMAL;
         amount = DEFAULT_AMOUNT;
     }
 
@@ -117,7 +117,7 @@ public class Player {
         /**
          * Player are healthy.
          */
-        HEALTHY,
+        NORMAL,
         /**
          * Player has no money.
          *

@@ -12,6 +12,10 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
+/**
+ * Unit test of GoToJailBlock
+ */
 class GoToJailBlockTest {
     PlayerLocation playerLocation;
     Player player;

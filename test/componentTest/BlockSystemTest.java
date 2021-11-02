@@ -44,7 +44,7 @@ public class BlockSystemTest {
         Random random = new Random(3);
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");
-        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
+        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
         players = playerFactory.make(names);
         playerA = players.get(0);
 

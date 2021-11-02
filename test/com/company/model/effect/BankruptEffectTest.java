@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit Test case for BankruptEffect
+ * Unit test for BankruptEffect
  */
 class BankruptEffectTest {
 
@@ -18,11 +18,11 @@ class BankruptEffectTest {
     }
 
     /**
-     * Unit Test case for BankruptEffect.onLand()
+     * Unit test for BankruptEffect.onLand()
      */
     @Test
     void onLand() {
-        assertEquals(Player.Status.HEALTHY, player.getStatus()); // Test if the player is bankrupt
+        assertEquals(Player.Status.NORMAL, player.getStatus()); // Test if the player is bankrupt
         assertEquals(Player.Status.BANKRUPT, player.getStatus()); // Test if the player is bankrupt
     }
 }

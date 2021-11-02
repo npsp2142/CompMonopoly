@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Unit tests of PropertyBlock
+ */
 class PropertyBlockTest {
     PropertyBlock propertyBlock;
     Property wanChai;
@@ -22,6 +25,9 @@ class PropertyBlockTest {
         propertyBlock = new PropertyBlock("Wan Chai", wanChai);
     }
 
+    /**
+     * Unit test of PropertyBlock.createOnLandEffect()
+     */
     @Test
     void createOnLandEffect() {
         int old = player.getAmount();

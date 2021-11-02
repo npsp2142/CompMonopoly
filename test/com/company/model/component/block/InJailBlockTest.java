@@ -13,6 +13,10 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
+/**
+ * Unit tests of InJailBlock
+ */
 class InJailBlockTest {
 
     InJailBlock inJailBlock;
@@ -72,7 +76,7 @@ class InJailBlockTest {
         player.setResponse(Player.Response.YES); // Pay to lave
         inJailBlock.createOnLandEffect(player).onLand();
         assertEquals(initialAmount - InJailBlock.FINE, player.getAmount());
-        assertEquals(Player.Status.HEALTHY, player.getStatus());
+        assertEquals(Player.Status.NORMAL, player.getStatus());
 
         // Roll to leave successful
         player.setStatus(Player.Status.GROUNDED);
@@ -80,7 +84,7 @@ class InJailBlockTest {
         rolls = new int[]{2, 2};
         inJailBlock.setDiceRolls(rolls);
         inJailBlock.createOnLandEffect(player).onLand();
-        assertEquals(Player.Status.HEALTHY, player.getStatus());
+        assertEquals(Player.Status.NORMAL, player.getStatus());
 
         // Roll to leave failed 3 times
         player.setAmount(initialAmount);
@@ -97,7 +101,7 @@ class InJailBlockTest {
         inJailBlock.setDiceRolls(rolls);
         inJailBlock.createOnLandEffect(player).onLand();
         assertEquals(initialAmount - InJailBlock.FINE, player.getAmount());
-        assertEquals(Player.Status.HEALTHY, player.getStatus());
+        assertEquals(Player.Status.NORMAL, player.getStatus());
 
         // Roll to leave success at the 3rd time
         player.setAmount(initialAmount);
@@ -114,6 +118,6 @@ class InJailBlockTest {
         inJailBlock.setDiceRolls(rolls);
         inJailBlock.createOnLandEffect(player).onLand();
         assertEquals(initialAmount, player.getAmount());
-        assertEquals(Player.Status.HEALTHY, player.getStatus());
+        assertEquals(Player.Status.NORMAL, player.getStatus());
     }
 }

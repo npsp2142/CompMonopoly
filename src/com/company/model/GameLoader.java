@@ -38,7 +38,8 @@ public class GameLoader {
         players.clear();
         playerLocation.getPlayers().clear();
 
-        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.HEALTHY, Player.DEFAULT_AMOUNT);
+        // Load player
+        PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
 
         for (PlayerSave playerSave : playerSaves) {  // Load every player in save file
             Player player = playerFactory.make(playerSave.getName(), playerSave.getStatus(), playerSave.getAmount());
@@ -46,7 +47,7 @@ public class GameLoader {
             playerSavePlayerHashMap.put(playerSave, player);
         }
 
-        // properties
+        // Load properties
         for (Property property : properties) { // Clear all owner
             property.reset();
         }
@@ -60,8 +61,7 @@ public class GameLoader {
             }
         }
 
-        // location
-
+        // Load location
         for (PlayerSave playerSave : locationSave.getLocation().keySet()) { // Move every player to the destination.
             playerLocation.setStartLocation();
             playerLocation.moveTo(playerSavePlayerHashMap.get(playerSave), locationSave.getLocation().get(playerSave).getName());
