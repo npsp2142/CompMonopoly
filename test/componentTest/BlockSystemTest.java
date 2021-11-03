@@ -132,30 +132,6 @@ public class BlockSystemTest {
 
     }
 
-    /**
-     * Unit test of BlockSystem.InJail()
-     */
-    @Test
-    public void InJail() {
-        new GameDisplay(System.out);
-        MoveEffect effect;
-        Player.NEED_PROMPT = false;
-        playerA.setResponse(Player.Response.NO);
-        playerLocation.moveStep(playerA, 1);
-        assert (inJailRoundCounter.get(playerA) == 0);
-
-        effect = new MoveEffect("", playerA, playerA.roll(2), playerLocation);
-        effect.onLand();
-        assert (inJailRoundCounter.get(playerA) == 1);
-
-        effect = new MoveEffect("", playerA, playerA.roll(2), playerLocation);
-        effect.onLand();
-        assert (inJailRoundCounter.get(playerA) == 2);
-
-        effect = new MoveEffect("", playerA, playerA.roll(2), playerLocation);
-        effect.onLand();
-        assert (inJailRoundCounter.get(playerA) == 0);
-    }
 
     /**
      * throws IOException

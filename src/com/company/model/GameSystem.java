@@ -65,11 +65,15 @@ public class GameSystem {
     }
 
     private void resetObservers() {
-        for (String observerName : blockObservers.keySet()) {
-            blockObservers.get(observerName).reset();
+        if (blockObservers != null) {
+            for (String observerName : blockObservers.keySet()) {
+                blockObservers.get(observerName).reset();
+            }
         }
-        for (String observerName : playerObservers.keySet()) {
-            playerObservers.get(observerName).reset();
+        if (playerObservers != null) {
+            for (String observerName : playerObservers.keySet()) {
+                playerObservers.get(observerName).reset();
+            }
         }
     }
 
@@ -186,14 +190,18 @@ public class GameSystem {
 
         GameSaveFactory gameSaveFactory = new GameSaveFactory(
                 players, properties, playerLocation, round, currentPlayer, random);
-        gameSaveFactory.setBlockVisitObserver((BlockVisitObserver) blockObservers.get(BlockVisitObserver.DEFAULT_NAME));
-        gameSaveFactory.setPathObserver((PathObserver) playerObservers.get(PathObserver.DEFAULT_NAME));
+
+        if (blockObservers != null) {
+            gameSaveFactory.setBlockVisitObserver((BlockVisitObserver) blockObservers.get(BlockVisitObserver.DEFAULT_NAME));
+        }
+        if (playerObservers != null) {
+            gameSaveFactory.setPathObserver((PathObserver) playerObservers.get(PathObserver.DEFAULT_NAME));
+        }
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_FILE_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(gameSaveFactory.make());
-            GameDisplay.infoMessage("File written - " + DEFAULT_FILE_NAME);
             objectOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -206,7 +214,6 @@ public class GameSystem {
             FileInputStream fileInputStream = new FileInputStream(DEFAULT_FILE_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             save = (GameSave) objectInputStream.readObject();
-            GameDisplay.infoMessage("Game Save File loaded - " + DEFAULT_FILE_NAME);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

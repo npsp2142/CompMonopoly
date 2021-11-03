@@ -17,6 +17,9 @@ public class BankruptEffect extends Effect implements OnLandEffect {
     @Override
     public void onLand() {
         notifyEffectSubscribers();
+        if (player.getAmount() > 0) {
+            return;
+        }
         player.setBankruptStatus();
         for (AbandonPropertyEffect abandonPropertyEffect : abandonPropertyEffects) {
             abandonPropertyEffect.onLand();
