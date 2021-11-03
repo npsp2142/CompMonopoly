@@ -30,7 +30,6 @@ class GameSystemTest {
     NoEffectBlock noEffectBlockC;
     NoEffectBlock noEffectBlockD;
     int customAmount;
-    GameDisplay gameDisplay;
 
     @BeforeEach
     void setUp() {

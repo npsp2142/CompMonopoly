@@ -1,7 +1,5 @@
-package componentTest;
+package com.company.model.effect;
 
-import com.company.Main;
-import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.PlayerFactory;
 import com.company.model.component.Board;
@@ -12,18 +10,14 @@ import com.company.model.component.block.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-/**
- * Unit test of BlockSystem
- */
-public class BlockSystemTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class GoJailEffectTest {
+
     Board board;
     PlayerLocation playerLocation;
     ArrayList<Player> players;
@@ -87,65 +81,15 @@ public class BlockSystemTest {
         playerLocation.setStartLocation();
     }
 
-    /**
-     * Unit test of BlockSystem.MoveStepTest()
-     */
     @Test
-    public void MoveStepTest() {
-        playerLocation.moveStep(playerA, 3);
-        assert (playerA.getCurrentLocation(playerLocation).equals(wanChaiBlock));
+    void onLand() {
+        // Test that the effect should move the player to jail, and make the player no move.
+        playerLocation.moveTo(playerA, centralBlock);
+        SetGroundedEffect setGroundedEffect = new SetGroundedEffect("No move", playerA);
+        TeleportEffect teleportEffect = new TeleportEffect("Go Jail",
+                playerA, playerLocation, justVisitingOrInJailBlock, false);
+        GoJailEffect goJailEffect = new GoJailEffect("Move to jail", setGroundedEffect, teleportEffect);
+        goJailEffect.onLand();
+        assertEquals(justVisitingOrInJailBlock, playerA.getCurrentLocation(playerLocation));
     }
-
-    /**
-     * Unit test of BlockSystem.MoveToBlockTest()
-     */
-    @Test
-    public void MoveToBlockTest() {
-        playerLocation.moveTo(playerA, justVisitingOrInJailBlock, true);
-        assert (playerA.getCurrentLocation(playerLocation).equals(justVisitingOrInJailBlock));
-    }
-
-
-    /**
-     * Unit test of BlockSystem.GoToJail()
-     */
-    @Test
-    public void GoToJail() {
-        Player.NEED_PROMPT = false;
-        playerA.setResponse(Player.Response.YES);
-        playerLocation.moveStep(playerA, 1);
-        Block block = playerA.getCurrentLocation(playerLocation);
-        assert (block.equals(justVisitingOrInJailBlock));
-
-    }
-
-    /**
-     * Unit test of BlockSystem.SetInJail()
-     */
-    @Test
-    public void SetInJail() {
-        Player.NEED_PROMPT = false;
-        playerA.setResponse(Player.Response.YES);
-        playerLocation.moveStep(playerA, 1);
-        assert (playerA.getStatus().equals(Player.Status.GROUNDED));
-
-    }
-
-
-    /**
-     * throws IOException
-     */
-    @Test
-    public void Test() throws IOException {
-        byte[] data = "123,456,789,123,456,789\n".getBytes();
-
-        InputStream input = new ByteArrayInputStream(data);
-
-        FileOutputStream fileOutputStream = new FileOutputStream("tmp/output.txt");
-        CompMonopolyApplication compMonopolyApplication = Main.createGameApplication(input, fileOutputStream);
-        compMonopolyApplication.run();
-        GameDisplay.flush();
-    }
-
-
 }

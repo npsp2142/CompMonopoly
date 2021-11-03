@@ -28,13 +28,11 @@ class AbandonPropertyEffectTest {
      */
     @Test
     void onLand() {
-        // Test that someone own the property
+        // Test that the effect should change the property ownership to no one.
         wanChai.setOwner(player);
         assertEquals(player, wanChai.getOwner());
         abandonPropertyEffect = new AbandonPropertyEffect("Bankrupt", wanChai);
         abandonPropertyEffect.onLand();
-
-        // Test that no one own the property
         assertNull(wanChai.getOwner());
     }
 }

@@ -30,13 +30,11 @@ class BankruptEffectTest {
      */
     @Test
     void onLand() {
+        // Test that the effect should change player status to BANKRUPT
         AbandonPropertyEffect abandonPropertyEffect = new AbandonPropertyEffect("Unowned Property", wanChai);
         ArrayList<AbandonPropertyEffect> abandonPropertyEffects = new ArrayList<>();
         abandonPropertyEffects.add(abandonPropertyEffect);
         BankruptEffect bankruptEffect = new BankruptEffect("Bankrupt", player, abandonPropertyEffects);
-        bankruptEffect.onLand();
-        assertEquals(Player.Status.NORMAL, player.getStatus()); // Test if the player is bankrupt
-        player.setAmount(0);
         bankruptEffect.onLand();
         assertEquals(Player.Status.BANKRUPT, player.getStatus()); // Test if the player is bankrupt
     }
