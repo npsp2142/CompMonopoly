@@ -1,4 +1,4 @@
-package componentTest;
+package com.company.model.effect;
 
 import com.company.model.GameDisplay;
 import com.company.model.PlayerFactory;
@@ -7,7 +7,6 @@ import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.Property;
 import com.company.model.component.block.*;
-import com.company.model.effect.MoveEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,40 +14,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-/**
- * Unit test of JailTest
- */
-public class JailTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class PayToLeaveJailEffectTest {
+
     Board board;
     PlayerLocation playerLocation;
     ArrayList<Player> players;
-    GoBlock goBlock;
     PropertyBlock centralBlock;
     PropertyBlock wanChaiBlock;
     NoEffectBlock justVisitingBlock;
-    InJailBlock inJailBlock;
+    JailBlock jailBlock;
     GoToJailBlock goToJailBlock;
     JustVisitingOrInJailBlock justVisitingOrInJailBlock;
+    Player playerA;
     HashMap<Player, Integer> inJailRoundCounter;
+    NoEffectBlock noEffectBlock;
 
-    /**
-     * Unit test of JailTest.setUp()
-     */
     @BeforeEach
     void setUp() {
-
         new GameDisplay(System.out);
-
-        players = new ArrayList<>();
-        Random random = new Random(4);
+        Random random = new Random(3);
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");
         PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
         players = playerFactory.make(names);
-
-        goBlock = new GoBlock("Go");
-        Player playerA = players.get(0);
-        Block startBlock = goBlock;
+        playerA = players.get(0);
+        playerA.setAmount(Player.DEFAULT_AMOUNT);
+        noEffectBlock = new NoEffectBlock("No Effect");
+        Block startBlock = noEffectBlock;
         board = new Board();
         playerLocation = new PlayerLocation(board, players, startBlock);
 
@@ -59,46 +53,41 @@ public class JailTest {
         justVisitingBlock = new NoEffectBlock("Just Visiting");
         inJailRoundCounter = new HashMap<>();
         inJailRoundCounter.put(playerA, 0);
-        inJailBlock = new InJailBlock("In Jail", playerLocation, inJailRoundCounter);
+        jailBlock = new JailBlock("In Jail", playerLocation, inJailRoundCounter);
         justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
-                justVisitingBlock, inJailBlock
+                justVisitingBlock, jailBlock
         );
         goToJailBlock = new GoToJailBlock("Go To Jail", playerLocation, justVisitingOrInJailBlock);
 
-
-        board.addBlock(goBlock);
+        board.addBlock(noEffectBlock);
         board.addBlock(centralBlock);
         board.addBlock(wanChaiBlock);
         board.addBlock(justVisitingOrInJailBlock);
         board.addBlock(goToJailBlock);
 
-        board.addPath(goBlock, goToJailBlock);
+        board.addPath(noEffectBlock, goToJailBlock);
         board.addPath(goToJailBlock, centralBlock);
         board.addPath(centralBlock, wanChaiBlock);
         board.addPath(wanChaiBlock, justVisitingOrInJailBlock);
-        board.addPath(justVisitingOrInJailBlock, goBlock);
+        board.addPath(justVisitingOrInJailBlock, noEffectBlock);
 
         playerLocation.setStartLocation();
-
     }
 
-    /**
-     * Unit test of JailTest.RollToLeaveJailAtFirstRound()
-     */
     @Test
-    public void RollToLeaveJailAtFirstRound() {
-        new GameDisplay(System.out);
-        MoveEffect effect;
-        Player.NEED_PROMPT = false;
-        Player playerA = players.get(0);
-        playerA.setResponse(Player.Response.NO);
-        playerLocation.moveStep(playerA, 1);
-        assert (inJailRoundCounter.get(playerA) == 0);
+    void onLand() {
+        // Test that the effect should reduce player fine, and move the player
+        playerLocation.moveTo(playerA, justVisitingOrInJailBlock);
+        playerA.setStatus(Player.Status.GROUNDED);
+        LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay fine", playerA, JailBlock.FINE);
+        CureEffect cureEffect = new CureEffect("You can move", playerA);
+        int[] steps = new int[]{1};
 
-        effect = new MoveEffect("", playerA, playerA.roll(2), playerLocation);
-        effect.onLand();
-        assert (inJailRoundCounter.get(playerA) == 0);
+        MoveEffect moveEffect = new MoveEffect("Move some steps", playerA, steps, playerLocation);
+        PayToLeaveJailEffect payToLeaveJailEffect = new PayToLeaveJailEffect("Pay to leave jail", playerA, loseMoneyEffect, cureEffect, moveEffect, inJailRoundCounter);
+        payToLeaveJailEffect.triggerOnLand();
+        assertEquals(Player.Status.NORMAL, playerA.getStatus());
+        assertEquals(Player.DEFAULT_AMOUNT - JailBlock.FINE, playerA.getAmount());
+        assertEquals(noEffectBlock, playerA.getCurrentLocation(playerLocation));
     }
-
-
 }

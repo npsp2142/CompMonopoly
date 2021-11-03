@@ -30,19 +30,19 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
         if (dices[0] == dices[1]) { // If roll Double
-            cureEffect.onLand();
+            cureEffect.triggerOnLand();
             roundCounter.replace(player, 0);
-            moveEffect.onLand();
+            moveEffect.triggerOnLand();
             return;
         }
         if (roundCounter.get(player) < MAX_STAY - 1) { // If still need in jail this turn
             roundCounter.replace(player, roundCounter.get(player) + 1);
             return;
         }
-        payToLeaveJailEffect.onLand();
+        payToLeaveJailEffect.triggerOnLand();
     }
 
     public String getDescription() {

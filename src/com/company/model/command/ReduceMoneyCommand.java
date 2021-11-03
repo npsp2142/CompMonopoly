@@ -12,7 +12,7 @@ public class ReduceMoneyCommand implements Command {
 
     @Override
     public void execute() {
-        loseMoneyEffect.onLand();
+        loseMoneyEffect.triggerOnLand();
     }
 
     @Override

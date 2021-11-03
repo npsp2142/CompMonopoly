@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Unit tests of InJailBlock
  */
-class InJailBlockTest {
+class JailBlockTest {
 
-    InJailBlock inJailBlock;
+    JailBlock jailBlock;
     Player player;
     PlayerLocation playerLocation;
     int initialAmount;
@@ -44,9 +44,9 @@ class InJailBlockTest {
         playerLocation = new PlayerLocation(board, players, noEffectBlock);
         playerLocation.setStartLocation();
         Map<Player, Integer> roundCounter = new HashMap<>();
-        inJailBlock = new InJailBlock("In Jail", playerLocation, roundCounter);
+        jailBlock = new JailBlock("In Jail", playerLocation, roundCounter);
         roundCounter.put(player, 0);
-        InJailBlock.IS_RANDOM = false;
+        JailBlock.IS_RANDOM = false;
         board.addBlock(noEffectBlock);
         board.addBlock(noEffectBlockA);
         board.addBlock(noEffectBlockB);
@@ -54,9 +54,9 @@ class InJailBlockTest {
         board.addBlock(noEffectBlockD);
         board.addBlock(noEffectBlockE);
         board.addBlock(noEffectBlockF);
-        board.addBlock(inJailBlock);
-        board.addPath(noEffectBlock, inJailBlock);
-        board.addPath(inJailBlock, noEffectBlockA);
+        board.addBlock(jailBlock);
+        board.addPath(noEffectBlock, jailBlock);
+        board.addPath(jailBlock, noEffectBlockA);
         board.addPath(noEffectBlockA, noEffectBlockB);
         board.addPath(noEffectBlockB, noEffectBlockC);
         board.addPath(noEffectBlockC, noEffectBlockD);
@@ -74,16 +74,16 @@ class InJailBlockTest {
 
         // Pay to leave
         player.setResponse(Player.Response.YES); // Pay to lave
-        inJailBlock.createOnLandEffect(player).onLand();
-        assertEquals(initialAmount - InJailBlock.FINE, player.getAmount());
+        jailBlock.createOnLandEffect(player).triggerOnLand();
+        assertEquals(initialAmount - JailBlock.FINE, player.getAmount());
         assertEquals(Player.Status.NORMAL, player.getStatus());
 
         // Roll to leave successful
         player.setStatus(Player.Status.GROUNDED);
         player.setResponse(Player.Response.NO);
         rolls = new int[]{2, 2};
-        inJailBlock.setDiceRolls(rolls);
-        inJailBlock.createOnLandEffect(player).onLand();
+        jailBlock.setDiceRolls(rolls);
+        jailBlock.createOnLandEffect(player).triggerOnLand();
         assertEquals(Player.Status.NORMAL, player.getStatus());
 
         // Roll to leave failed 3 times
@@ -91,16 +91,16 @@ class InJailBlockTest {
         player.setStatus(Player.Status.GROUNDED);
         player.setResponse(Player.Response.NO);
         rolls = new int[]{2, 3};
-        inJailBlock.setDiceRolls(rolls);
-        inJailBlock.createOnLandEffect(player).onLand();
+        jailBlock.setDiceRolls(rolls);
+        jailBlock.createOnLandEffect(player).triggerOnLand();
         assertEquals(Player.Status.GROUNDED, player.getStatus());
-        inJailBlock.setDiceRolls(rolls);
-        inJailBlock.createOnLandEffect(player).onLand();
+        jailBlock.setDiceRolls(rolls);
+        jailBlock.createOnLandEffect(player).triggerOnLand();
         assertEquals(Player.Status.GROUNDED, player.getStatus());
         rolls = new int[]{2, 3};
-        inJailBlock.setDiceRolls(rolls);
-        inJailBlock.createOnLandEffect(player).onLand();
-        assertEquals(initialAmount - InJailBlock.FINE, player.getAmount());
+        jailBlock.setDiceRolls(rolls);
+        jailBlock.createOnLandEffect(player).triggerOnLand();
+        assertEquals(initialAmount - JailBlock.FINE, player.getAmount());
         assertEquals(Player.Status.NORMAL, player.getStatus());
 
         // Roll to leave success at the 3rd time
@@ -108,15 +108,15 @@ class InJailBlockTest {
         player.setStatus(Player.Status.GROUNDED);
         player.setResponse(Player.Response.NO);
         rolls = new int[]{2, 3};
-        inJailBlock.setDiceRolls(rolls);
-        inJailBlock.createOnLandEffect(player).onLand();
+        jailBlock.setDiceRolls(rolls);
+        jailBlock.createOnLandEffect(player).triggerOnLand();
         assertEquals(Player.Status.GROUNDED, player.getStatus());
-        inJailBlock.setDiceRolls(rolls);
-        inJailBlock.createOnLandEffect(player).onLand();
+        jailBlock.setDiceRolls(rolls);
+        jailBlock.createOnLandEffect(player).triggerOnLand();
         assertEquals(Player.Status.GROUNDED, player.getStatus());
         rolls = new int[]{2, 2};
-        inJailBlock.setDiceRolls(rolls);
-        inJailBlock.createOnLandEffect(player).onLand();
+        jailBlock.setDiceRolls(rolls);
+        jailBlock.createOnLandEffect(player).triggerOnLand();
         assertEquals(initialAmount, player.getAmount());
         assertEquals(Player.Status.NORMAL, player.getStatus());
     }

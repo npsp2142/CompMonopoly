@@ -29,7 +29,7 @@ class IncomeTaxBlockTest {
     @Test
     void createOnLandEffect() {
         int oldAmount = player.getAmount();
-        incomeTaxBlock.createOnLandEffect(player).onLand();
+        incomeTaxBlock.createOnLandEffect(player).triggerOnLand();
         int diff = player.getAmount() - oldAmount;
         assertEquals(-initialAmount * incomeTaxBlock.INCOME_TAX_RATE, diff);
     }

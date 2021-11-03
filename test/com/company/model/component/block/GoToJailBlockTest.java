@@ -31,9 +31,9 @@ class GoToJailBlockTest {
         GoBlock goBlock = new GoBlock("Go");
         playerLocation = new PlayerLocation(board, players, goBlock);
         playerLocation.setStartLocation();
-        InJailBlock inJailBlock = new InJailBlock("In Jail", playerLocation, new HashMap<>());
+        JailBlock jailBlock = new JailBlock("In Jail", playerLocation, new HashMap<>());
         NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting");
-        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, inJailBlock);
+        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
         goToJailBlock = new GoToJailBlock("Go Jail", playerLocation, justVisitingOrInJailBlock);
     }
 
@@ -43,7 +43,7 @@ class GoToJailBlockTest {
     @Test
     void createOnLandEffect() {
         OnLandEffect onLandEffect = goToJailBlock.createOnLandEffect(player);
-        onLandEffect.onLand();
+        onLandEffect.triggerOnLand();
         assertEquals(justVisitingOrInJailBlock, playerLocation.getCurrentLocation(player));
         assertEquals(Player.Status.GROUNDED, player.getStatus());
     }

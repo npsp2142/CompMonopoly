@@ -11,7 +11,7 @@ public class CureEffect extends Effect implements OnLandEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
         player.setStatus(Player.Status.NORMAL);
     }

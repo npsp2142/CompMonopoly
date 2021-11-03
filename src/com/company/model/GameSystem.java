@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class GameSystem {
     public static final int MAX_TURN = 100;
-    public static final String DEFAULT_FILE_NAME = "tmp\\save_file.txt";
+    public static String DEFAULT_FILE_NAME = "tmp\\save_file.txt";
 
     private final Board board;
     private final ArrayList<Player> players;
@@ -121,7 +121,7 @@ public class GameSystem {
             }
             BankruptEffect bankruptEffect = new BankruptEffect("Bankrupt", currentPlayer, abandonPropertyEffects);
             bankruptEffect.setEffectObservers(getEffectObservers());
-            bankruptEffect.onLand();
+            bankruptEffect.triggerOnLand();
         }
     }
 

@@ -12,13 +12,13 @@ public class GainMoneyEffect extends Effect implements OnLandEffect, OnEnterEffe
         this.amount = amount;
     }
 
-    public void onLand() {
+    public void triggerOnLand() {
         player.addAmount(amount);
         notifyEffectSubscribers();
     }
 
     @Override
-    public void onEnter() {
+    public void triggerOnEnter() {
         player.addAmount(amount);
         notifyEffectSubscribers();
     }

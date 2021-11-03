@@ -19,12 +19,12 @@ public class MoveEffect extends Effect implements OnLandEffect, Describable {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
         if (player.getStatus().equals(Player.Status.GROUNDED)) { // if no move
             Block block = player.getCurrentLocation(playerLocation);
             OnLandEffect onLandEffect = block.createOnLandEffect(player);
-            onLandEffect.onLand();
+            onLandEffect.triggerOnLand();
             block.notifyBlockSubscribers();
             return;
         }

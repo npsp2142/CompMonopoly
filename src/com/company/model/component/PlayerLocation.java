@@ -38,13 +38,13 @@ public class PlayerLocation implements Serializable {
         for (int i = 0; i < step; i++) {
             currentBlock = board.getNextBlock(currentBlock);
             OnEnterEffect onEnterEffect = currentBlock.createOnEnterEffect(player);
-            onEnterEffect.onEnter();
+            onEnterEffect.triggerOnEnter();
         }
 
         currentBlock.notifyBlockSubscribers();
         location.replace(player, location.get(player), currentBlock);
         OnLandEffect effect = currentBlock.createOnLandEffect(player);
-        effect.onLand();
+        effect.triggerOnLand();
     }
 
     public Block getCurrentLocation(Player player) {
@@ -55,7 +55,7 @@ public class PlayerLocation implements Serializable {
         block.notifyBlockSubscribers();
         location.replace(player, block);
         if (isTrigger) {
-            block.createOnLandEffect(player).onLand();
+            block.createOnLandEffect(player).triggerOnLand();
         }
     }
 

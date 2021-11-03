@@ -26,7 +26,7 @@ class CureEffectTest {
         // Test that the effect should change the player back to normal.
         player.setStatus(Player.Status.GROUNDED);
         CureEffect cureEffect = new CureEffect("back to normal", player);
-        cureEffect.onLand();
+        cureEffect.triggerOnLand();
         assertEquals(Player.Status.NORMAL, player.getStatus());
     }
 }

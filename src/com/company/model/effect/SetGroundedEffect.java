@@ -11,7 +11,7 @@ public class SetGroundedEffect extends Effect implements OnLandEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         player.setStatus(Player.Status.GROUNDED);
         notifyEffectSubscribers();
     }

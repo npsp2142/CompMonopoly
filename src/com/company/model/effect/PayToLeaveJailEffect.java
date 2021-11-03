@@ -25,12 +25,12 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
-        loseMoneyEffect.onLand();
-        cureEffect.onLand();
+        loseMoneyEffect.triggerOnLand();
+        cureEffect.triggerOnLand();
         roundCounter.replace(player, 0);
-        moveEffect.onLand();
+        moveEffect.triggerOnLand();
     }
 
     public String getDescription() {

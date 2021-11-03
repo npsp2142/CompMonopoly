@@ -38,7 +38,7 @@ class ConditionalBlockTest {
     void goToTestTrue() {
         playerA.setStatus(Player.Status.NORMAL);
         OnLandEffect onLandEffect = conditionalBlock.createOnLandEffect(playerA);
-        onLandEffect.onLand();
+        onLandEffect.triggerOnLand();
         assertEquals(-central.getRent(), playerA.getAmount());
     }
 
@@ -49,7 +49,7 @@ class ConditionalBlockTest {
     void goToTestFalse() {
         playerA.setStatus(Player.Status.GROUNDED);
         OnLandEffect onLandEffect = conditionalBlock.createOnLandEffect(playerA);
-        onLandEffect.onLand();
+        onLandEffect.triggerOnLand();
         assertEquals(-wanChai.getRent(), playerA.getAmount());
     }
 

@@ -28,7 +28,7 @@ class BuyPropertyEffectTest {
         player.setAmount(customAmount);
         loseMoneyEffect = new LoseMoneyEffect("Pay ownership fee", player, wanChai.getPrice());
         buyPropertyEffect = new BuyPropertyEffect("Buy Property", player, wanChai, loseMoneyEffect);
-        buyPropertyEffect.onLand();
+        buyPropertyEffect.triggerOnLand();
         assertEquals(player, wanChai.getOwner());
         assertEquals(customAmount - wanChai.getPrice(), player.getAmount());
     }

@@ -31,7 +31,7 @@ public class BlockSystemTest {
     PropertyBlock centralBlock;
     PropertyBlock wanChaiBlock;
     NoEffectBlock justVisitingBlock;
-    InJailBlock inJailBlock;
+    JailBlock jailBlock;
     GoToJailBlock goToJailBlock;
     JustVisitingOrInJailBlock justVisitingOrInJailBlock;
     Player playerA;
@@ -66,9 +66,9 @@ public class BlockSystemTest {
         justVisitingBlock = new NoEffectBlock("Just Visiting");
         inJailRoundCounter = new HashMap<>();
         inJailRoundCounter.put(playerA, 0);
-        inJailBlock = new InJailBlock("In Jail", playerLocation, inJailRoundCounter);
+        jailBlock = new JailBlock("In Jail", playerLocation, inJailRoundCounter);
         justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
-                justVisitingBlock, inJailBlock
+                justVisitingBlock, jailBlock
         );
         goToJailBlock = new GoToJailBlock("Go To Jail", playerLocation, justVisitingOrInJailBlock);
 

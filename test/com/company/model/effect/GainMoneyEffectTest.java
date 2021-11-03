@@ -22,7 +22,7 @@ class GainMoneyEffectTest {
     void onLand() {
         // Test that the effect should add the player some money
         GainMoneyEffect gainMoneyEffect = new GainMoneyEffect("Gain Some Money", player, amountToBeAdded);
-        gainMoneyEffect.onLand();
+        gainMoneyEffect.triggerOnLand();
         assertEquals(initialAmount + amountToBeAdded, player.getAmount());
     }
 }

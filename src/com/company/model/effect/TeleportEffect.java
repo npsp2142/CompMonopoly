@@ -19,8 +19,16 @@ public class TeleportEffect extends Effect implements OnLandEffect {
         this.triggerOnLand = triggerOnLand;
     }
 
+    public TeleportEffect(String name, Player player, PlayerLocation playerLocation, Block block) {
+        super(name);
+        this.player = player;
+        this.playerLocation = playerLocation;
+        this.block = block;
+        this.triggerOnLand = false;
+    }
+
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
         playerLocation.moveTo(player, block, triggerOnLand);
     }

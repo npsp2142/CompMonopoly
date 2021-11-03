@@ -49,7 +49,10 @@ class GameSystemTest {
         players.add(playerA);
         players.add(playerB);
         Board board = new Board();
+        board.addBlock(noEffectBlockA);
         board.addBlock(noEffectBlockB);
+        board.addBlock(noEffectBlockC);
+        board.addBlock(noEffectBlockD);
         board.addPath(noEffectBlockA, noEffectBlockB);
         board.addPath(noEffectBlockB, noEffectBlockC);
         board.addPath(noEffectBlockC, noEffectBlockD);
@@ -60,6 +63,7 @@ class GameSystemTest {
         new CompMonopolyApplication(new CommandFactory(gameSystem));
         new GameDisplay(System.out);
         gameSystem.setCurrentPlayer(playerA);
+        GameSystem.DEFAULT_FILE_NAME = "tmp/load_file_test";
 
     }
 
@@ -115,6 +119,8 @@ class GameSystemTest {
         playerLocation.moveTo(playerA, noEffectBlockB);
         playerA.setAmount(customAmount);
         playerA.setStatus(Player.Status.GROUNDED);
+        int savedAmount = playerA.getAmount();
+        Player.Status savedStatus = playerA.getStatus();
         gameSystem.saveGame();
         gameSystem.loadGame();
         Player loadedPlayer = null;
@@ -126,8 +132,8 @@ class GameSystemTest {
         }
         // Test if the save file loads the correct player data.
         assert (loadedPlayer != null);
-        assertEquals(playerA.getAmount(), loadedPlayer.getAmount());
-        assertEquals(playerA.getStatus(), loadedPlayer.getStatus());
+        assertEquals(savedAmount, loadedPlayer.getAmount());
+        assertEquals(savedStatus, loadedPlayer.getStatus());
         assertEquals(noEffectBlockB, playerLocation.getCurrentLocation(loadedPlayer));
         // Test if the game starts after loading.
         assertEquals(CompMonopolyApplication.Status.PLAYING, CompMonopolyApplication.instance.getStatus());

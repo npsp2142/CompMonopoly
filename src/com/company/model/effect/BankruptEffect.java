@@ -15,11 +15,11 @@ public class BankruptEffect extends Effect implements OnLandEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
         player.setBankruptStatus();
         for (AbandonPropertyEffect abandonPropertyEffect : abandonPropertyEffects) {
-            abandonPropertyEffect.onLand();
+            abandonPropertyEffect.triggerOnLand();
         }
     }
 

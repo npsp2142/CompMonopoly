@@ -17,7 +17,7 @@ public class AbandonPropertyEffect extends Effect implements OnLandEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         property.setOwner(null);
     }
 }

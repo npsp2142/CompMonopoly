@@ -39,4 +39,5 @@ public abstract class Effect implements Describable {
     public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
         this.effectObservers = effectObservers;
     }
+
 }

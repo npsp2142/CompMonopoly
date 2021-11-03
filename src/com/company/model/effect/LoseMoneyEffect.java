@@ -12,7 +12,7 @@ public class LoseMoneyEffect extends Effect implements OnLandEffect {
         this.amount = amount;
     }
 
-    public void onLand() {
+    public void triggerOnLand() {
         player.addAmount(-amount);
         notifyEffectSubscribers();
     }

@@ -32,7 +32,7 @@ class PropertyBlockTest {
     void createOnLandEffect() {
         int old = player.getAmount();
         player.setResponse(Player.Response.YES);
-        propertyBlock.createOnLandEffect(player).onLand();
+        propertyBlock.createOnLandEffect(player).triggerOnLand();
         assertEquals(player, wanChai.getOwner());
         int diff = old - player.getAmount();
         assertEquals(wanChai.getPrice(), diff);

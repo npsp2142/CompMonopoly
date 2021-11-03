@@ -15,7 +15,7 @@ public class RollCommand implements Command {
 
     @Override
     public void execute() {
-        moveEffect.onLand();
+        moveEffect.triggerOnLand();
         gameSystem.getCurrentPlayer().notifySubscribers();
         gameSystem.endTurn();
     }

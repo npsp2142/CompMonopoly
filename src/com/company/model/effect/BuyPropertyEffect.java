@@ -16,10 +16,10 @@ public class BuyPropertyEffect extends Effect implements OnLandEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
         property.setOwner(player);
-        loseMoneyEffect.onLand();
+        loseMoneyEffect.triggerOnLand();
     }
 
     public String getDescription() {

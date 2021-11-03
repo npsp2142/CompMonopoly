@@ -15,7 +15,7 @@ public class TeleportCommand implements Command {
 
     @Override
     public void execute() {
-        teleportEffect.onLand();
+        teleportEffect.triggerOnLand();
         gameSystem.getCurrentPlayer().notifySubscribers();
         gameSystem.endTurn();
     }

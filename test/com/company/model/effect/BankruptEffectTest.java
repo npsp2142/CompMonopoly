@@ -35,7 +35,7 @@ class BankruptEffectTest {
         ArrayList<AbandonPropertyEffect> abandonPropertyEffects = new ArrayList<>();
         abandonPropertyEffects.add(abandonPropertyEffect);
         BankruptEffect bankruptEffect = new BankruptEffect("Bankrupt", player, abandonPropertyEffects);
-        bankruptEffect.onLand();
+        bankruptEffect.triggerOnLand();
         assertEquals(Player.Status.BANKRUPT, player.getStatus()); // Test if the player is bankrupt
     }
 }

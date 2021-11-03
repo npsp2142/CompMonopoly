@@ -27,7 +27,7 @@ class GoBlockTest {
     @Test
     void createOnEnterEffect() {
         OnEnterEffect onEnterEffect = goBlock.createOnEnterEffect(playerA);
-        onEnterEffect.onEnter();
+        onEnterEffect.triggerOnEnter();
         assertEquals(GoBlock.SALARY, playerA.getAmount());
     }
 

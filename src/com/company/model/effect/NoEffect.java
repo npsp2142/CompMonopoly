@@ -15,12 +15,12 @@ public class NoEffect extends Effect implements OnLandEffect, OnEnterEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
     }
 
     @Override
-    public void onEnter() {
+    public void triggerOnEnter() {
     }
 
     public String getDescription() {

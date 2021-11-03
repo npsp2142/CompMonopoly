@@ -22,7 +22,7 @@ class LoseMoneyEffectTest {
     void onLand() {
         // Test that the effect should reduce the player some money
         LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Lose Some Money", player, amountToBeReduced);
-        loseMoneyEffect.onLand();
+        loseMoneyEffect.triggerOnLand();
         assertEquals(initialAmount - amountToBeReduced, player.getAmount());
     }
 }

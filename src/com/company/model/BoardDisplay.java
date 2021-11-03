@@ -3,7 +3,7 @@ package com.company.model;
 /**
  * To print the game board when user needs.
  */
-public class GameBoard {
+public class BoardDisplay {
     public static void main(String[] args) {
         System.out.println(
                 "______________________________________________________________________________________\r\n" +

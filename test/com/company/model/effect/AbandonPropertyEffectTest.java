@@ -32,7 +32,7 @@ class AbandonPropertyEffectTest {
         wanChai.setOwner(player);
         assertEquals(player, wanChai.getOwner());
         abandonPropertyEffect = new AbandonPropertyEffect("Bankrupt", wanChai);
-        abandonPropertyEffect.onLand();
+        abandonPropertyEffect.triggerOnLand();
         assertNull(wanChai.getOwner());
     }
 }

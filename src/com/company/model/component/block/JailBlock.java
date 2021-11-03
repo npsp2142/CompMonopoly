@@ -6,16 +6,16 @@ import com.company.model.effect.*;
 
 import java.util.Map;
 
-public class InJailBlock extends Block {
+public class JailBlock extends Block {
     public static final int FINE = 150;
     public static boolean IS_RANDOM = true;
     private final PlayerLocation playerLocation;
     private final Map<Player, Integer> roundCounter;
     private int[] diceRolls;
 
-    public InJailBlock(String name,
-                       PlayerLocation playerLocation,
-                       Map<Player, Integer> roundCounter) {
+    public JailBlock(String name,
+                     PlayerLocation playerLocation,
+                     Map<Player, Integer> roundCounter) {
         super(name);
         this.playerLocation = playerLocation;
         this.roundCounter = roundCounter;

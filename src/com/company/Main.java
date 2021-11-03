@@ -83,8 +83,8 @@ public class Main {
         roundCounter.put(players.get(0), 0);
         roundCounter.put(players.get(1), 0);
         roundCounter.put(players.get(2), 0);
-        InJailBlock inJailBlock = new InJailBlock("In Jail", playerLocation, roundCounter);
-        JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, inJailBlock);
+        JailBlock jailBlock = new JailBlock("In Jail", playerLocation, roundCounter);
+        JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
         GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", playerLocation, justVisitingOrInJailBlock);
 
         board.addBlock(goBlock);

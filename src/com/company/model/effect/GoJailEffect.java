@@ -11,10 +11,10 @@ public class GoJailEffect extends Effect implements OnLandEffect {
     }
 
     @Override
-    public void onLand() {
+    public void triggerOnLand() {
         notifyEffectSubscribers();
-        setGroundedEffect.onLand();
-        teleportEffect.onLand();
+        setGroundedEffect.triggerOnLand();
+        teleportEffect.triggerOnLand();
     }
 
     public String getDescription() {
