@@ -62,6 +62,7 @@ public class GameLoader {
         }
 
         // Load location
+        playerLocation.reload();
         for (PlayerSave playerSave : locationSave.getLocation().keySet()) { // Move every player to the destination.
             playerLocation.setStartLocation();
             playerLocation.moveTo(playerSavePlayerHashMap.get(playerSave), locationSave.getLocation().get(playerSave).getName());

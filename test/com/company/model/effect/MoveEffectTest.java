@@ -16,11 +16,9 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GoJailEffectTest {
-
+class MoveEffectTest {
     Board board;
     PlayerLocation playerLocation;
-    ArrayList<Player> players;
     GoBlock goBlock;
     PropertyBlock centralBlock;
     PropertyBlock wanChaiBlock;
@@ -30,6 +28,7 @@ class GoJailEffectTest {
     JustVisitingOrInJailBlock justVisitingOrInJailBlock;
     Player playerA;
     HashMap<Player, Integer> inJailRoundCounter;
+    Property central;
 
     @BeforeEach
     void setUp() {
@@ -38,17 +37,17 @@ class GoJailEffectTest {
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");
         PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
-        players = playerFactory.make(names);
+        ArrayList<Player> players = playerFactory.make(names);
         playerA = players.get(0);
+        playerA.setAmount(Player.DEFAULT_AMOUNT);
 
         goBlock = new GoBlock("Go");
 
         Block startBlock = goBlock;
         board = new Board();
         playerLocation = new PlayerLocation(board, players, startBlock);
-
-        centralBlock = new PropertyBlock("Central",
-                new Property("Central", 800, 90));
+        central = new Property("Central", 800, 90);
+        centralBlock = new PropertyBlock("Central", central);
         wanChaiBlock = new PropertyBlock("Wan Chai",
                 new Property("Wan Chai", 700, 65));
         justVisitingBlock = new NoEffectBlock("Just Visiting");
@@ -77,13 +76,26 @@ class GoJailEffectTest {
 
     @Test
     void onLand() {
-        // Test that the effect should move the player to jail, and make the player no move.
-        playerLocation.moveTo(playerA, centralBlock);
-        SetGroundedEffect setGroundedEffect = new SetGroundedEffect("No move", playerA);
-        TeleportEffect teleportEffect = new TeleportEffect("Go Jail",
-                playerA, playerLocation, justVisitingOrInJailBlock, false);
-        GoJailEffect goJailEffect = new GoJailEffect("Move to jail", setGroundedEffect, teleportEffect);
-        goJailEffect.onLand();
-        assertEquals(justVisitingOrInJailBlock, playerA.getCurrentLocation(playerLocation));
+        int[] steps;
+        MoveEffect moveEffect;
+        // Test that the effect should move the player, and
+        // trigger the effects when the player lands on some block.
+        playerLocation.moveTo(playerA, goBlock);
+        steps = new int[]{2}; // move 2 step
+        moveEffect = new MoveEffect("Move steps", playerA, steps, playerLocation);
+        playerA.setResponse(Player.Response.YES); // player choose to buy property.
+        moveEffect.onLand();
+        assertEquals(centralBlock, playerA.getCurrentLocation(playerLocation));
+        assertEquals(playerA, central.getOwner());
+        assertEquals(Player.DEFAULT_AMOUNT - central.getPrice(), playerA.getAmount());
+
+        // Test that the effect should move the player, and
+        // trigger the effects when the player passes some block.
+        playerLocation.moveTo(playerA, justVisitingOrInJailBlock);
+        steps = new int[]{3}; // move 2 step
+        moveEffect = new MoveEffect("Move steps", playerA, steps, playerLocation);
+        moveEffect.onLand();
+        assertEquals(centralBlock, playerA.getCurrentLocation(playerLocation));
+        assertEquals(Player.DEFAULT_AMOUNT - central.getPrice() + GoBlock.SALARY, playerA.getAmount());
     }
 }

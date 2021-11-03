@@ -114,19 +114,21 @@ class GameSystemTest {
     void loadGame() {
         playerLocation.moveTo(playerA, noEffectBlockB);
         playerA.setAmount(customAmount);
-        playerA.setStatus(Player.Status.BANKRUPT);
-        gameSystem.saveGame();
-
-        playerLocation.moveTo(playerA, noEffectBlockB);
-        playerA.setAmount(customAmount);
         playerA.setStatus(Player.Status.GROUNDED);
         gameSystem.saveGame();
         gameSystem.loadGame();
-        Player loadedPlayer = gameSystem.getPlayers().get(0);
+        Player loadedPlayer = null;
+        for (Player player : gameSystem.getPlayers()) {
+            if (player.getName().equals("Player A")) {
+                loadedPlayer = player;
+                break;
+            }
+        }
         // Test if the save file loads the correct player data.
+        assert (loadedPlayer != null);
         assertEquals(playerA.getAmount(), loadedPlayer.getAmount());
         assertEquals(playerA.getStatus(), loadedPlayer.getStatus());
-        assertEquals(playerLocation.getCurrentLocation(playerA), playerLocation.getCurrentLocation(loadedPlayer));
+        assertEquals(noEffectBlockB, playerLocation.getCurrentLocation(loadedPlayer));
         // Test if the game starts after loading.
         assertEquals(CompMonopolyApplication.Status.PLAYING, CompMonopolyApplication.instance.getStatus());
     }
