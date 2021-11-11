@@ -25,4 +25,12 @@ class GainMoneyEffectTest {
         gainMoneyEffect.triggerOnLand();
         assertEquals(initialAmount + amountToBeAdded, player.getAmount());
     }
+
+    @Test
+    void onEnter() {
+        // Test that the effect should add the player some money
+        GainMoneyEffect gainMoneyEffect = new GainMoneyEffect("Gain Some Money", player, amountToBeAdded);
+        gainMoneyEffect.triggerOnLand();
+        assertEquals(initialAmount + amountToBeAdded, player.getAmount());
+    }
 }

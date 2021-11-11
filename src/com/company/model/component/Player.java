@@ -34,33 +34,34 @@ public class Player {
         this.amount += amount;
     }
 
-    public void setBankruptStatus() {
-        status = Status.BANKRUPT;
+    public void reduceAmount(int amount) {
+        this.amount -= amount;
     }
+
 
     public Status getStatus() {
         return status;
     }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public int getAmount() {
         return amount;
+    }
+    public String getName() {
+        return name;
+    }
+    public Block getCurrentLocation(PlayerLocation playerLocation) {
+        return playerLocation.getCurrentLocation(this);
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
     }
-
-    public String getName() {
-        return name;
+    public void setBankruptStatus() {
+        status = Status.BANKRUPT;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public Block getCurrentLocation(PlayerLocation playerLocation) {
-        return playerLocation.getCurrentLocation(this);
-    }
 
     public int[] roll(int times) {
         int[] result = new int[times];

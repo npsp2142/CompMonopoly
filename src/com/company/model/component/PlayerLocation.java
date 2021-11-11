@@ -67,9 +67,19 @@ public class PlayerLocation implements Serializable {
         moveTo(player, block);
     }
 
-    public void moveTo(Player player, Block block) {
-        block.notifyBlockSubscribers();
-        location.replace(player, block);
+    public void moveTo(Player player, Block destination) {
+        if(!blockExist(destination)) return;
+        destination.notifyBlockSubscribers();
+        location.replace(player, destination);
+    }
+
+    private boolean blockExist(Block destination){
+        for(Block block: board.getBlocks()){
+            if(block.equals(destination)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void reload() {
@@ -80,7 +90,6 @@ public class PlayerLocation implements Serializable {
     public Block getStartBlock() {
         return startBlock;
     }
-
     public ArrayList<Player> getPlayers() {
         return players;
     }

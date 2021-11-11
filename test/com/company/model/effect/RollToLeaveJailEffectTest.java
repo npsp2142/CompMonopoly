@@ -47,17 +47,13 @@ class RollToLeaveJailEffectTest {
         board = new Board();
         playerLocation = new PlayerLocation(board, players, startBlock);
 
-        centralBlock = new PropertyBlock("Central",
-                new Property("Central", 800, 90));
-        wanChaiBlock = new PropertyBlock("Wan Chai",
-                new Property("Wan Chai", 700, 65));
+        centralBlock = new PropertyBlock("Central", new Property("Central", 800, 90));
+        wanChaiBlock = new PropertyBlock("Wan Chai", new Property("Wan Chai", 700, 65));
         justVisitingBlock = new NoEffectBlock("Just Visiting");
         jailRoundCounter = new HashMap<>();
         jailRoundCounter.put(playerA, 0);
         jailBlock = new JailBlock("In Jail", playerLocation, jailRoundCounter);
-        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
-                justVisitingBlock, jailBlock
-        );
+        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
         goToJailBlock = new GoToJailBlock("Go To Jail", playerLocation, justVisitingOrInJailBlock);
 
         board.addBlock(noEffectBlock);

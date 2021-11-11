@@ -4,6 +4,5 @@ import com.company.model.component.block.Block;
 
 public interface BlockObserver {
     void update(Block block);
-
     void reset();
 }
