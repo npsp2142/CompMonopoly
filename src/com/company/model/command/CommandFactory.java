@@ -48,7 +48,7 @@ public class CommandFactory {
                 return new LoadCommand(gameSystem);
             case "quit":
                 return new QuitCommand(CompMonopolyApplication.instance);
-            case "location":
+            case "location": // path and now location
             case "loc":
                 PathObserver blockVisitObserver =
                         (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME);
@@ -77,7 +77,7 @@ public class CommandFactory {
                     return new EmptyCommand(description);
                 }
                 switch (tokens.get(1).toLowerCase()) {
-                    case "-bvc": // visit count
+                    case "-bvc": // bot visit count
                         return new ViewBlockVisitCountCommand((BlockVisitObserver)
                                 gameSystem.getBlockObservers().get(BlockVisitObserver.DEFAULT_NAME));
                     case "-path":
