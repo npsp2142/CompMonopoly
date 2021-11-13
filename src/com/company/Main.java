@@ -19,6 +19,7 @@ import java.util.Random;
 public class Main {
 
     public static CompMonopolyApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
+        // TODO: Customise name, player number
         Random random = new Random(System.currentTimeMillis());
         ArrayList<String> names = new ArrayList<>();
         names.add("Player A");

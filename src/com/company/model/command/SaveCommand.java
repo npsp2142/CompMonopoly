@@ -12,6 +12,7 @@ public class SaveCommand implements Command {
 
     @Override
     public void execute() {
+        // TODO: Add tmp folder
         gameSystem.saveGame();
         CompMonopolyApplication.instance.quitGame();
     }

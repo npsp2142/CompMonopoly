@@ -26,6 +26,7 @@ public class BlockVisitObserver implements BlockObserver {
 
     @Override
     public void update(Block block) {
+        GameDisplay.infoMessage(String.format("You are at %s",block.getColoredName()));
         if (!counter.containsKey(block)) {
             counter.put(block, 1);
             return;

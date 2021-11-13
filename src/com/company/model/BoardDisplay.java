@@ -4,6 +4,7 @@ package com.company.model;
  * To print the game board when user needs.
  */
 public class BoardDisplay {
+    // TODO: Add Command Display
     public static void main(String[] args) {
         System.out.println(
                 "______________________________________________________________________________________\r\n" +
