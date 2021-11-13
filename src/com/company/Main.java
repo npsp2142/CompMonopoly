@@ -11,20 +11,14 @@ import com.company.model.observer.*;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
 
-    public static CompMonopolyApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
+    public static CompMonopolyApplication createGameApplication(ArrayList<String> playerNames,InputStream inputStream, OutputStream outputStream) {
         // TODO: Customise name, player number
         Random random = new Random(System.currentTimeMillis());
-        ArrayList<String> names = new ArrayList<>();
-        names.add("Player A");
-        names.add("Player B");
-        names.add("Player C");
+        ArrayList<String> names = new ArrayList<>(playerNames);
         Map<String, PlayerObserver> playerObservers = new HashMap<>();
         PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
         ArrayList<Player> players = playerFactory.make(names);
@@ -81,9 +75,9 @@ public class Main {
         PlayerLocation playerLocation = new PlayerLocation(board, players, goBlock);
 
         HashMap<Player, Integer> roundCounter = new HashMap<>();
-        roundCounter.put(players.get(0), 0);
-        roundCounter.put(players.get(1), 0);
-        roundCounter.put(players.get(2), 0);
+        for(int i=0;i<playerNames.size();i++){
+            roundCounter.put(players.get(i), 0);
+        }
         JailBlock jailBlock = new JailBlock("In Jail", playerLocation, roundCounter);
         JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
         GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", playerLocation, justVisitingOrInJailBlock);
@@ -158,7 +152,9 @@ public class Main {
 
     public static void main(String[] args) {
         Player.NEED_PROMPT = true;
-        CompMonopolyApplication compMonopolyApplication = createGameApplication(System.in, System.out);
+        ArrayList<String> playerNames = new ArrayList<>();
+        Collections.addAll(playerNames, args);
+        CompMonopolyApplication compMonopolyApplication = createGameApplication(playerNames,System.in, System.out);
         compMonopolyApplication.run();
     }
 }

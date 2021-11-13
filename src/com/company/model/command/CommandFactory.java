@@ -11,6 +11,9 @@ import com.company.model.observer.PathObserver;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class CommandFactory {
 
     private final GameSystem gameSystem;
