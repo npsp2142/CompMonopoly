@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class PlayerLocationTest {
 
@@ -18,15 +19,16 @@ class PlayerLocationTest {
     Player playerB;
     PlayerLocation playerLocation;
     int initialAmount;
-    NoEffectBlock noEffectBlockA ;
-    NoEffectBlock noEffectBlockB ;
-    NoEffectBlock noEffectBlockC ;
-    NoEffectBlock noEffectBlockD ;
+    NoEffectBlock noEffectBlockA;
+    NoEffectBlock noEffectBlockB;
+    NoEffectBlock noEffectBlockC;
+    NoEffectBlock noEffectBlockD;
     NoEffectBlock noEffectBlockE;
     NoEffectBlock noEffectBlockF;
     NoEffectBlock noEffectBlockG;
     GoBlock goBlock;
     ChanceBlock chanceBlock;
+
     @BeforeEach
     void setUp() {
         initialAmount = 1500;
@@ -46,7 +48,7 @@ class PlayerLocationTest {
         noEffectBlockF = new NoEffectBlock("No Effect F");
         noEffectBlockG = new NoEffectBlock("No Effect G");
         goBlock = new GoBlock("Go");
-        chanceBlock = new ChanceBlock("Change",new Random(1));
+        chanceBlock = new ChanceBlock("Change", new Random(1));
         playerLocation = new PlayerLocation(board, players, noEffectBlockA);
         playerLocation.setStartLocation();
         JailBlock.IS_RANDOM = false;
@@ -73,41 +75,41 @@ class PlayerLocationTest {
         playerLocation.moveTo(playerA, noEffectBlockF);
         playerLocation.moveTo(playerB, noEffectBlockE);
         playerLocation.setStartLocation();
-        assertEquals(noEffectBlockA,playerA.getCurrentLocation(playerLocation));
-        assertEquals(noEffectBlockA,playerB.getCurrentLocation(playerLocation));
+        assertEquals(noEffectBlockA, playerA.getCurrentLocation(playerLocation));
+        assertEquals(noEffectBlockA, playerB.getCurrentLocation(playerLocation));
     }
 
     @Test
     void moveStep() {
-        playerLocation.moveStep(playerA,4);
-        assertEquals(noEffectBlockD,playerA.getCurrentLocation(playerLocation));
-        assertEquals(initialAmount+GoBlock.SALARY,playerA.getAmount()); // player pass the "GO" once.
-        playerLocation.moveStep(playerA,3);
-        assertEquals(chanceBlock,playerA.getCurrentLocation(playerLocation));
-        assertNotEquals(initialAmount+GoBlock.SALARY,playerA.getAmount()); // player amount change by chance block.
+        playerLocation.moveStep(playerA, 4);
+        assertEquals(noEffectBlockD, playerA.getCurrentLocation(playerLocation));
+        assertEquals(initialAmount + GoBlock.SALARY, playerA.getAmount()); // player pass the "GO" once.
+        playerLocation.moveStep(playerA, 3);
+        assertEquals(chanceBlock, playerA.getCurrentLocation(playerLocation));
+        assertNotEquals(initialAmount + GoBlock.SALARY, playerA.getAmount()); // player amount change by chance block.
     }
 
     @Test
     void getCurrentLocation() {
-        playerLocation.moveTo(playerA,goBlock);
-        assertEquals(goBlock,playerA.getCurrentLocation(playerLocation));
-        playerLocation.moveStep(playerA,3);
-        assertEquals(noEffectBlockF,playerA.getCurrentLocation(playerLocation));
+        playerLocation.moveTo(playerA, goBlock);
+        assertEquals(goBlock, playerA.getCurrentLocation(playerLocation));
+        playerLocation.moveStep(playerA, 3);
+        assertEquals(noEffectBlockF, playerA.getCurrentLocation(playerLocation));
     }
 
     @Test
     void moveTo() {
-        playerLocation.moveTo(playerA,goBlock);
-        assertEquals(goBlock,playerA.getCurrentLocation(playerLocation));
-        playerLocation.moveTo(playerA,noEffectBlockG); // noEffectBlockG do not appear in board
-        assertNotEquals(noEffectBlockG,playerA.getCurrentLocation(playerLocation));
+        playerLocation.moveTo(playerA, goBlock);
+        assertEquals(goBlock, playerA.getCurrentLocation(playerLocation));
+        playerLocation.moveTo(playerA, noEffectBlockG); // noEffectBlockG do not appear in board
+        assertNotEquals(noEffectBlockG, playerA.getCurrentLocation(playerLocation));
     }
 
     @Test
     void testMoveTo() {
-        playerLocation.moveTo(playerA,goBlock.getName());
-        assertEquals(goBlock,playerA.getCurrentLocation(playerLocation));
-        playerLocation.moveTo(playerA,noEffectBlockG.getName());
-        assertNotEquals(noEffectBlockG,playerA.getCurrentLocation(playerLocation));
+        playerLocation.moveTo(playerA, goBlock.getName());
+        assertEquals(goBlock, playerA.getCurrentLocation(playerLocation));
+        playerLocation.moveTo(playerA, noEffectBlockG.getName());
+        assertNotEquals(noEffectBlockG, playerA.getCurrentLocation(playerLocation));
     }
 }

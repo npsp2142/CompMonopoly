@@ -33,7 +33,20 @@ public class CommandFactory {
         if (CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU) {
             switch (tokens.get(0).toLowerCase()) {
                 case "start":
-                    return new StartCommand(CompMonopolyApplication.instance, gameSystem);
+                    if (tokens.size() == 1) {
+                        return new StartCommand(
+                                CompMonopolyApplication.instance,
+                                gameSystem
+                        );
+                    }
+                    if (tokens.size() < 4) return null;
+                    int playerNumber = Integer.parseInt(tokens.get(1));
+                    return new StartCommand(
+                            CompMonopolyApplication.instance,
+                            playerNumber,
+                            tokens.subList(2, tokens.size()),
+                            gameSystem
+                    );
                 case "load":
                     return new LoadCommand(gameSystem);
                 case "quit":
@@ -43,12 +56,8 @@ public class CommandFactory {
         }
 
         switch (tokens.get(0).toLowerCase()) {
-            case "start":
-                return new StartCommand(CompMonopolyApplication.instance, gameSystem);
             case "save":
                 return new SaveCommand(gameSystem);
-            case "load":
-                return new LoadCommand(gameSystem);
             case "quit":
                 return new QuitCommand(CompMonopolyApplication.instance);
             case "location": // path and now location

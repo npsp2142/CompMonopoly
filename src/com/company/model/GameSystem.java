@@ -284,15 +284,19 @@ public class GameSystem {
         this.playerObservers = playerObservers;
     }
 
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
     public Map<String, BlockObserver> getBlockObservers() {
         return blockObservers;
     }
 
     public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
         this.blockObservers = blockObservers;
-    }
-
-    public void setRandom(Random random) {
-        this.random = random;
     }
 }

@@ -14,8 +14,9 @@ import java.io.OutputStream;
 import java.util.*;
 
 public class Main {
+    public static ArrayList<String> playerNames;
 
-    public static CompMonopolyApplication createGameApplication(ArrayList<String> playerNames,InputStream inputStream, OutputStream outputStream) {
+    public static CompMonopolyApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
         // TODO: Customise name, player number
         Random random = new Random(System.currentTimeMillis());
         ArrayList<String> names = new ArrayList<>(playerNames);
@@ -75,7 +76,7 @@ public class Main {
         PlayerLocation playerLocation = new PlayerLocation(board, players, goBlock);
 
         HashMap<Player, Integer> roundCounter = new HashMap<>();
-        for(int i=0;i<playerNames.size();i++){
+        for (int i = 0; i < playerNames.size(); i++) {
             roundCounter.put(players.get(i), 0);
         }
         JailBlock jailBlock = new JailBlock("In Jail", playerLocation, roundCounter);
@@ -152,9 +153,9 @@ public class Main {
 
     public static void main(String[] args) {
         Player.NEED_PROMPT = true;
-        ArrayList<String> playerNames = new ArrayList<>();
+        playerNames = new ArrayList<>();
         Collections.addAll(playerNames, args);
-        CompMonopolyApplication compMonopolyApplication = createGameApplication(playerNames,System.in, System.out);
+        CompMonopolyApplication compMonopolyApplication = createGameApplication(System.in, System.out);
         compMonopolyApplication.run();
     }
 }

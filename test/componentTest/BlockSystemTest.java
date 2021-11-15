@@ -142,9 +142,7 @@ public class BlockSystemTest {
         InputStream input = new ByteArrayInputStream(data);
 
         FileOutputStream fileOutputStream = new FileOutputStream("tmp/output.txt");
-        // TODO: Remove Dependency
-        ArrayList<String> arrayList = new ArrayList<>();
-        CompMonopolyApplication compMonopolyApplication = Main.createGameApplication(arrayList,input, fileOutputStream);
+        CompMonopolyApplication compMonopolyApplication = Main.createGameApplication(input, fileOutputStream);
         compMonopolyApplication.run();
         GameDisplay.flush();
     }

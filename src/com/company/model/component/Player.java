@@ -13,7 +13,7 @@ public class Player {
     public static final int MAX_ROLL_VALUE = 4;
     public static boolean NEED_PROMPT = false;
 
-    private final String name;
+    private String name;
 
     private Random random;
     private Map<String, PlayerObserver> playerObservers;
@@ -42,26 +42,34 @@ public class Player {
     public Status getStatus() {
         return status;
     }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public int getAmount() {
         return amount;
-    }
-    public String getName() {
-        return name;
-    }
-    public Block getCurrentLocation(PlayerLocation playerLocation) {
-        return playerLocation.getCurrentLocation(this);
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Block getCurrentLocation(PlayerLocation playerLocation) {
+        return playerLocation.getCurrentLocation(this);
+    }
+
     public void setBankruptStatus() {
         status = Status.BANKRUPT;
     }
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
 
     public int[] roll(int times) {
         int[] result = new int[times];

@@ -34,13 +34,14 @@ public class GameDisplay {
     public static void infoMessage(String message) {
         instance.getPrintStream().println("[Info] " + message);
     }
+
     public static void print(String message) {
         instance.getPrintStream().print(message);
     }
 
 
     public static void promptMessage(String message) {
-        instance.getPrintStream().print(message);
+        instance.getPrintStream().print("[prompt] " + message + " [y/n]");
     }
 
     public static void warnMessage(String message) {
