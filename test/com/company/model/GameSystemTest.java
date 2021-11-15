@@ -63,7 +63,6 @@ class GameSystemTest {
         new CompMonopolyApplication(new CommandFactory(gameSystem));
         new GameDisplay(System.out);
         gameSystem.setCurrentPlayer(playerA);
-        GameSystem.DEFAULT_FILE_NAME = "tmp/load_file_test";
 
     }
 

@@ -13,7 +13,7 @@ public class Player {
     public static final int MAX_ROLL_VALUE = 4;
     public static boolean NEED_PROMPT = false;
 
-    private String name;
+    private final String name;
 
     private Random random;
     private Map<String, PlayerObserver> playerObservers;
@@ -57,10 +57,6 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Block getCurrentLocation(PlayerLocation playerLocation) {

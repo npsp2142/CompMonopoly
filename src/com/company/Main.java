@@ -15,15 +15,22 @@ import java.util.*;
 
 public class Main {
     public static ArrayList<String> playerNames;
+    public static ArrayList<Player> players;
 
     public static CompMonopolyApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
-        // TODO: Customise name, player number
+        if (playerNames == null) {
+            playerNames = new ArrayList<>();
+        }
+        if (players == null) {
+            players = new ArrayList<>();
+        }
         Random random = new Random(System.currentTimeMillis());
-        ArrayList<String> names = new ArrayList<>(playerNames);
+
         HashMap<String, PlayerObserver> playerObservers = new HashMap<>();
         PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
-        ArrayList<Player> players = playerFactory.make(names);
 
+        ArrayList<String> names = new ArrayList<>(playerNames);
+        players = playerFactory.make(names);
         // Add all property
         Property central = new Property("Central", 800, 90);
         Property wanChai = new Property("Wan Chai", 700, 65);
@@ -76,6 +83,7 @@ public class Main {
         PlayerLocation playerLocation = new PlayerLocation(board, players, goBlock);
 
         HashMap<Player, Integer> roundCounter = new HashMap<>();
+
         for (int i = 0; i < playerNames.size(); i++) {
             roundCounter.put(players.get(i), 0);
         }

@@ -27,16 +27,6 @@ public class PathObserver implements PlayerObserver {
         }
     }
 
-    public void view() {
-        for (Player player : paths.keySet()) {
-            GameDisplay.titleBar(player.getName());
-            List<Block> path = paths.get(player);
-            for (int i = 0; i < path.size(); i++) {
-                GameDisplay.infoMessage(String.format("Round %d: %s", i, path.get(i).getColoredName()));
-            }
-        }
-    }
-
     public void update(Player player) {
         Block currentLocation = player.getCurrentLocation(playerLocation);
         if (!paths.containsKey(player)) {

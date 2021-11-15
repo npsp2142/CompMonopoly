@@ -107,6 +107,14 @@ public class CommandFactory {
             case "board":
             case "b":
                 return new ViewBoardCommand(gameSystem.getBoard(), gameSystem.getLocation());
+            case "player":
+            case "self":
+            case "profile":
+                return new ViewPersonalProfileCommand(
+                        gameSystem.getPlayers(),
+                        gameSystem.getProperties(),
+                        gameSystem.getLocation()
+                );
             case "cheat":
                 switch (tokens.get(1).toLowerCase()) {
                     case "-lm":

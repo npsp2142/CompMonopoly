@@ -18,8 +18,8 @@ import java.util.Random;
 
 public class GameSystem {
     public static final int MAX_TURN = 100;
-    public static String DEFAULT_FILE_NAME = "tmp\\save_file.txt";
-
+    public static final String DEFAULT_FILE_NAME = "save_file.txt";
+    public static final String DEFAULT_FOLDER = "tmp";
     private final Board board;
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
@@ -180,9 +180,12 @@ public class GameSystem {
 
     public void saveGame() {
         try {
-            File file = new File(DEFAULT_FILE_NAME);
+            if (new File(DEFAULT_FOLDER).mkdir()) {
+                GameDisplay.infoMessage("Directory created - " + DEFAULT_FOLDER);
+            }
+            File file = new File(DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
             if (file.createNewFile()) {
-                GameDisplay.infoMessage("File created - " + DEFAULT_FILE_NAME);
+                GameDisplay.infoMessage("File created - " + DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -199,7 +202,7 @@ public class GameSystem {
         }
 
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_FILE_NAME);
+            FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(gameSaveFactory.make());
             objectOutputStream.close();
@@ -211,9 +214,10 @@ public class GameSystem {
     public void loadGame() {
         GameSave save = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream(DEFAULT_FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             save = (GameSave) objectInputStream.readObject();
+            objectInputStream.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

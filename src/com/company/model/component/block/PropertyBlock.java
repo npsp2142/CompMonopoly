@@ -66,7 +66,7 @@ public class PropertyBlock extends Block {
                     property.getPrice(),
                     property.getRent());
         }
-        return String.format("%s - Rent: %d",
+        return String.format("Owner: %s - Rent: %d",
                 property.getOwner(),
                 property.getRent());
     }
