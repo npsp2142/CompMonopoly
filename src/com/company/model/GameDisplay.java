@@ -1,7 +1,5 @@
 package com.company.model;
 
-import com.company.model.command.Command;
-
 import java.io.OutputStream;
 import java.io.PrintStream;
 
@@ -9,6 +7,7 @@ public class GameDisplay {
     private static final int TERMINAL_WIDTH = 80;
     private static final char DIVIDER_SYMBOL = '-';
     private static final char SPACE_SYMBOL = ' ';
+    private static final int COMMAND_LENGTH_MAX = 20;
     private static GameDisplay instance;
     private final PrintStream printStream;
     private GameSystem gameSystem;
@@ -35,10 +34,13 @@ public class GameDisplay {
     public static void infoMessage(String message) {
         instance.getPrintStream().println("[Info] " + message);
     }
+    public static void print(String message) {
+        instance.getPrintStream().print(message);
+    }
 
 
     public static void promptMessage(String message) {
-        instance.getPrintStream().print("[Prompt] " + message + " [y/n] ");
+        instance.getPrintStream().print(message);
     }
 
     public static void warnMessage(String message) {
@@ -47,7 +49,7 @@ public class GameDisplay {
 
     public static void commandHelpMessage(String command, String description) {
         StringBuilder builder = new StringBuilder();
-        int space_width = (Command.COMMAND_LENGTH_MAX - command.length());
+        int space_width = (COMMAND_LENGTH_MAX - command.length());
         builder.append(command);
         for (int i = 0; i < space_width; i++) {
             builder.append(SPACE_SYMBOL);

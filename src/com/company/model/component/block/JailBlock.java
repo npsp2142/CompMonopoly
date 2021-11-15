@@ -86,7 +86,7 @@ public class JailBlock extends Block {
 
     @Override
     public String getDescription() {
-        return String.format("No Move %d at maximum - Pay Fine %d HKD if not roll to leave",
+        return String.format("No Move %d round at maximum - Pay Fine %d HKD if not roll to leave",
                 RollToLeaveJailEffect.MAX_STAY, FINE);
     }
 

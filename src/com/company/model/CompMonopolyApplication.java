@@ -22,7 +22,7 @@ public class CompMonopolyApplication {
         beforeRun();
         try {
             while (!isExitApp) {
-                Command command = getCommand();
+                Command command = makeCommand();
                 if (command == null) {
                     GameDisplay.warnMessage("Unknown Command");
                     continue;
@@ -43,7 +43,7 @@ public class CompMonopolyApplication {
         GameDisplay.titleBar("Welcome to COMP Monopoly. Type \"start\" to start the game");
     }
 
-    public Command getCommand() {
+    public Command makeCommand() {
         ArrayList<String> tokens = GameController.instance.getArguments();
         return commandFactory.make(tokens);
     }

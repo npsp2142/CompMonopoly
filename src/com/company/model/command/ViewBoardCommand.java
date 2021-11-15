@@ -1,5 +1,6 @@
 package com.company.model.command;
 
+import com.company.model.BoardDisplay;
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.component.Board;
@@ -18,7 +19,8 @@ public class ViewBoardCommand implements Command {
     @Override
     public void execute() {
         Block currentBlock = playerLocation.getStartBlock();
-        GameDisplay.infoMessage(currentBlock.getDescription());
+        GameDisplay.print(BoardDisplay.VISUAL);
+        GameDisplay.infoMessage(currentBlock.getColoredName() + " - " + currentBlock.getDescription());
         while (!board.getNextBlock(currentBlock).equals(playerLocation.getStartBlock())) {
             currentBlock = board.getNextBlock(currentBlock);
             GameDisplay.infoMessage(currentBlock.getColoredName() + " - " + currentBlock.getDescription());

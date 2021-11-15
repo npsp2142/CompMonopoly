@@ -19,7 +19,7 @@ public class Main {
         // TODO: Customise name, player number
         Random random = new Random(System.currentTimeMillis());
         ArrayList<String> names = new ArrayList<>(playerNames);
-        Map<String, PlayerObserver> playerObservers = new HashMap<>();
+        HashMap<String, PlayerObserver> playerObservers = new HashMap<>();
         PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
         ArrayList<Player> players = playerFactory.make(names);
 
