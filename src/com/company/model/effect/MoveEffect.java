@@ -36,6 +36,7 @@ public class MoveEffect extends Effect implements OnLandEffect, Describable {
         if (player.getStatus().equals(Player.Status.GROUNDED)) {
             return "Move not allowed";
         }
-        return String.format("Move %s steps", Arrays.stream(steps).sum());
+        assert (steps.length == 2);
+        return String.format("You roll %d and %d. Move %s steps", steps[0], steps[1], Arrays.stream(steps).sum());
     }
 }

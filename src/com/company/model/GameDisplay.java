@@ -38,7 +38,7 @@ public class GameDisplay {
 
 
     public static void promptMessage(String message) {
-        instance.getPrintStream().print("[prompt] " + message + " [y/n]");
+        instance.getPrintStream().print("[prompt] " + message + " [y/n] ");
     }
 
     public static void warnMessage(String message) {

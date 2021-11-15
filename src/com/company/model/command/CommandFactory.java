@@ -159,7 +159,6 @@ public class CommandFactory {
                         teleportEffect.setEffectObservers(gameSystem.getEffectObservers());
                         return new TeleportCommand(teleportEffect, gameSystem);
                 }
-
         }
         return null;
     }

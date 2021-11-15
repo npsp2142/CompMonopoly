@@ -34,6 +34,8 @@ public class ViewPropertyCommand implements Command {
             Player owner = propertyBlock.getProperty().getOwner();
             if (owner == null) {
                 GameDisplay.infoMessage(String.format("%-20s No Owner", propertyBlock.getColoredName()));
+                currentBlock = board.getNextBlock(currentBlock);
+                continue;
             }
             GameDisplay.infoMessage(String.format("%-20s %s", propertyBlock.getColoredName(), owner));
 
