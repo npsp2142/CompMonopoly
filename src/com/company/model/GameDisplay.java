@@ -27,9 +27,6 @@ public class GameDisplay {
         }
     }
 
-    public static void flush() {
-        instance.getPrintStream().flush();
-    }
 
     public static void infoMessage(String message) {
         instance.getPrintStream().println("[Info] " + message);

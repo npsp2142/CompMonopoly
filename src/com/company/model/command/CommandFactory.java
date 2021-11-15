@@ -9,7 +9,7 @@ import com.company.model.effect.TeleportEffect;
 import com.company.model.observer.BlockVisitObserver;
 import com.company.model.observer.PathObserver;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,7 +29,7 @@ public class CommandFactory {
      * @param tokens the tokens that specify which command to be made
      * @return a command that control the game system
      */
-    public Command make(ArrayList<String> tokens) {
+    public Command make(List<String> tokens) {
         if (CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU) {
             switch (tokens.get(0).toLowerCase()) {
                 case "start":
@@ -60,14 +60,7 @@ public class CommandFactory {
                 return new SaveCommand(gameSystem);
             case "quit":
                 return new QuitCommand(CompMonopolyApplication.instance);
-            case "location": // path and now location
-            case "loc":
-                PathObserver blockVisitObserver =
-                        (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME);
-                if (blockVisitObserver == null) {
-                    return null;
-                }
-                return new ViewPathCommand(blockVisitObserver);
+
             case "roll":
             case "r":
                 MoveEffect moveEffect =
@@ -78,8 +71,10 @@ public class CommandFactory {
                 moveEffect.setEffectObservers(gameSystem.getEffectObservers());
                 return new RollCommand(moveEffect, gameSystem);
             case "y":
+            case "yes":
                 return new GiveYesRespondCommand(gameSystem.getCurrentPlayer());
             case "n":
+            case "no":
                 return new GiveNoResponseCommand(gameSystem.getCurrentPlayer());
             case "help":
                 return new HelpCommand();
@@ -97,10 +92,18 @@ public class CommandFactory {
                                 (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME));
                 }
                 break;
+            case "location": // path and now location
+            case "loc":
+                PathObserver blockVisitObserver =
+                        (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME);
+                if (blockVisitObserver == null) {
+                    return null;
+                }
+                return new ViewPathCommand(blockVisitObserver);
             case "property":
             case "p":
                 return new ViewPropertyCommand(gameSystem.getCurrentPlayer(), gameSystem.getBoard(),
-                        gameSystem.getLocation(), ViewPropertyCommand.Mode.ALL);
+                        gameSystem.getLocation());
             case "money":
             case "m":
                 return new ViewAmountCommand(gameSystem.getPlayers());
@@ -116,8 +119,10 @@ public class CommandFactory {
                         gameSystem.getLocation()
                 );
             case "cheat":
+                if (tokens.size() < 2) return new EmptyCommand("Usage:\n\tcheat [-lm/t]");
                 switch (tokens.get(1).toLowerCase()) {
                     case "-lm":
+                        if (tokens.size() < 3) return new EmptyCommand("Usage:\n\tcheat -lm [money to lose]");
                         LoseMoneyEffect loseMoneyEffect =
                                 new LoseMoneyEffect(
                                         "Cheat",
@@ -127,6 +132,9 @@ public class CommandFactory {
                         loseMoneyEffect.setEffectObservers(gameSystem.getEffectObservers());
                         return new ReduceMoneyCommand(loseMoneyEffect);
                     case "-t":
+                        if (tokens.size() < 3) return new EmptyCommand(
+                                "Usage:\n\tcheat -lm [block name to transport]"
+                        );
                         // Join tokens
                         StringBuilder stringBuilder = new StringBuilder();
                         for (String token : tokens.subList(2, tokens.size())) {
@@ -154,5 +162,9 @@ public class CommandFactory {
 
         }
         return null;
+    }
+
+    public GameSystem getGameSystem() {
+        return gameSystem;
     }
 }

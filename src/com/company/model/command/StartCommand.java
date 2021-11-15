@@ -5,14 +5,15 @@ import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 import com.company.model.PlayerFactory;
 import com.company.model.component.Player;
+import com.company.model.component.block.Block;
+import com.company.model.component.block.JailBlock;
+import com.company.model.component.block.JustVisitingOrInJailBlock;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class StartCommand implements Command {
-    public static final String[] DEFAULT_NAMES = {
-            "Player A", "Player B", "Player C",
-    };
+
     private final CompMonopolyApplication compMonopolyApplication;
     private final GameSystem gameSystem;
     private final int playerNumber;
@@ -35,8 +36,8 @@ public class StartCommand implements Command {
     public StartCommand(CompMonopolyApplication compMonopolyApplication, GameSystem gameSystem) {
         this.compMonopolyApplication = compMonopolyApplication;
         this.gameSystem = gameSystem;
-        this.playerNumber = DEFAULT_NAMES.length;
-        this.names = Arrays.asList(DEFAULT_NAMES);
+        this.playerNumber = GameSystem.DEFAULT_NAMES.length;
+        this.names = Arrays.asList(GameSystem.DEFAULT_NAMES);
         this.playerFactory = new PlayerFactory(gameSystem.getRandom(), Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
     }
 
@@ -46,6 +47,16 @@ public class StartCommand implements Command {
         GameDisplay.titleBar("GAME START!");
         for (int i = 0; i < playerNumber; i++) {
             gameSystem.getPlayers().add(playerFactory.make(names.get(i)));
+        }
+
+        for (Block block : gameSystem.getBoard().getBlocks()) {
+            if (!(block instanceof JustVisitingOrInJailBlock)) continue;
+            JustVisitingOrInJailBlock justVisitingOrInJailBlock = (JustVisitingOrInJailBlock) block;
+            JailBlock jailBlock = justVisitingOrInJailBlock.getJailBlock();
+            jailBlock.getRoundCounter().clear();
+            for (int i = 0; i < playerNumber; i++) {
+                jailBlock.getRoundCounter().put(gameSystem.getPlayers().get(i), 0);
+            }
         }
         gameSystem.startGame();
     }

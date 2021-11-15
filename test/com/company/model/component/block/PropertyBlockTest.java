@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Unit tests of PropertyBlock
@@ -18,11 +19,12 @@ class PropertyBlockTest {
 
     @BeforeEach
     void setUp() {
-        initialAmount = 1500;
+        initialAmount = 100;
         player = new Player("Player");
         player.setAmount(initialAmount);
         wanChai = new Property("Wan Chai", 700, 65);
         propertyBlock = new PropertyBlock("Wan Chai", wanChai);
+        Player.NEED_PROMPT = false;
     }
 
     /**
@@ -30,6 +32,12 @@ class PropertyBlockTest {
      */
     @Test
     void createOnLandEffect() {
+        assertNull(wanChai.getOwner());
+        // Test if no money buy
+        player.setResponse(Player.Response.YES);
+        propertyBlock.createOnLandEffect(player).triggerOnLand();
+        assertNull(wanChai.getOwner());
+        player.setAmount(Player.DEFAULT_AMOUNT);
         int old = player.getAmount();
         player.setResponse(Player.Response.YES);
         propertyBlock.createOnLandEffect(player).triggerOnLand();

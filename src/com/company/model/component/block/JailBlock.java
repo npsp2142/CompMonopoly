@@ -93,4 +93,8 @@ public class JailBlock extends Block {
     public void setDiceRolls(int[] diceRolls) {
         this.diceRolls = diceRolls;
     }
+
+    public Map<Player, Integer> getRoundCounter() {
+        return roundCounter;
+    }
 }

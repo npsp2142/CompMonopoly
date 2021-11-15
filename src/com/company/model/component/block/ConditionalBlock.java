@@ -56,4 +56,8 @@ public abstract class ConditionalBlock extends Block {
     public String getName() {
         return blockA.getName() + " / " + blockB.getName();
     }
+
+    public Block getBlockB() {
+        return blockB;
+    }
 }

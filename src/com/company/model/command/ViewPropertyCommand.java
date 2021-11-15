@@ -12,13 +12,11 @@ public class ViewPropertyCommand implements Command {
     private final Player player;
     private final Board board;
     private final PlayerLocation playerLocation;
-    private final Mode mode;
 
-    public ViewPropertyCommand(Player player, Board board, com.company.model.component.PlayerLocation playerLocation, Mode mode) {
+    public ViewPropertyCommand(Player player, Board board, com.company.model.component.PlayerLocation playerLocation) {
         this.player = player;
         this.board = board;
         this.playerLocation = playerLocation;
-        this.mode = mode;
     }
 
     @Override
@@ -34,20 +32,10 @@ public class ViewPropertyCommand implements Command {
 
             PropertyBlock propertyBlock = (PropertyBlock) currentBlock;
             Player owner = propertyBlock.getProperty().getOwner();
-            switch (mode) {
-                case ALL:
-                    if (owner == null) {
-                        GameDisplay.infoMessage(String.format("%-20s No Owner", propertyBlock.getColoredName()));
-                        break;
-                    }
-                    GameDisplay.infoMessage(String.format("%-20s %s", propertyBlock.getColoredName(), owner));
-                    break;
-                case SELF:
-                    if (owner == null) break;
-                    if (!owner.equals(player)) break;
-                    GameDisplay.infoMessage(String.format("%-20s %s", propertyBlock.getColoredName(), owner));
-                    break;
+            if (owner == null) {
+                GameDisplay.infoMessage(String.format("%-20s No Owner", propertyBlock.getColoredName()));
             }
+            GameDisplay.infoMessage(String.format("%-20s %s", propertyBlock.getColoredName(), owner));
 
             currentBlock = board.getNextBlock(currentBlock);
 
@@ -59,7 +47,5 @@ public class ViewPropertyCommand implements Command {
         return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.PLAYING;
     }
 
-    public enum Mode {
-        ALL, SELF
-    }
 }
+

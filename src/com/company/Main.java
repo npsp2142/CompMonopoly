@@ -20,6 +20,7 @@ public class Main {
     public static CompMonopolyApplication createGameApplication(InputStream inputStream, OutputStream outputStream) {
         if (playerNames == null) {
             playerNames = new ArrayList<>();
+            playerNames.addAll(Arrays.asList(GameSystem.DEFAULT_NAMES));
         }
         if (players == null) {
             players = new ArrayList<>();
@@ -29,8 +30,7 @@ public class Main {
         HashMap<String, PlayerObserver> playerObservers = new HashMap<>();
         PlayerFactory playerFactory = new PlayerFactory(random, Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
 
-        ArrayList<String> names = new ArrayList<>(playerNames);
-        players = playerFactory.make(names);
+        players = playerFactory.make(playerNames);
         // Add all property
         Property central = new Property("Central", 800, 90);
         Property wanChai = new Property("Wan Chai", 700, 65);
@@ -84,8 +84,8 @@ public class Main {
 
         HashMap<Player, Integer> roundCounter = new HashMap<>();
 
-        for (int i = 0; i < playerNames.size(); i++) {
-            roundCounter.put(players.get(i), 0);
+        for (Player player : players) {
+            roundCounter.put(player, 0);
         }
         JailBlock jailBlock = new JailBlock("In Jail", playerLocation, roundCounter);
         JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
@@ -137,7 +137,7 @@ public class Main {
         GameSystem gameSystem = new GameSystem(board, players, properties, playerLocation);
 
         Map<String, EffectObserver> effectObservers = new HashMap<>();
-        effectObservers.put(EffectDisplay.DEFAULT_NAME, new EffectDisplay(System.out));
+        effectObservers.put(EffectDisplay.DEFAULT_NAME, new EffectDisplay());
         gameSystem.setEffectObservers(effectObservers);
 
         MoneyObserver moneyObserver = new MoneyObserver(new HashMap<>());

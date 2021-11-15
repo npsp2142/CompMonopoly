@@ -26,19 +26,18 @@ public class GameController {
             GameDisplay.promptMessage(promptMessage);
             String token = bufferedReader.readLine();
             tokens.add(token);
-            switch (tokens.get(0).toLowerCase()) {
-                case "y":
-                    return Player.Response.YES;
-                case "n":
-                    return Player.Response.NO;
-                default:
-                    GameDisplay.warnMessage("Unknown Response");
-                    return null;
-            }
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        return null;
+        switch (tokens.get(0).toLowerCase()) {
+            case "y":
+                return Player.Response.YES;
+            case "n":
+                return Player.Response.NO;
+            default:
+                GameDisplay.warnMessage("Unknown Response");
+                return null;
+        }
     }
 
 

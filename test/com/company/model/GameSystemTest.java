@@ -97,14 +97,14 @@ class GameSystemTest {
      */
     @Test
     void saveGame() throws IOException {
-        FileWriter fileWriter = new FileWriter(GameSystem.DEFAULT_FILE_NAME);
+        FileWriter fileWriter = new FileWriter(GameSystem.DEFAULT_FOLDER + "\\" + GameSystem.DEFAULT_FILE_NAME);
         fileWriter.write(0);
         fileWriter.close();
         playerLocation.moveTo(playerA, noEffectBlockB);
         playerA.setAmount(customAmount);
         playerA.setStatus(Player.Status.BANKRUPT);
         gameSystem.saveGame();
-        FileReader fileReader = new FileReader(GameSystem.DEFAULT_FILE_NAME);
+        FileReader fileReader = new FileReader(GameSystem.DEFAULT_FOLDER + "\\" + GameSystem.DEFAULT_FILE_NAME);
         char[] chars = new char[1000];
         // Test if write any characters.
         assertTrue(fileReader.read(chars) > 0);

@@ -4,6 +4,8 @@ import com.company.model.command.Command;
 import com.company.model.command.CommandFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CompMonopolyApplication {
     public static CompMonopolyApplication instance;
@@ -36,6 +38,7 @@ public class CompMonopolyApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.exit(0);
     }
 
     private void beforeRun() {
@@ -48,12 +51,10 @@ public class CompMonopolyApplication {
         return commandFactory.make(tokens);
     }
 
-// --Commented out by Inspection START (26/10/2021 17:53):
-//    public Command getCommand(String string) {
-//        ArrayList<String> tokens = GameController.instance.getArguments(string);
-//        return commandFactory.make(tokens);
-//    }
-// --Commented out by Inspection STOP (26/10/2021 17:53)
+    public Command makeCommand(String commandInput) {
+        List<String> tokens = Arrays.asList(commandInput.split(" "));
+        return commandFactory.make(tokens);
+    }
 
     public void closeApplication() {
         isExitApp = true;
@@ -65,6 +66,10 @@ public class CompMonopolyApplication {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public CommandFactory getCommandFactory() {
+        return commandFactory;
     }
 
     public void quitGame() {

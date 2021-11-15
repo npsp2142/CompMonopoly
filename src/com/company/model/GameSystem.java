@@ -20,6 +20,9 @@ public class GameSystem {
     public static final int MAX_TURN = 100;
     public static final String DEFAULT_FILE_NAME = "save_file.txt";
     public static final String DEFAULT_FOLDER = "tmp";
+    public static final String[] DEFAULT_NAMES = {
+            "Player A", "Player B", "Player C",
+    };
     private final Board board;
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;

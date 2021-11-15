@@ -1,17 +1,13 @@
 package com.company.model.observer;
 
+import com.company.model.GameDisplay;
 import com.company.model.effect.Effect;
-
-import java.io.OutputStream;
-import java.io.PrintStream;
 
 public class EffectDisplay implements EffectObserver {
     public static final String DEFAULT_NAME = "Effect Display";
     private static EffectDisplay instance;
-    private final PrintStream printStream;
 
-    public EffectDisplay(OutputStream outputStream) {
-        printStream = new PrintStream(outputStream);
+    public EffectDisplay() {
         if (instance == null) {
             instance = this;
         }
@@ -24,10 +20,6 @@ public class EffectDisplay implements EffectObserver {
      */
     @Override
     public void update(Effect effect) {
-        instance.getPrintStream().println("[Info] " + effect.getColoredName() + " - " + effect.getDescription());
-    }
-
-    public PrintStream getPrintStream() {
-        return printStream;
+        GameDisplay.infoMessage(effect.getColoredName() + " - " + effect.getDescription());
     }
 }

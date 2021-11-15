@@ -1,6 +1,5 @@
 package com.company.model.command;
 
-import com.company.model.CompMonopolyApplication;
 import com.company.model.component.Player;
 
 public class GiveNoResponseCommand implements Command {
@@ -17,6 +16,6 @@ public class GiveNoResponseCommand implements Command {
 
     @Override
     public boolean isValid() {
-        return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU;
+        return true;
     }
 }

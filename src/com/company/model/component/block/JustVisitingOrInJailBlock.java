@@ -12,5 +12,7 @@ public class JustVisitingOrInJailBlock extends ConditionalBlock {
         return player.getStatus() == Player.Status.NORMAL;
     }
 
-
+    public JailBlock getJailBlock() {
+        return (JailBlock) super.getBlockB();
+    }
 }
