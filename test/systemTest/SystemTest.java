@@ -34,10 +34,38 @@ class SystemTest {
     void ifBankrupt() {
         ArrayList<String> commands = new ArrayList<>();
         commands.add("start");
+        commands.add("yes");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
         commands.add("cheat -lm 15000");
         commands.add("roll");
         commands.add("roll");
         commands.add("roll");
+        commands.add("roll");
+        executeCommands(commands);
+    }
+
+    @Test
+    void endGameWhenOnePlayerLeft() {
+        ArrayList<String> commands = new ArrayList<>();
+        commands.add("start");
+        commands.add("yes");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("cheat -lm 15000");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("cheat -lm 15000");
         commands.add("roll");
         executeCommands(commands);
     }

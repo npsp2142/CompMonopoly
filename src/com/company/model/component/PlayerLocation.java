@@ -52,8 +52,7 @@ public class PlayerLocation implements Serializable {
         return location.get(player);
     }
 
-
-    public void moveTo(Player player, String name,boolean isTrigger, boolean isVerbose) {
+    public void moveTo(Player player, String name, boolean isTrigger, boolean isVerbose) {
         Block block = board.findBlock(name);
         if (block == null) {
             GameDisplay.warnMessage("Block not found");

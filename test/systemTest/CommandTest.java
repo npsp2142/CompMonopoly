@@ -59,12 +59,9 @@ class CommandTest {
     @Test
     void loadCommand() {
         ArrayList<String> commands = new ArrayList<>();
-        ArrayList<Player> players = compMonopolyApplication.getCommandFactory().getGameSystem().getPlayers();
-        for (Player player : players) {
-            player.setResponse(Player.Response.YES);
-        }
-        Player.NEED_PROMPT = false;
+
         commands.add("start");
+        commands.add("yes");
         commands.add("roll");
         commands.add("roll");
         commands.add("roll");
@@ -101,6 +98,14 @@ class CommandTest {
     void saveCommand() {
         ArrayList<String> commands = new ArrayList<>();
         commands.add("start");
+        commands.add("yes");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
         commands.add("save");
         executeCommands(commands);
     }
@@ -161,8 +166,6 @@ class CommandTest {
         commands.add("bvc");
         executeCommands(commands);
     }
-
-
 
 
     @Test
