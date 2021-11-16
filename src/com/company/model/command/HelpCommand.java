@@ -9,9 +9,9 @@ public class HelpCommand implements Command {
     public void execute() {
         GameDisplay.commandHelpMessage("Command", "Description");
         GameDisplay.divider();
-        GameDisplay.commandHelpMessage("save", "Save the game at the moment");
-        GameDisplay.commandHelpMessage("load", "Load the game at the moment");
-        GameDisplay.commandHelpMessage("quit", "Quit the game at the moment");
+        GameDisplay.commandHelpMessage("save", "Save the game at the moment.");
+        GameDisplay.commandHelpMessage("load", "Load the game at the moment.");
+        GameDisplay.commandHelpMessage("quit", "Quit the game at the moment.");
         GameDisplay.divider();
         GameDisplay.commandHelpMessage("roll", "Roll to move across the board.");
         GameDisplay.commandHelpMessage("y", "Answer yes for prompt question.");
