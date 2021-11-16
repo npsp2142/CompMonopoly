@@ -1,5 +1,6 @@
 package com.company.model.observer;
 
+import com.company.model.ANSI;
 import com.company.model.GameDisplay;
 import com.company.model.component.block.Block;
 
@@ -26,7 +27,7 @@ public class BlockVisitObserver implements BlockObserver {
 
     @Override
     public void update(Block block) {
-        GameDisplay.infoMessage(String.format("You are at %s", block.getColoredName()));
+        GameDisplay.infoMessage(String.format("You are at" +ANSI.ANSI_CYAN +" %s"+ANSI.ANSI_RESET, block.getName()));
         if (!counter.containsKey(block)) {
             counter.put(block, 1);
             return;

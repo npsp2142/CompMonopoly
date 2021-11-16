@@ -35,10 +35,10 @@ public class MoneyObserver implements PlayerObserver {
     private void compare(Player player, int oldAmount, int newAmount) {
         int diff = newAmount - oldAmount;
         if (diff > 0) {
-            GameDisplay.infoMessage(String.format("%s gain %d HKD in this turn", player, diff));
+            GameDisplay.infoMessage(String.format("%s gains %d HKD in this turn", player, diff));
         }
         if (diff < 0) {
-            GameDisplay.infoMessage(String.format("%s loss %d HKD in this turn", player, -diff));
+            GameDisplay.infoMessage(String.format("%s losses %d HKD in this turn", player, -diff));
         }
 
     }
