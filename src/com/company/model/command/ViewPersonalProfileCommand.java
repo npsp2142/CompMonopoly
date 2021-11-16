@@ -23,7 +23,7 @@ public class ViewPersonalProfileCommand implements Command {
     @Override
     public void execute() {
         for (Player player : players) {
-            GameDisplay.titleBar(player.getName());
+            GameDisplay.titleBar(player.getName(), '-');
             GameDisplay.infoMessage(String.format("Amount: %s", player.getAmount()));
             GameDisplay.infoMessage(String.format("Current Location: %s", player.getCurrentLocation(playerLocation)));
             GameDisplay.infoMessage(String.format("Status: %s", player.getStatus()));

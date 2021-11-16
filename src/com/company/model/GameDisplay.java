@@ -5,8 +5,8 @@ import java.io.PrintStream;
 
 public class GameDisplay {
     private static final int TERMINAL_WIDTH = 80;
-    private static final char DIVIDER_SYMBOL = '-';
-    private static final char SPACE_SYMBOL = ' ';
+    private static final char DIVIDER = '=';
+    private static final char SPACE = ' ';
     private static final int COMMAND_LENGTH_MAX = 20;
     private static GameDisplay instance;
     private final PrintStream printStream;
@@ -50,7 +50,7 @@ public class GameDisplay {
         int space_width = (COMMAND_LENGTH_MAX - command.length());
         builder.append(command);
         for (int i = 0; i < space_width; i++) {
-            builder.append(SPACE_SYMBOL);
+            builder.append(SPACE);
         }
         builder.append(description);
         instance.getPrintStream().println(builder);
@@ -59,7 +59,7 @@ public class GameDisplay {
     public static void divider() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < TERMINAL_WIDTH; i++) {
-            builder.append(DIVIDER_SYMBOL);
+            builder.append(DIVIDER);
         }
         instance.getPrintStream().println(builder);
     }
@@ -70,16 +70,20 @@ public class GameDisplay {
      * @param title words is this title Bar
      */
     public static void titleBar(String title) {
+        titleBar(title, DIVIDER);
+    }
+
+    public static void titleBar(String title, char dividerChar) {
         int star_width = (TERMINAL_WIDTH - title.length()) / 2;
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < star_width; i++) {
-            builder.append(DIVIDER_SYMBOL);
+            builder.append(dividerChar);
         }
-        builder.append(SPACE_SYMBOL);
+        builder.append(SPACE);
         builder.append(title);
-        builder.append(SPACE_SYMBOL);
+        builder.append(SPACE);
         for (int i = 0; i < star_width; i++) {
-            builder.append(DIVIDER_SYMBOL);
+            builder.append(dividerChar);
         }
         builder.setLength(TERMINAL_WIDTH);
         instance.getPrintStream().println(builder);
