@@ -93,6 +93,9 @@ public class GameSystem {
         }
         GameDisplay.titleBar(String.format("%s TURN", currentPlayer.getName()));
         GameDisplay.infoMessage(String.format("Amount: %d HKD", currentPlayer.getAmount()));
+        GameDisplay.infoMessage(
+                String.format("You are at %s", currentPlayer.getCurrentLocation(playerLocation).getColoredName())
+        );
     }
 
     public void endTurn() {

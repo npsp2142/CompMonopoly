@@ -8,6 +8,17 @@ import java.util.Map;
 
 public class JailBlock extends Block {
     public static final int FINE = 150;
+    public static final int ROLL_TIMES = 2;
+
+    private static final String PROMPT = "pay $%d HKD to leave. [y] or Roll double [n]";
+    private static final String[] EFFECT_NAMES = {
+            "Pay Fine",
+            "You are free",
+            "Roll To Move",
+            "Pay To Leave %d",
+            "Roll To Leave"
+    };
+
     public static boolean IS_RANDOM = true;
     private final PlayerLocation playerLocation;
     private final Map<Player, Integer> roundCounter;
@@ -24,7 +35,7 @@ public class JailBlock extends Block {
     /**
      * @param player the player steps on the block
      * @return When the player response is yes, return the effect that the player pay to leave the jail.
-     * When the player response is yes, return the effect that the player attempts to roll to leave the jail.
+     * When the player response is no, return the effect that the player attempts to roll to leave the jail.
      * @see Player.Response
      * @see PayToLeaveJailEffect
      * @see RollToLeaveJailEffect
@@ -32,20 +43,19 @@ public class JailBlock extends Block {
     @Override
     public OnLandEffect createOnLandEffect(Player player) {
         Player.Response response;
-        response = player.getResponse(String.format("pay $%d HKD to leave. [y] or Roll double [n]",
-                FINE));
+        response = player.getResponse(String.format(PROMPT, FINE));
 
         if (response == Player.Response.YES) {
-            LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay Fine", player, FINE);
-            CureEffect cureEffect = new CureEffect("You are free", player);
-            MoveEffect moveEffect = new MoveEffect("Roll To Move", player, player.roll(2), playerLocation);
+            LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect(EFFECT_NAMES[0], player, FINE);
+            CureEffect cureEffect = new CureEffect(EFFECT_NAMES[1], player);
+            MoveEffect moveEffect = new MoveEffect(EFFECT_NAMES[2], player, player.roll(ROLL_TIMES), playerLocation);
 
             loseMoneyEffect.setEffectObservers(getEffectObservers());
             cureEffect.setEffectObservers(getEffectObservers());
             moveEffect.setEffectObservers(getEffectObservers());
 
             PayToLeaveJailEffect payToLeaveJailEffect = new PayToLeaveJailEffect(
-                    String.format("Pay To Leave %d", FINE),
+                    String.format(EFFECT_NAMES[3], FINE),
                     player,
                     loseMoneyEffect,
                     cureEffect,
@@ -58,16 +68,16 @@ public class JailBlock extends Block {
         }
 
         if (IS_RANDOM) {
-            diceRolls = player.roll(2);
+            diceRolls = player.roll(ROLL_TIMES);
         }
 
-        LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay Fine", player, FINE);
-        CureEffect cureEffect = new CureEffect("You can move", player);
-        MoveEffect moveEffect = new MoveEffect("You are free", player, diceRolls, playerLocation);
+        LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect(EFFECT_NAMES[0], player, FINE);
+        CureEffect cureEffect = new CureEffect(EFFECT_NAMES[1], player);
+        MoveEffect moveEffect = new MoveEffect(EFFECT_NAMES[2], player, diceRolls, playerLocation);
         PayToLeaveJailEffect payToLeaveJailEffect = new PayToLeaveJailEffect(
-                String.format("Pay To Leave %d", FINE), player, loseMoneyEffect, cureEffect, moveEffect, roundCounter);
+                String.format(EFFECT_NAMES[3], FINE), player, loseMoneyEffect, cureEffect, moveEffect, roundCounter);
         RollToLeaveJailEffect rollToLeaveJailEffect = new RollToLeaveJailEffect(
-                "Roll To Leave", player, diceRolls, roundCounter, moveEffect, cureEffect, payToLeaveJailEffect);
+                EFFECT_NAMES[4], player, diceRolls, roundCounter, moveEffect, cureEffect, payToLeaveJailEffect);
 
         loseMoneyEffect.setEffectObservers(getEffectObservers());
         cureEffect.setEffectObservers(getEffectObservers());

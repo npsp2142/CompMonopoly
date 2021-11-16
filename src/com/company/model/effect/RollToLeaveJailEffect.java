@@ -1,6 +1,7 @@
 package com.company.model.effect;
 
 import com.company.model.component.Player;
+import com.company.model.component.block.JailBlock;
 
 import java.util.Map;
 
@@ -46,13 +47,20 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
     }
 
     public String getDescription() {
+        assert (dices.length == 2);
         if (dices[0] == dices[1]) { // If roll Double
-            return String.format("%s roll double.", player.getName());
+            return String.format(
+                    "You roll %d and %d. DOUBLE!!! Leave jail immediately.",
+                    dices[0], dices[1]
+            );
         }
         if (roundCounter.get(player) < MAX_STAY - 1) { // If still need in jail this turn
-            return String.format("You need to stay in jail for %s round.", MAX_STAY - roundCounter.get(player));
+            return String.format(
+                    "You roll %d and %d. You need to stay in jail for %s more round.",
+                    dices[0], dices[1], MAX_STAY - roundCounter.get(player) - 1
+            );
         }
-        return "So Unlucky.";
+        return String.format("You roll %d and %d. Pay %s to leave jail", dices[0], dices[1], JailBlock.FINE);
     }
 
 }

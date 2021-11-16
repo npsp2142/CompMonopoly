@@ -34,6 +34,6 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
     }
 
     public String getDescription() {
-        return "You paid to leave jail.";
+        return "You paid to leave jail";
     }
 }

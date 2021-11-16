@@ -109,6 +109,8 @@ public class Main {
         board.addBlock(chanceThreeBlock);
         board.addBlock(freeParkingBlock);
         board.addBlock(incomeTaxBlock);
+        board.addBlock(justVisitingBlock);
+        board.addBlock(jailBlock);
         board.addBlock(justVisitingOrInJailBlock);
         board.addBlock(goToJailBlock);
 
