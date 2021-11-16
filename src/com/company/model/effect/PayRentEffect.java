@@ -17,6 +17,6 @@ public class PayRentEffect extends Effect implements OnLandEffect {
     }
 
     public String getDescription() {
-        return "You step on a property owned by others and pay Rent";
+        return "You stepped on a property owned by others and pay Rent";
     }
 }

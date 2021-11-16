@@ -45,6 +45,7 @@ public class StartCommand implements Command {
     public void execute() {
         gameSystem.getPlayers().clear();
         GameDisplay.titleBar("GAME START!");
+        GameDisplay.print("                  Try \"help\" when you do not know what to type!\n");
         for (int i = 0; i < playerNumber; i++) {
             gameSystem.getPlayers().add(playerFactory.make(names.get(i)));
         }

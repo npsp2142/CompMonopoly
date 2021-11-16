@@ -37,6 +37,6 @@ public class MoveEffect extends Effect implements OnLandEffect, Describable {
             return "Move not allowed";
         }
         assert (steps.length == 2);
-        return String.format("You roll %d and %d. Move %s steps", steps[0], steps[1], Arrays.stream(steps).sum());
+        return String.format("You rolled %d and %d. Move %s steps.", steps[0], steps[1], Arrays.stream(steps).sum());
     }
 }

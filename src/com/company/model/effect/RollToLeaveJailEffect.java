@@ -50,17 +50,17 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
         assert (dices.length == 2);
         if (dices[0] == dices[1]) { // If roll Double
             return String.format(
-                    "You roll %d and %d. DOUBLE!!! Leave jail immediately.",
+                    "You rolled %d and %d. DOUBLE!!! Leave jail immediately.",
                     dices[0], dices[1]
             );
         }
         if (roundCounter.get(player) < MAX_STAY - 1) { // If still need in jail this turn
             return String.format(
-                    "You roll %d and %d. You need to stay in jail for %s more round.",
+                    "You rolled %d and %d. You need to stay in jail for %s more round.",
                     dices[0], dices[1], MAX_STAY - roundCounter.get(player) - 1
             );
         }
-        return String.format("You roll %d and %d. Pay %s to leave jail", dices[0], dices[1], JailBlock.FINE);
+        return String.format("You rolled %d and %d. Pay %s to leave jail", dices[0], dices[1], JailBlock.FINE);
     }
 
 }
