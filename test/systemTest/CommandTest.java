@@ -106,11 +106,15 @@ class CommandTest {
     }
 
     @Test
-    void locationCommand() {
+    void pathCommand() {
         ArrayList<String> commands = new ArrayList<>();
         commands.add("start");
-        commands.add("location");
-        commands.add("loc");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("path");
         executeCommands(commands);
     }
 
@@ -154,26 +158,11 @@ class CommandTest {
         commands.add("roll");
         commands.add("roll");
         commands.add("roll");
-        commands.add("view");
-        commands.add("view -bvc");
+        commands.add("bvc");
         executeCommands(commands);
     }
 
-    @Test
-    void viewPathCommand() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add("start");
-        commands.add("roll");
-        commands.add("roll");
-        commands.add("roll");
-        commands.add("roll");
-        commands.add("roll");
-        commands.add("roll");
-        commands.add("view -path");
-        commands.add("loc");
-        commands.add("location");
-        executeCommands(commands);
-    }
+
 
 
     @Test

@@ -1,5 +1,6 @@
 package com.company.model.component;
 
+import com.company.model.GameDisplay;
 import com.company.model.component.block.Block;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
@@ -52,12 +53,13 @@ public class PlayerLocation implements Serializable {
     }
 
 
-    public void moveTo(Player player, String name, boolean isVerbose) {
+    public void moveTo(Player player, String name,boolean isTrigger, boolean isVerbose) {
         Block block = board.findBlock(name);
         if (block == null) {
+            GameDisplay.warnMessage("Block not found");
             return;
         }
-        moveTo(player, block, false, isVerbose);
+        moveTo(player, block, isTrigger, isVerbose);
     }
 
     public void moveTo(Player player, Block destination) {

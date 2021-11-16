@@ -66,6 +66,7 @@ public class GameLoader {
             playerLocation.moveTo(
                     playerSavePlayerHashMap.get(playerSave),
                     locationSave.getLocation().get(playerSave).getName(),
+                    false,
                     false
             );
         }

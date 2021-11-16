@@ -35,6 +35,7 @@ class GoToJailBlockTest {
         NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting");
         justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
         goToJailBlock = new GoToJailBlock("Go Jail", playerLocation, justVisitingOrInJailBlock);
+        board.getBlocks().add(justVisitingOrInJailBlock);
     }
 
     /**
