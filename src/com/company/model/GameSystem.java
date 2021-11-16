@@ -94,7 +94,9 @@ public class GameSystem {
         GameDisplay.titleBar(String.format("%s TURN", currentPlayer.getName()));
         GameDisplay.infoMessage(String.format("Amount: %d HKD", currentPlayer.getAmount()));
         GameDisplay.infoMessage(
-                String.format("You are at %s", currentPlayer.getCurrentLocation(playerLocation).getColoredName())
+                String.format("You are at %s",
+                        GameDisplay.colorString(currentPlayer.getCurrentLocation(playerLocation).getName(), GameDisplay.ANSI_PURPLE)
+                )
         );
     }
 
@@ -189,9 +191,9 @@ public class GameSystem {
             if (new File(DEFAULT_FOLDER).mkdir()) {
                 GameDisplay.infoMessage("Directory created - " + DEFAULT_FOLDER);
             }
-            File file = new File(DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
+            File file = new File(DEFAULT_FOLDER + "/" + DEFAULT_FILE_NAME);
             if (file.createNewFile()) {
-                GameDisplay.infoMessage("File created - " + DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
+                GameDisplay.infoMessage("File created - " + DEFAULT_FOLDER + "/" + DEFAULT_FILE_NAME);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -237,6 +239,7 @@ public class GameSystem {
 
     private void onGameLoad() {
         CompMonopolyApplication.instance.setStatus(CompMonopolyApplication.Status.PLAYING);
+        GameDisplay.infoMessage("Game load success");
         GameDisplay.titleBar(String.format("ROUND %d", round));
         setObservers();
         onTurnStart();

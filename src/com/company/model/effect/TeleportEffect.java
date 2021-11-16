@@ -30,7 +30,7 @@ public class TeleportEffect extends Effect implements OnLandEffect {
     @Override
     public void triggerOnLand() {
         notifyEffectSubscribers();
-        playerLocation.moveTo(player, block, triggerOnLand);
+        playerLocation.moveTo(player, block, triggerOnLand, true);
     }
 
 
