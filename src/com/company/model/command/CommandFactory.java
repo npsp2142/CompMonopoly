@@ -48,6 +48,11 @@ public class CommandFactory {
                             gameSystem
                     );
                 case "load":
+                    if (tokens.size() == 2) {
+                        LoadCommand loadCommand = new LoadCommand(gameSystem);
+                        loadCommand.setFileName(tokens.get(1));
+                        return loadCommand;
+                    }
                     return new LoadCommand(gameSystem);
                 case "quit":
                     return new QuitCommand(CompMonopolyApplication.instance);
@@ -57,6 +62,11 @@ public class CommandFactory {
 
         switch (tokens.get(0).toLowerCase()) {
             case "save":
+                if (tokens.size() == 2) {
+                    SaveCommand saveCommand = new SaveCommand(gameSystem);
+                    saveCommand.setFileName(tokens.get(1));
+                    return saveCommand;
+                }
                 return new SaveCommand(gameSystem);
             case "quit":
                 return new QuitCommand(CompMonopolyApplication.instance);

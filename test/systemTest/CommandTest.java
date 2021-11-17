@@ -76,6 +76,13 @@ class CommandTest {
         commands.add("save");
 
         commands.add("load");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("roll");
+        commands.add("save saveSlot.txt");
+        commands.add("load saveSlot.txt");
         executeCommands(commands);
     }
 
@@ -106,7 +113,7 @@ class CommandTest {
         commands.add("roll");
         commands.add("roll");
         commands.add("roll");
-        commands.add("save");
+        commands.add("save saveSlotTwo.txt");
         executeCommands(commands);
     }
 
