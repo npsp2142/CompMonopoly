@@ -7,7 +7,7 @@ import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.block.Block;
 import com.company.model.component.block.PropertyBlock;
-
+//TODO: change the first line and change the list into orders
 public class ViewPropertyCommand implements Command {
     private final Player player;
     private final Board board;
