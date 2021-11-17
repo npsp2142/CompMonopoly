@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,7 +64,7 @@ class GameSystemTest {
         new CompMonopolyApplication(new CommandFactory(gameSystem));
         new GameDisplay(System.out);
         gameSystem.setCurrentPlayer(playerA);
-
+        gameSystem.setJailRoundCounter(new HashMap<>());
     }
 
     /**

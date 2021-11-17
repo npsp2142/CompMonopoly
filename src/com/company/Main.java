@@ -82,13 +82,15 @@ public class Main {
         Board board = new Board();
         PlayerLocation playerLocation = new PlayerLocation(board, players, goBlock);
 
-        HashMap<Player, Integer> roundCounter = new HashMap<>();
+        HashMap<Player, Integer> jailRoundCounter = new HashMap<>();
 
         for (Player player : players) {
-            roundCounter.put(player, 0);
+            jailRoundCounter.put(player, 0);
         }
-        JailBlock jailBlock = new JailBlock("In Jail", playerLocation, roundCounter);
-        JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
+        JailBlock jailBlock = new JailBlock(
+                JustVisitingOrInJailBlock.IN_JAIL_DEFAULT_NAME, playerLocation, jailRoundCounter);
+        JustVisitingOrInJailBlock justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
+                JustVisitingOrInJailBlock.DEFAULT_NAME, justVisitingBlock, jailBlock);
         GoToJailBlock goToJailBlock = new GoToJailBlock("Go Jail", playerLocation, justVisitingOrInJailBlock);
 
         board.addBlock(goBlock);
@@ -136,7 +138,7 @@ public class Main {
         board.addPath(taiOBlock, goBlock);
 
 
-        GameSystem gameSystem = new GameSystem(board, players, properties, playerLocation);
+        GameSystem gameSystem = new GameSystem(board, players, properties, playerLocation, jailRoundCounter);
 
         Map<String, EffectObserver> effectObservers = new HashMap<>();
         effectObservers.put(EffectDisplay.DEFAULT_NAME, new EffectDisplay());

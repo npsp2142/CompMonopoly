@@ -3,8 +3,11 @@ package com.company.model.component.block;
 import com.company.model.component.Player;
 
 public class JustVisitingOrInJailBlock extends ConditionalBlock {
-    public JustVisitingOrInJailBlock(NoEffectBlock noEffectBlock, JailBlock jailBlock) {
-        super(noEffectBlock.getName() + " / " + jailBlock.getName(), noEffectBlock, jailBlock);
+    public static final String JUST_VISITING_DEFAULT_NAME = "Just Visiting";
+    public static final String IN_JAIL_DEFAULT_NAME = "In Jail";
+    public static final String DEFAULT_NAME = JUST_VISITING_DEFAULT_NAME + " / " + IN_JAIL_DEFAULT_NAME;
+    public JustVisitingOrInJailBlock(String name,NoEffectBlock noEffectBlock, JailBlock jailBlock) {
+        super(name, noEffectBlock, jailBlock);
     }
 
     @Override

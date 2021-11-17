@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -56,6 +57,7 @@ class GameLoaderTest {
         playerLocation.moveTo(playerA, noEffectBlockB);
         playerA.setAmount(customAmount);
         playerA.setStatus(Player.Status.BANKRUPT);
+        gameSystem.setJailRoundCounter(new HashMap<>());
         gameSystem.saveGame();
     }
 

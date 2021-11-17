@@ -13,6 +13,7 @@ public class GameSave implements Serializable {
     private final Integer round;
     private final PlayerSave currentPlayer;
     private final Random random;
+    private final ArrayList<Integer> roundCounter;
     private Map<BlockSave, Integer> blockVisit;
     private Map<PlayerSave, List<BlockSave>> path;
 
@@ -21,13 +22,14 @@ public class GameSave implements Serializable {
                     PlayerLocationSave playerLocationSave,
                     Integer round,
                     PlayerSave currentPlayer,
-                    Random random) {
+                    Random random, ArrayList<Integer> roundCounter) {
         this.playerSaves = playerSaves;
         this.propertySaves = propertySaves;
         this.playerLocationSave = playerLocationSave;
         this.round = round;
         this.currentPlayer = currentPlayer;
         this.random = random;
+        this.roundCounter = roundCounter;
     }
 
     public ArrayList<PlayerSave> getPlayerSaves() {
@@ -56,6 +58,10 @@ public class GameSave implements Serializable {
 
     public Map<PlayerSave, List<BlockSave>> getPath() {
         return path;
+    }
+
+    public ArrayList<Integer> getRoundCounter() {
+        return roundCounter;
     }
 
     public void setPath(Map<PlayerSave, List<BlockSave>> path) {

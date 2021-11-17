@@ -22,8 +22,8 @@ public class CompMonopolyApplication {
 
     public void run() {
         beforeRun();
-        try {
-            while (!isExitApp) {
+        while (!isExitApp) {
+            try {
                 Command command = makeCommand();
                 if (command == null) {
                     GameDisplay.warnMessage("Unknown Command");
@@ -34,9 +34,10 @@ public class CompMonopolyApplication {
                     continue;
                 }
                 command.execute();
+            } catch (Exception e) {
+                // TODO: Remove e.printStackTrace
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         System.exit(0);
     }

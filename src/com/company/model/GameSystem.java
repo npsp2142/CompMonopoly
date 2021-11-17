@@ -27,14 +27,27 @@ public class GameSystem {
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
     private final PlayerLocation playerLocation;
-
     private Player currentPlayer;
     private int round;
     private Random random;
 
+    private Map<Player, Integer> jailRoundCounter;
+
     private Map<String, EffectObserver> effectObservers;
     private Map<String, BlockObserver> blockObservers;
     private Map<String, PlayerObserver> playerObservers;
+
+    public GameSystem(Board board,
+                      ArrayList<Player> players,
+                      ArrayList<Property> properties,
+                      PlayerLocation playerLocation, Map<Player, Integer> jailRoundCounter) {
+        this.board = board;
+        this.players = players;
+        this.properties = properties;
+        this.playerLocation = playerLocation;
+        this.jailRoundCounter = jailRoundCounter;
+        round = 0;
+    }
 
     public GameSystem(Board board,
                       ArrayList<Player> players,
@@ -203,8 +216,14 @@ public class GameSystem {
             e.printStackTrace();
         }
 
+
+        ArrayList<Integer> roundCounterSave = new ArrayList<>();
+        for(Player player:players){
+            if(!jailRoundCounter.containsKey(player)) continue;
+            roundCounterSave.add(jailRoundCounter.get(player));
+        }
         GameSaveFactory gameSaveFactory = new GameSaveFactory(
-                players, properties, playerLocation, round, currentPlayer, random);
+                players, properties, playerLocation, round, currentPlayer, random,roundCounterSave);
 
         if (blockObservers != null) {
             gameSaveFactory.setBlockVisitObserver((BlockVisitObserver) blockObservers.get(BlockVisitObserver.DEFAULT_NAME));
@@ -288,6 +307,10 @@ public class GameSystem {
         return effectObservers;
     }
 
+    public Map<Player, Integer> getJailRoundCounter() {
+        return jailRoundCounter;
+    }
+
     public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
         this.effectObservers = effectObservers;
     }
@@ -302,6 +325,10 @@ public class GameSystem {
 
     public void setPlayerObservers(Map<String, PlayerObserver> playerObservers) {
         this.playerObservers = playerObservers;
+    }
+
+    public void setJailRoundCounter(Map<Player, Integer> jailRoundCounter) {
+        this.jailRoundCounter = jailRoundCounter;
     }
 
     public Random getRandom() {

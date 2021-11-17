@@ -19,6 +19,7 @@ public class GameLoader {
     private final ArrayList<PlayerSave> playerSaves;
     private final ArrayList<PropertySave> propertySaves;
     private final PlayerLocationSave locationSave;
+    private final ArrayList<Integer> roundCounterSave;
     private final Random random;
 
     public GameLoader(GameSystem gameSystem, GameSave gameSave) {
@@ -31,6 +32,7 @@ public class GameLoader {
         propertySaves = gameSave.getPropertySaves();
         locationSave = gameSave.getPlayerLocationSave();
         random = gameSave.getRandom();
+        roundCounterSave = gameSave.getRoundCounter();
     }
 
     public void load() {
@@ -74,6 +76,12 @@ public class GameLoader {
         gameSystem.setCurrentPlayer(playerSavePlayerHashMap.get(gameSave.getCurrentPlayer()));
         gameSystem.setRound(gameSave.getRound());
         gameSystem.setRandom(gameSave.getRandom());
+
+        Map<Player, Integer> roundCounter = gameSystem.getJailRoundCounter();
+        roundCounter.clear();
+        for(Player player:players){
+            roundCounter.put(player,roundCounterSave.get(players.indexOf(player)));
+        }
 
         loadBlockObservers();
         loadPlayerObservers(playerSavePlayerHashMap);

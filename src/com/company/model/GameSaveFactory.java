@@ -18,6 +18,7 @@ public class GameSaveFactory {
     private final Integer round;
     private final Player currentPlayer;
     private final Random random;
+    private final ArrayList<Integer> roundCounter;
     private BlockVisitObserver blockVisitObserver;
     private PathObserver pathObserver;
 
@@ -27,13 +28,15 @@ public class GameSaveFactory {
             PlayerLocation playerLocation,
             Integer round,
             Player currentPlayer,
-            Random random) {
+            Random random,
+            ArrayList<Integer> roundCounter) {
         this.players = players;
         this.properties = properties;
         this.playerLocation = playerLocation;
         this.round = round;
         this.currentPlayer = currentPlayer;
         this.random = random;
+        this.roundCounter = roundCounter;
     }
 
     public GameSave make() {
@@ -61,9 +64,8 @@ public class GameSaveFactory {
             playerSaveBlockSaveHashMap.put(playerPlayerSaveHashMap.get(player), blockDatum);
         }
 
-
         GameSave gameSave = new GameSave(playerSaves, propertySaves,
-                locationSave, round, playerPlayerSaveHashMap.get(currentPlayer), random);
+                locationSave, round, playerPlayerSaveHashMap.get(currentPlayer), random, roundCounter);
 
         if (blockVisitObserver != null) {
             Map<Block, Integer> blockVisitObserverCounter = blockVisitObserver.getCounter();

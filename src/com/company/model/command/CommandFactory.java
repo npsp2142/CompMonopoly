@@ -10,6 +10,7 @@ import com.company.model.observer.BlockVisitObserver;
 import com.company.model.observer.PathObserver;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -40,6 +41,7 @@ public class CommandFactory {
                         );
                     }
                     if (tokens.size() < 4) return null;
+                    if (!Pattern.matches("[0-9]+",tokens.get(1))) return null;
                     int playerNumber = Integer.parseInt(tokens.get(1));
                     return new StartCommand(
                             CompMonopolyApplication.instance,
@@ -98,9 +100,9 @@ public class CommandFactory {
                     return null;
                 }
                 return new ViewPathCommand(blockVisitObserver);
-            case "property":
-            case "p":
-                return new ViewPropertyCommand(gameSystem.getCurrentPlayer(), gameSystem.getBoard(),
+            case "destiny":
+            case "d":
+                return new SeeMyDestinyCommand(gameSystem.getCurrentPlayer(), gameSystem.getBoard(),
                         gameSystem.getLocation());
             case "money":
             case "m":

@@ -55,7 +55,7 @@ class PayToLeaveJailEffectTest {
         inJailRoundCounter.put(playerA, 0);
         jailBlock = new JailBlock("In Jail", playerLocation, inJailRoundCounter);
         justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
-                justVisitingBlock, jailBlock
+                JustVisitingOrInJailBlock.DEFAULT_NAME, justVisitingBlock, jailBlock
         );
         goToJailBlock = new GoToJailBlock("Go To Jail", playerLocation, justVisitingOrInJailBlock);
 

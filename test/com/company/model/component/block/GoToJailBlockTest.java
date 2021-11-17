@@ -33,7 +33,8 @@ class GoToJailBlockTest {
         playerLocation.setStartLocation();
         JailBlock jailBlock = new JailBlock("In Jail", playerLocation, new HashMap<>());
         NoEffectBlock justVisitingBlock = new NoEffectBlock("Just Visiting");
-        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(justVisitingBlock, jailBlock);
+        justVisitingOrInJailBlock = new JustVisitingOrInJailBlock(
+                JustVisitingOrInJailBlock.DEFAULT_NAME, justVisitingBlock, jailBlock);
         goToJailBlock = new GoToJailBlock("Go Jail", playerLocation, justVisitingOrInJailBlock);
         board.getBlocks().add(justVisitingOrInJailBlock);
     }
