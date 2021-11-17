@@ -1,6 +1,6 @@
 package com.company.model.component.block;
 
-import com.company.model.ANSI;
+import com.company.model.GameDisplay;
 import com.company.model.effect.Describable;
 import com.company.model.observer.BlockObserver;
 import com.company.model.observer.EffectObserver;
@@ -25,10 +25,10 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
         effectObservers = new HashMap<>();
     }
 
-    public void notifyBlockSubscribers() {
+    public void notifyBlockSubscribers(boolean isVerbose) {
         for (String name : blockObservers.keySet()
         ) {
-            blockObservers.get(name).update(this);
+            blockObservers.get(name).update(this, isVerbose);
         }
     }
 
@@ -50,7 +50,7 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
     }
 
     public String getColoredName() {
-        return ANSI.ANSI_PURPLE + name + ANSI.ANSI_RESET;
+        return GameDisplay.colorString(name, GameDisplay.ANSI_PURPLE);
     }
 
     public void setBlockObservers(Map<String, BlockObserver> blockObservers) {

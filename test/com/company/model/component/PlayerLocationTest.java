@@ -107,9 +107,9 @@ class PlayerLocationTest {
 
     @Test
     void testMoveTo() {
-        playerLocation.moveTo(playerA, goBlock.getName());
+        playerLocation.moveTo(playerA, goBlock.getName(), false, true);
         assertEquals(goBlock, playerA.getCurrentLocation(playerLocation));
-        playerLocation.moveTo(playerA, noEffectBlockG.getName());
+        playerLocation.moveTo(playerA, noEffectBlockG.getName(), false, true);
         assertNotEquals(noEffectBlockG, playerA.getCurrentLocation(playerLocation));
     }
 }

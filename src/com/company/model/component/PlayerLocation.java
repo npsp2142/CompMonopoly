@@ -1,5 +1,6 @@
 package com.company.model.component;
 
+import com.company.model.GameDisplay;
 import com.company.model.component.block.Block;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
@@ -41,7 +42,7 @@ public class PlayerLocation implements Serializable {
             onEnterEffect.triggerOnEnter();
         }
 
-        currentBlock.notifyBlockSubscribers();
+        currentBlock.notifyBlockSubscribers(true);
         location.replace(player, location.get(player), currentBlock);
         OnLandEffect effect = currentBlock.createOnLandEffect(player);
         effect.triggerOnLand();
@@ -51,31 +52,31 @@ public class PlayerLocation implements Serializable {
         return location.get(player);
     }
 
-    public void moveTo(Player player, Block block, boolean isTrigger) {
-        block.notifyBlockSubscribers();
-        location.replace(player, block);
-        if (isTrigger) {
-            block.createOnLandEffect(player).triggerOnLand();
-        }
-    }
-
-    public void moveTo(Player player, String name) {
+    public void moveTo(Player player, String name, boolean isTrigger, boolean isVerbose) {
         Block block = board.findBlock(name);
         if (block == null) {
+            GameDisplay.warnMessage("Block not found");
             return;
         }
-        moveTo(player, block);
+        moveTo(player, block, isTrigger, isVerbose);
     }
 
     public void moveTo(Player player, Block destination) {
-        if (!blockExist(destination)) return;
-        destination.notifyBlockSubscribers();
-        location.replace(player, destination);
+        moveTo(player, destination, true, true);
     }
 
-    private boolean blockExist(Block destination) {
-        for (Block block : board.getBlocks()) {
-            if (block.equals(destination)) {
+    public void moveTo(Player player, Block destination, boolean isTrigger, boolean isVerbose) {
+        if (!blockExist(destination)) return;
+        destination.notifyBlockSubscribers(isVerbose);
+        location.replace(player, destination);
+        if (isTrigger) {
+            destination.createOnLandEffect(player).triggerOnLand();
+        }
+    }
+
+    private boolean blockExist(Block block) {
+        for (Block existingBlock : board.getBlocks()) {
+            if (block.equals(existingBlock)) {
                 return true;
             }
         }

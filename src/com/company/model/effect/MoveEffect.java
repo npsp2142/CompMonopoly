@@ -25,7 +25,7 @@ public class MoveEffect extends Effect implements OnLandEffect, Describable {
             Block block = player.getCurrentLocation(playerLocation);
             OnLandEffect onLandEffect = block.createOnLandEffect(player);
             onLandEffect.triggerOnLand();
-            block.notifyBlockSubscribers();
+            block.notifyBlockSubscribers(true);
             return;
         }
 

@@ -94,7 +94,9 @@ public class GameSystem {
         GameDisplay.titleBar(String.format("%s TURN", currentPlayer.getName()));
         GameDisplay.infoMessage(String.format("Amount: %d HKD", currentPlayer.getAmount()));
         GameDisplay.infoMessage(
-                String.format("You are at %s", currentPlayer.getCurrentLocation(playerLocation).getColoredName())
+                String.format("You are at %s",
+                        GameDisplay.colorString(currentPlayer.getCurrentLocation(playerLocation).getName(), GameDisplay.ANSI_PURPLE)
+                )
         );
     }
 
@@ -185,13 +187,17 @@ public class GameSystem {
     }
 
     public void saveGame() {
+        saveGame(DEFAULT_FILE_NAME);
+    }
+
+    public void saveGame(String fileName) {
         try {
             if (new File(DEFAULT_FOLDER).mkdir()) {
                 GameDisplay.infoMessage("Directory created - " + DEFAULT_FOLDER);
             }
-            File file = new File(DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
+            File file = new File(DEFAULT_FOLDER + "/" + fileName);
             if (file.createNewFile()) {
-                GameDisplay.infoMessage("File created - " + DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
+                GameDisplay.infoMessage("File created - " + DEFAULT_FOLDER + "/" + fileName);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -208,7 +214,7 @@ public class GameSystem {
         }
 
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
+            FileOutputStream fileOutputStream = new FileOutputStream(DEFAULT_FOLDER + "\\" + fileName);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(gameSaveFactory.make());
             objectOutputStream.close();
@@ -218,9 +224,13 @@ public class GameSystem {
     }
 
     public void loadGame() {
+        loadGame(DEFAULT_FILE_NAME);
+    }
+
+    public void loadGame(String fileName) {
         GameSave save = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream(DEFAULT_FOLDER + "\\" + DEFAULT_FILE_NAME);
+            FileInputStream fileInputStream = new FileInputStream(DEFAULT_FOLDER + "\\" + fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             save = (GameSave) objectInputStream.readObject();
             objectInputStream.close();

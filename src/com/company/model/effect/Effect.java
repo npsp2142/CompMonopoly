@@ -1,6 +1,6 @@
 package com.company.model.effect;
 
-import com.company.model.ANSI;
+import com.company.model.GameDisplay;
 import com.company.model.observer.EffectObserver;
 
 import java.util.Map;
@@ -33,7 +33,7 @@ public abstract class Effect implements Describable {
     }
 
     public String getColoredName() {
-        return ANSI.ANSI_YELLOW + name + ANSI.ANSI_RESET;
+        return GameDisplay.colorString(name, GameDisplay.ANSI_YELLOW);
     }
 
     public void setEffectObservers(Map<String, EffectObserver> effectObservers) {

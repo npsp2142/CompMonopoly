@@ -1,10 +1,12 @@
 package com.company.model.command;
 
 import com.company.model.CompMonopolyApplication;
+import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 // TODO: change the three lines to Player A.... Player B... Player C...
 public class SaveCommand implements Command {
     private final GameSystem gameSystem;
+    private String fileName;
 
     public SaveCommand(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
@@ -12,12 +14,23 @@ public class SaveCommand implements Command {
 
     @Override
     public void execute() {
+        if (fileName != null) {
+            gameSystem.saveGame(fileName);
+            CompMonopolyApplication.instance.quitGame();
+            GameDisplay.infoMessage("Game saved - " + fileName);
+            return;
+        }
         gameSystem.saveGame();
         CompMonopolyApplication.instance.quitGame();
+        GameDisplay.infoMessage("Game saved - " + GameSystem.DEFAULT_FILE_NAME);
     }
 
     @Override
     public boolean isValid() {
         return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.PLAYING;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

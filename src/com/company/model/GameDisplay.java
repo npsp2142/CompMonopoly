@@ -4,10 +4,21 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class GameDisplay {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     private static final int TERMINAL_WIDTH = 80;
     private static final char DIVIDER = '=';
     private static final char SPACE = ' ';
     private static final int COMMAND_LENGTH_MAX = 20;
+
     private static GameDisplay instance;
     private final PrintStream printStream;
     private GameSystem gameSystem;
@@ -27,7 +38,6 @@ public class GameDisplay {
         }
     }
 
-
     public static void infoMessage(String message) {
         instance.getPrintStream().println("[Info] " + message);
     }
@@ -36,16 +46,15 @@ public class GameDisplay {
         instance.getPrintStream().print(message);
     }
 
-
     public static void promptMessage(String message) {
         instance.getPrintStream().print("[prompt] " + message + " [y/n] ");
     }
 
     public static void warnMessage(String message) {
-        instance.getPrintStream().println(ANSI.ANSI_RED + message + ANSI.ANSI_RESET);
+        instance.getPrintStream().println(ANSI_RED + message + ANSI_RESET);
     }
 
-    public static void commandHelpMessage(String command, String description) {
+    public static void HelpMessage(String command, String description) {
         StringBuilder builder = new StringBuilder();
         int space_width = (COMMAND_LENGTH_MAX - command.length());
         builder.append(command);
@@ -93,13 +102,17 @@ public class GameDisplay {
         switch (CompMonopolyApplication.instance.getStatus()) {
             case PLAYING:
                 if (instance.gameSystem == null) return;
-                instance.getPrintStream().print(ANSI.ANSI_GREEN + instance.gameSystem.getCurrentPlayer() + ANSI.ANSI_RESET);
-                instance.getPrintStream().print(ANSI.ANSI_BLUE + " > " + ANSI.ANSI_RESET);
+                instance.getPrintStream().print(colorString(instance.gameSystem.getCurrentPlayer().toString(), ANSI_GREEN));
+                instance.getPrintStream().print(colorString(" > ", ANSI_BLUE));
                 break;
             case MENU:
-                instance.getPrintStream().print(ANSI.ANSI_BLUE + " > " + ANSI.ANSI_RESET);
+                instance.getPrintStream().print(colorString(" > ", ANSI_BLUE));
                 break;
         }
+    }
+
+    public static String colorString(String message, String ansiColor) {
+        return ansiColor + message + ANSI_RESET;
     }
 
     public PrintStream getPrintStream() {

@@ -48,6 +48,11 @@ public class CommandFactory {
                             gameSystem
                     );
                 case "load":
+                    if (tokens.size() == 2) {
+                        LoadCommand loadCommand = new LoadCommand(gameSystem);
+                        loadCommand.setFileName(tokens.get(1));
+                        return loadCommand;
+                    }
                     return new LoadCommand(gameSystem);
                 case "quit":
                     return new QuitCommand(CompMonopolyApplication.instance);
@@ -57,6 +62,11 @@ public class CommandFactory {
 
         switch (tokens.get(0).toLowerCase()) {
             case "save":
+                if (tokens.size() == 2) {
+                    SaveCommand saveCommand = new SaveCommand(gameSystem);
+                    saveCommand.setFileName(tokens.get(1));
+                    return saveCommand;
+                }
                 return new SaveCommand(gameSystem);
             case "quit":
                 return new QuitCommand(CompMonopolyApplication.instance);
@@ -78,22 +88,10 @@ public class CommandFactory {
                 return new GiveNoResponseCommand(gameSystem.getCurrentPlayer());
             case "help":
                 return new HelpCommand();
-            case "view":
-                if (tokens.size() != 2) {
-                    String description = "Usage: view [-bvc/path]";
-                    return new EmptyCommand(description);
-                }
-                switch (tokens.get(1).toLowerCase()) {
-                    case "-bvc": // bot visit count
-                        return new ViewBlockVisitCountCommand((BlockVisitObserver)
-                                gameSystem.getBlockObservers().get(BlockVisitObserver.DEFAULT_NAME));
-                    case "-path":
-                        return new ViewPathCommand(
-                                (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME));
-                }
-                break;
-            case "location": // path and now location
-            case "loc":
+            case "bvc":
+                return new ViewBlockVisitCountCommand((BlockVisitObserver)
+                        gameSystem.getBlockObservers().get(BlockVisitObserver.DEFAULT_NAME));
+            case "path": // path and now location
                 PathObserver blockVisitObserver =
                         (PathObserver) gameSystem.getPlayerObservers().get(PathObserver.DEFAULT_NAME);
                 if (blockVisitObserver == null) {
