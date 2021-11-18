@@ -9,6 +9,9 @@ import com.company.model.component.block.JustVisitingOrInJailBlock;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * When player wants to start, this will set the game application status.
+ */
 public class StartCommand implements Command {
 
     private final CompMonopolyApplication compMonopolyApplication;
@@ -17,6 +20,12 @@ public class StartCommand implements Command {
     private final List<String> names;
     private final PlayerFactory playerFactory;
 
+    /**
+     * @param compMonopolyApplication the application
+     * @param playerNumber the number of the total player
+     * @param names the player name
+     * @param gameSystem the game system to be modify
+     */
     public StartCommand(
             CompMonopolyApplication compMonopolyApplication,
             int playerNumber,
@@ -30,6 +39,10 @@ public class StartCommand implements Command {
         this.playerFactory = new PlayerFactory(gameSystem.getRandom(), Player.Status.NORMAL, Player.DEFAULT_AMOUNT);
     }
 
+    /**
+     * @param compMonopolyApplication the application
+     * @param gameSystem the game system to be modify
+     */
     public StartCommand(CompMonopolyApplication compMonopolyApplication, GameSystem gameSystem) {
         this.compMonopolyApplication = compMonopolyApplication;
         this.gameSystem = gameSystem;

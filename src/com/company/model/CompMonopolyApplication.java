@@ -35,7 +35,6 @@ public class CompMonopolyApplication {
                 }
                 command.execute();
             } catch (Exception e) {
-                // TODO: Remove e.printStackTrace
                 e.printStackTrace();
             }
         }

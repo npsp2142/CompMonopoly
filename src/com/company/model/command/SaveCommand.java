@@ -3,11 +3,17 @@ package com.company.model.command;
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
-// TODO: change the three lines to Player A.... Player B... Player C...
+
+/**
+ * When player wants to save, this will help to save the game
+ */
 public class SaveCommand implements Command {
     private final GameSystem gameSystem;
     private String fileName;
 
+    /**
+     * @param gameSystem the GameSystem to be modify
+     */
     public SaveCommand(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
     }
@@ -30,6 +36,9 @@ public class SaveCommand implements Command {
         return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.PLAYING;
     }
 
+    /**
+     * @param fileName the file name user wants to save as
+     */
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
