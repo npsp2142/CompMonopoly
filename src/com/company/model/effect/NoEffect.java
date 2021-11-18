@@ -1,5 +1,8 @@
 package com.company.model.effect;
 
+/**
+ *
+ */
 public class NoEffect extends Effect implements OnLandEffect, OnEnterEffect {
     public static final String DEFAULT_NAME = "No Effect";
     private final String description;

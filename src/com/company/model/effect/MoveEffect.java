@@ -6,11 +6,21 @@ import com.company.model.component.block.Block;
 
 import java.util.Arrays;
 
+/**
+ * Player moves after rolling dice
+ */
 public class MoveEffect extends Effect implements OnLandEffect, Describable {
     private final Player player;
     private final int[] steps;
     private final PlayerLocation playerLocation;
 
+    /**
+     * @param name the name of the effect
+     * @param player the player that need to moved
+     * @param steps the dice result
+     * @param playerLocation the location of all players
+     * @see PlayerLocation
+     */
     public MoveEffect(String name, Player player, int[] steps, PlayerLocation playerLocation) {
         super(name);
         this.player = player;
