@@ -5,7 +5,13 @@ import com.company.model.component.block.JailBlock;
 
 import java.util.Map;
 
+/**
+ * player chose to roll instead of pay
+ */
 public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Describable {
+    /**
+     * The maximise turns of round stay in jail
+     */
     public static final int MAX_STAY = 3;
 
     private final Player player;
@@ -15,6 +21,15 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
     private final CureEffect cureEffect;
     private final PayToLeaveJailEffect payToLeaveJailEffect;
 
+    /**
+     * @param name the name of the effect
+     * @param player player want to roll to leave
+     * @param dices the result of dices
+     * @param roundCounter the current round
+     * @param moveEffect to move to desire block
+     * @param cureEffect to set player free (can move)
+     * @param payToLeaveJailEffect to pay to leave the jail
+     */
     public RollToLeaveJailEffect(String name,
                                  Player player,
                                  int[] dices,
