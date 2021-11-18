@@ -3,6 +3,9 @@ package com.company.model.command;
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 
+/**
+ * When the user wants to see what commands can be used in the system
+ */
 public class HelpCommand implements Command {
 
     @Override

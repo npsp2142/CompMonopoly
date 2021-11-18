@@ -7,12 +7,20 @@ import com.company.model.component.Player;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.block.Block;
 import com.company.model.component.block.PropertyBlock;
-//TODO: change the first line and change the list into orders
+
+/**
+ * When player needs to see their destiny, this will show the player destination
+ */
 public class SeeMyDestinyCommand implements Command {
     private final Player player;
     private final Board board;
     private final PlayerLocation playerLocation;
 
+    /**
+     * @param player The current player
+     * @param board The monopoly board
+     * @param playerLocation The current location of the player
+     */
     public SeeMyDestinyCommand(Player player, Board board, com.company.model.component.PlayerLocation playerLocation) {
         this.player = player;
         this.board = board;

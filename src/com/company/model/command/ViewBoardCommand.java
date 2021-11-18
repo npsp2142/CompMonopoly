@@ -7,10 +7,17 @@ import com.company.model.component.Board;
 import com.company.model.component.PlayerLocation;
 import com.company.model.component.block.Block;
 
+/**
+ * The player wants to view the board
+ */
 public class ViewBoardCommand implements Command {
     private final Board board;
     private final PlayerLocation playerLocation;
 
+    /**
+     * @param board the whole board
+     * @param playerLocation the current player location
+     */
     public ViewBoardCommand(Board board, PlayerLocation playerLocation) {
         this.board = board;
         this.playerLocation = playerLocation;
