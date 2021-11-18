@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- *
+ * Define the input and direct to different command classes
  */
 public class CommandFactory {
 
