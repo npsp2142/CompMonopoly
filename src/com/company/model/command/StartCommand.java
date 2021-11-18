@@ -1,9 +1,6 @@
 package com.company.model.command;
 
-import com.company.model.CompMonopolyApplication;
-import com.company.model.GameDisplay;
-import com.company.model.GameSystem;
-import com.company.model.PlayerFactory;
+import com.company.model.*;
 import com.company.model.component.Player;
 import com.company.model.component.block.Block;
 import com.company.model.component.block.JailBlock;
@@ -46,6 +43,7 @@ public class StartCommand implements Command {
         gameSystem.getPlayers().clear();
         GameDisplay.titleBar("GAME START!");
         GameDisplay.print("                  Try \"help\" when you do not know what to type!\n");
+        GameDisplay.print(BoardDisplay.VISUAL);
         for (int i = 0; i < playerNumber; i++) {
             gameSystem.getPlayers().add(playerFactory.make(names.get(i)));
         }
