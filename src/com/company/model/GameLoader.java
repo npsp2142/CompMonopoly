@@ -79,6 +79,8 @@ public class GameLoader {
 
         Map<Player, Integer> roundCounter = gameSystem.getJailRoundCounter();
         roundCounter.clear();
+
+
         for(Player player:players){
             roundCounter.put(player,roundCounterSave.get(players.indexOf(player)));
         }

@@ -4,11 +4,18 @@ import com.company.model.component.Player;
 import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
 
+/**
+ * Conditional Block contains two block, visit one block each time depends on player status.
+ */
 public abstract class ConditionalBlock extends Block {
     private final Block blockA;
     private final Block blockB;
 
-    // BlockA true, BlockB false
+    /**
+     * @param name name of the condition block
+     * @param blockA the block that travels when goto is true
+     * @param blockB the block that travels when goto is false
+     */
     public ConditionalBlock(String name,
                             Block blockA, Block blockB) {
         super(name);
@@ -16,7 +23,10 @@ public abstract class ConditionalBlock extends Block {
         this.blockB = blockB;
     }
 
-    // BlockA true, BlockB false
+    /**
+     * @param player the player entered the conditional block
+     * @return the block that the player travels to
+     */
     public abstract boolean GoTo(Player player);
 
     public OnEnterEffect createOnEnterEffect(Player player) {
@@ -57,6 +67,9 @@ public abstract class ConditionalBlock extends Block {
         return blockA.getName() + " / " + blockB.getName();
     }
 
+    /**
+     * @return the block that travels when goto is false
+     */
     public Block getBlockB() {
         return blockB;
     }

@@ -9,7 +9,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Game Controller can provide the control of the game application
+ */
 public class GameController {
+    /**
+     * The only instance of Game controller
+     */
     public static GameController instance;
     private final BufferedReader bufferedReader;
 
@@ -20,6 +26,10 @@ public class GameController {
         }
     }
 
+    /**
+     * @param promptMessage the message for getting response
+     * @return the response from the player
+     */
     public Player.Response getResponse(String promptMessage) {
         ArrayList<String> tokens = new ArrayList<>();
         try {
