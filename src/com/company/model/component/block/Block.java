@@ -19,12 +19,18 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
     private Map<String, BlockObserver> blockObservers;
     private Map<String, EffectObserver> effectObservers;
 
+    /**
+     * @param name the name of the block
+     */
     public Block(String name) {
         this.name = name;
         blockObservers = new HashMap<>();
         effectObservers = new HashMap<>();
     }
 
+    /**
+     * @param isVerbose if true, give more descriptions.
+     */
     public void notifyBlockSubscribers(boolean isVerbose) {
         for (String name : blockObservers.keySet()
         ) {
@@ -32,10 +38,16 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
         }
     }
 
+    /**
+     * @return the effect observers
+     */
     public Map<String, EffectObserver> getEffectObservers() {
         return effectObservers;
     }
 
+    /**
+     * @param effectObservers the map that contains instances of all observers and their names
+     */
     public void setEffectObservers(Map<String, EffectObserver> effectObservers) {
         this.effectObservers = effectObservers;
     }
@@ -45,14 +57,23 @@ public abstract class Block implements OnLandBlock, OnEnterBlock, Describable {
         return name;
     }
 
+    /**
+     * @return the name of the block
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the colored name of the block
+     */
     public String getColoredName() {
         return GameDisplay.colorString(name, GameDisplay.ANSI_PURPLE);
     }
 
+    /**
+     * @param blockObservers the map that contains instances of all observers and their names
+     */
     public void setBlockObservers(Map<String, BlockObserver> blockObservers) {
         this.blockObservers = blockObservers;
     }
