@@ -3,7 +3,6 @@ package com.company.model.command;
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
-// TODO: change the three lines to Player A.... Player B... Player C...
 public class SaveCommand implements Command {
     private final GameSystem gameSystem;
     private String fileName;
