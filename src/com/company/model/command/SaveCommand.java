@@ -4,9 +4,11 @@ import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 
+
 /**
  * When player wants to save, this will help to save the game
  */
+
 public class SaveCommand implements Command {
     private final GameSystem gameSystem;
     private String fileName;

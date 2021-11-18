@@ -9,6 +9,7 @@ import com.company.model.component.block.Block;
 import com.company.model.component.block.PropertyBlock;
 
 
+
 /**
  * When player needs to see their destiny, this will show the player destination
  */
