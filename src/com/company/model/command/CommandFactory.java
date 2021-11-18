@@ -19,6 +19,9 @@ public class CommandFactory {
 
     private final GameSystem gameSystem;
 
+    /**
+     * @param gameSystem the GameSystem to modify
+     */
     public CommandFactory(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
     }
@@ -163,6 +166,9 @@ public class CommandFactory {
         return null;
     }
 
+    /**
+     * @return the instance of GameSystem
+     */
     public GameSystem getGameSystem() {
         return gameSystem;
     }

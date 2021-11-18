@@ -4,10 +4,16 @@ import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 import com.company.model.GameSystem;
 
+/**
+ * When player wants to load a saved game
+ */
 public class LoadCommand implements Command {
     private final GameSystem gameSystem;
     private String fileName;
 
+    /**
+     * @param gameSystem the GameSystem to modify
+     */
     public LoadCommand(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
     }
@@ -27,6 +33,9 @@ public class LoadCommand implements Command {
         return CompMonopolyApplication.instance.getStatus() == CompMonopolyApplication.Status.MENU;
     }
 
+    /**
+     * @param fileName The saved file name the user wants to load
+     */
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }

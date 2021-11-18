@@ -2,9 +2,16 @@ package com.company.model.command;
 
 import com.company.model.component.Player;
 
+/**
+ * When player response Yes, this will set player response to Yes
+ */
 public class GiveYesRespondCommand implements Command {
-    public final Player player;
 
+    private final Player player;
+
+    /**
+     * @param player the current player
+     */
     public GiveYesRespondCommand(Player player) {
         this.player = player;
     }
