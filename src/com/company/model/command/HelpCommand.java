@@ -18,7 +18,6 @@ public class HelpCommand implements Command {
         GameDisplay.HelpMessage("n", "Answer no for prompt question.");
         GameDisplay.divider();
         GameDisplay.HelpMessage("help", "Show all commands and descriptions");
-        GameDisplay.HelpMessage("location", "Show current location and the path that player passed through.");
         GameDisplay.HelpMessage("destiny", "Show all blocks in the future road and corresponding owner and details.");
         GameDisplay.HelpMessage("money", "Show all players with their amount of money.");
         GameDisplay.HelpMessage("board", "Show the whole board and properties description.");
