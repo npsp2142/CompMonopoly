@@ -5,6 +5,9 @@ package com.company.model;
  */
 public class BoardDisplay {
 
+    /**
+     * The visual of the board
+     */
     public static final String VISUAL =
             "______________________________________________________________________________________\r\n" +
                     "|.            ..            ..            ..            ..            ..            .|\r\n" +

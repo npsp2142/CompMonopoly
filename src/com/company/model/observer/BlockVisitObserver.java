@@ -6,14 +6,27 @@ import com.company.model.component.block.Block;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * BlockVisitObserver provides the view that counts the times visited by players.
+ * The observer informs the locction of a player for each update
+ */
 public class BlockVisitObserver implements BlockObserver {
+    /**
+     * DEFAULT_NAME is the default name of the block visit observer
+     */
     public static final String DEFAULT_NAME = "Block Visit Observer";
     private final Map<Block, Integer> counter;
 
+    /**
+     * Create the instance of BlockVisitObserver
+     */
     public BlockVisitObserver() {
         this.counter = new HashMap<>();
     }
 
+    /**
+     * Provides the view that counts the times visited by players.
+     */
     public void view() {
         for (Block block : counter.keySet()) {
             if (!counter.containsKey(block)) {
@@ -23,6 +36,7 @@ public class BlockVisitObserver implements BlockObserver {
             GameDisplay.infoMessage(String.format("%s: %d times", block.getColoredName(), counter.get(block)));
         }
     }
+
 
     @Override
     public void update(Block block, boolean isVerbose) {
@@ -44,6 +58,9 @@ public class BlockVisitObserver implements BlockObserver {
         counter.clear();
     }
 
+    /**
+     * @return get the block view counter
+     */
     public Map<Block, Integer> getCounter() {
         return counter;
     }

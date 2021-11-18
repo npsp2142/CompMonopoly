@@ -5,9 +5,21 @@ import com.company.model.effect.*;
 
 import java.util.Random;
 
+/**
+ * The block of Chance
+ */
 public class ChanceBlock extends Block {
+    /**
+     * The maximum gain of money per visit
+     */
     public static final int MAX_ADD = 200;
+    /**
+     * The maximum lose of money per visit
+     */
     public static final int MAX_REDUCE = 300;
+    /**
+     *
+     */
     public static final String DEFAULT_EFFECT_NAME = "Chance";
     public static final float PROBABILITY_ADD = 0.5f;
     private final Random random;
