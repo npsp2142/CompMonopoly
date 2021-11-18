@@ -3,14 +3,17 @@ package com.company.model.command;
 import com.company.model.CompMonopolyApplication;
 import com.company.model.GameDisplay;
 
+/**
+ * When the user wants to see what commands can be used in the system
+ */
 public class HelpCommand implements Command {
 
     @Override
     public void execute() {
         GameDisplay.HelpMessage("Command", "Description");
         GameDisplay.divider();
-        GameDisplay.HelpMessage("save (filename)", "Save the game at the moment.");
-        GameDisplay.HelpMessage("load (filename)", "Load the game at the moment.");
+        GameDisplay.HelpMessage("save <filename>", "Save the game at the moment.");
+        GameDisplay.HelpMessage("load <filename>", "Load the game at the moment.");
         GameDisplay.HelpMessage("quit", "Quit the application at the moment.");
         GameDisplay.divider();
         GameDisplay.HelpMessage("roll", "Roll to move across the board.");
@@ -18,8 +21,7 @@ public class HelpCommand implements Command {
         GameDisplay.HelpMessage("n", "Answer no for prompt question.");
         GameDisplay.divider();
         GameDisplay.HelpMessage("help", "Show all commands and descriptions");
-        GameDisplay.HelpMessage("location", "Show current location and the path that player passed through.");
-        GameDisplay.HelpMessage("property", "Show properties in the future road and corresponding owner.");
+        GameDisplay.HelpMessage("destiny", "Show all blocks in the future road and corresponding owner and details.");
         GameDisplay.HelpMessage("money", "Show all players with their amount of money.");
         GameDisplay.HelpMessage("board", "Show the whole board and properties description.");
         GameDisplay.HelpMessage("profile", "Show all player's information, e.g. money they have, current location,");

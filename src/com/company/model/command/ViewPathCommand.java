@@ -8,9 +8,15 @@ import com.company.model.observer.PathObserver;
 
 import java.util.List;
 
+/**
+ * The path the player can roll to
+ */
 public class ViewPathCommand implements Command {
     private final PathObserver pathObserver;
 
+    /**
+     * @param pathObserver the counter for the blocks which the player can go to
+     */
     public ViewPathCommand(PathObserver pathObserver) {
         this.pathObserver = pathObserver;
     }
