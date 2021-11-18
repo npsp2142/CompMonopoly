@@ -176,7 +176,7 @@ class CommandTest {
 
 
     @Test
-    void viewPropertyCommand() {
+    void destinyCommand() {
         ArrayList<String> commands = new ArrayList<>();
         Player.NEED_PROMPT = false;
 
@@ -198,8 +198,7 @@ class CommandTest {
         commands.add("roll");
         commands.add("roll");
 
-        commands.add("property");
-        commands.add("p");
+        commands.add("destiny");
         executeCommands(commands);
     }
 

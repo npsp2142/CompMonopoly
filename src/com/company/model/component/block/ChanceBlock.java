@@ -18,9 +18,12 @@ public class ChanceBlock extends Block {
      */
     public static final int MAX_REDUCE = 300;
     /**
-     *
+     * The default name of the chance block
      */
     public static final String DEFAULT_EFFECT_NAME = "Chance";
+    /**
+     * The default probability of gaining money when visited
+     */
     public static final float PROBABILITY_ADD = 0.5f;
     private final Random random;
 

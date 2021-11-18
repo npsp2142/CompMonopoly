@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,7 +65,13 @@ class GameSystemTest {
         new CompMonopolyApplication(new CommandFactory(gameSystem));
         new GameDisplay(System.out);
         gameSystem.setCurrentPlayer(playerA);
-        gameSystem.setJailRoundCounter(new HashMap<>());
+        Map<Player, Integer> roundCounter = new HashMap<>();
+        for(Player player: players){
+            roundCounter.put(player,0);
+        }
+        gameSystem.setJailRoundCounter(roundCounter);
+
+
     }
 
     /**
