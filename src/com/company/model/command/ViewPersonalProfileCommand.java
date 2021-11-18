@@ -8,12 +8,20 @@ import com.company.model.component.Property;
 
 import java.util.ArrayList;
 
+/**
+ * The player wants to see all player information, eg The amount money they own, their current location, their status, their properties and the rent
+ */
 public class ViewPersonalProfileCommand implements Command {
     private final ArrayList<Player> players;
     private final ArrayList<Property> properties;
     private final PlayerLocation playerLocation;
 
 
+    /**
+     * @param players the players in the game
+     * @param properties the properties in the game
+     * @param playerLocation the current player location
+     */
     public ViewPersonalProfileCommand(ArrayList<Player> players, ArrayList<Property> properties, PlayerLocation playerLocation) {
         this.players = players;
         this.properties = properties;

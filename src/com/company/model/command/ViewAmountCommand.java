@@ -6,9 +6,15 @@ import com.company.model.component.Player;
 
 import java.util.ArrayList;
 
+/**
+ * When player wants to view all players amount, this will show all players amount
+ */
 public class ViewAmountCommand implements Command {
     private final ArrayList<Player> players;
 
+    /**
+     * @param players the players in the game
+     */
     public ViewAmountCommand(ArrayList<Player> players) {
         this.players = players;
     }
