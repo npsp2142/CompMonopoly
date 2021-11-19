@@ -33,6 +33,7 @@ public class ChanceBlock extends Block {
         this.random = random;
     }
 
+    @Override
     public OnLandEffect createOnLandEffect(Player player) {
         boolean isAdd = random.nextFloat() < PROBABILITY_ADD;
         if (isAdd) {

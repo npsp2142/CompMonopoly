@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class GoBlockTest {
 
-    GoBlock goBlock;
-    Player playerA;
+    private GoBlock goBlock;
+    private Player playerA;
 
     @BeforeEach
     void setUp() {

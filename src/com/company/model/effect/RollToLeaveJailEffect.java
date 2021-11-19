@@ -61,6 +61,7 @@ public class RollToLeaveJailEffect extends Effect implements OnLandEffect, Descr
         payToLeaveJailEffect.triggerOnLand();
     }
 
+    @Override
     public String getDescription() {
         assert (dices.length == 2);
         if (dices[0] == dices[1]) { // If roll Double

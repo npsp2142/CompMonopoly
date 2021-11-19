@@ -9,11 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BuyPropertyEffectTest {
 
-    final int customAmount = 1100;
-    Player player;
-    Property wanChai;
-    LoseMoneyEffect loseMoneyEffect;
-    BuyPropertyEffect buyPropertyEffect;
+    private Player player;
+    private Property wanChai;
 
     @BeforeEach
     void setUp() {
@@ -25,9 +22,10 @@ class BuyPropertyEffectTest {
     @Test
     void onLand() {
         // Test that the effect should change the property ownership and reduce player amount.
+        int customAmount = 1100;
         player.setAmount(customAmount);
-        loseMoneyEffect = new LoseMoneyEffect("Pay ownership fee", player, wanChai.getPrice());
-        buyPropertyEffect = new BuyPropertyEffect("Buy Property", player, wanChai, loseMoneyEffect);
+        LoseMoneyEffect loseMoneyEffect = new LoseMoneyEffect("Pay ownership fee", player, wanChai.getPrice());
+        BuyPropertyEffect buyPropertyEffect = new BuyPropertyEffect("Buy Property", player, wanChai, loseMoneyEffect);
         buyPropertyEffect.triggerOnLand();
         assertEquals(player, wanChai.getOwner());
         assertEquals(customAmount - wanChai.getPrice(), player.getAmount());

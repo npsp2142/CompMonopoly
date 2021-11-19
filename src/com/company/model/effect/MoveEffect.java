@@ -31,7 +31,7 @@ public class MoveEffect extends Effect implements OnLandEffect, Describable {
     @Override
     public void triggerOnLand() {
         notifyEffectSubscribers();
-        if (player.getStatus().equals(Player.Status.GROUNDED)) { // if no move
+        if (player.getStatus() == Player.Status.GROUNDED) { // if no move
             Block block = player.getCurrentLocation(playerLocation);
             OnLandEffect onLandEffect = block.createOnLandEffect(player);
             onLandEffect.triggerOnLand();
@@ -42,8 +42,9 @@ public class MoveEffect extends Effect implements OnLandEffect, Describable {
         playerLocation.moveStep(player, Arrays.stream(steps).sum());
     }
 
+    @Override
     public String getDescription() {
-        if (player.getStatus().equals(Player.Status.GROUNDED)) {
+        if (player.getStatus() == Player.Status.GROUNDED) {
             return "Move not allowed";
         }
         assert (steps.length == 2);

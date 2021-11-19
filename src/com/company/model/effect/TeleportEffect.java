@@ -34,6 +34,7 @@ public class TeleportEffect extends Effect implements OnLandEffect {
     }
 
 
+    @Override
     public String getDescription() {
         return String.format("%s teleports to %s", player, block);
     }

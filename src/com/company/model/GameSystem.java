@@ -100,7 +100,7 @@ public class GameSystem {
     }
 
     private void onTurnStart() {
-        if (currentPlayer.getStatus().equals(Player.Status.BANKRUPT)) {
+        if (currentPlayer.getStatus() == Player.Status.BANKRUPT) {
             endTurn();
             return;
         }
@@ -157,7 +157,7 @@ public class GameSystem {
     private boolean isAllOtherPlayerBankrupt() {
         int count = 0;
         for (Player player : players) { // Count the number of player bankrupt
-            if (player.getStatus().equals(Player.Status.BANKRUPT)) {
+            if (player.getStatus() == Player.Status.BANKRUPT) {
                 count += 1;
             }
         }
@@ -171,7 +171,7 @@ public class GameSystem {
     private void onGameEnd() {
         if (isAllOtherPlayerBankrupt()) {
             for (Player player : players) {
-                if (player.getStatus().equals(Player.Status.NORMAL)) {
+                if (player.getStatus() == Player.Status.NORMAL) {
                     GameDisplay.titleBar(String.format("%s is the winner", player.getName()));
                     break;
                 }

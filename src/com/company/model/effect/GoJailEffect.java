@@ -28,6 +28,7 @@ public class GoJailEffect extends Effect implements OnLandEffect {
         teleportEffect.triggerOnLand();
     }
 
+    @Override
     public String getDescription() {
         return "Go to jail immediately";
     }

@@ -7,7 +7,7 @@ import com.company.model.effect.OnEnterEffect;
 import com.company.model.effect.OnLandEffect;
 
 public class IncomeTaxBlock extends Block {
-    final float INCOME_TAX_RATE = (float) 0.1;
+    public final float INCOME_TAX_RATE = (float) 0.1;
 
     public IncomeTaxBlock(String name) {
         super(name);

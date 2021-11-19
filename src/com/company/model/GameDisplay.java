@@ -32,7 +32,7 @@ public class GameDisplay {
 
     public GameDisplay(OutputStream outputStream, GameSystem gameSystem) {
         printStream = new PrintStream(outputStream);
-        this.gameSystem = gameSystem;
+        this.setGameSystem(gameSystem);
         if (instance == null) {
             instance = this;
         }
@@ -101,8 +101,8 @@ public class GameDisplay {
     public static void printCommandPrompt() {
         switch (CompMonopolyApplication.instance.getStatus()) {
             case PLAYING:
-                if (instance.gameSystem == null) return;
-                instance.getPrintStream().print(colorString(instance.gameSystem.getCurrentPlayer().toString(), ANSI_GREEN));
+                if (instance.getGameSystem() == null) return;
+                instance.getPrintStream().print(colorString(instance.getGameSystem().getCurrentPlayer().toString(), ANSI_GREEN));
                 instance.getPrintStream().print(colorString(" > ", ANSI_BLUE));
                 break;
             case MENU:
@@ -119,4 +119,11 @@ public class GameDisplay {
         return printStream;
     }
 
+    public GameSystem getGameSystem() {
+        return gameSystem;
+    }
+
+    public void setGameSystem(GameSystem gameSystem) {
+        this.gameSystem = gameSystem;
+    }
 }

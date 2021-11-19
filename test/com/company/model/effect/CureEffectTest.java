@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class CureEffectTest {
 
-    Player player;
+    private Player player;
 
     @BeforeEach
     void setUp() {

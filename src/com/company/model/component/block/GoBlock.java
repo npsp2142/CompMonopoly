@@ -15,6 +15,7 @@ public class GoBlock extends Block {
         super(name);
     }
 
+    @Override
     public OnEnterEffect createOnEnterEffect(Player player) {
         GainMoneyEffect gainMoneyEffect = new GainMoneyEffect(DEFAULT_NAME, player, SALARY);
         gainMoneyEffect.setEffectObservers(getEffectObservers());

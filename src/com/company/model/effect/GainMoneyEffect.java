@@ -12,6 +12,7 @@ public class GainMoneyEffect extends Effect implements OnLandEffect, OnEnterEffe
         this.amount = amount;
     }
 
+    @Override
     public void triggerOnLand() {
         player.addAmount(amount);
         notifyEffectSubscribers();
@@ -23,6 +24,7 @@ public class GainMoneyEffect extends Effect implements OnLandEffect, OnEnterEffe
         notifyEffectSubscribers();
     }
 
+    @Override
     public String getDescription() {
         return String.format("%s gains %d HKD", player, amount);
     }

@@ -29,6 +29,7 @@ public abstract class ConditionalBlock extends Block {
      */
     public abstract boolean GoTo(Player player);
 
+    @Override
     public OnEnterEffect createOnEnterEffect(Player player) {
         if (blockA == null) {
             return null;
@@ -43,6 +44,7 @@ public abstract class ConditionalBlock extends Block {
         }
     }
 
+    @Override
     public OnLandEffect createOnLandEffect(Player player) {
         if (blockA == null) {
             return null;

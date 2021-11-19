@@ -35,6 +35,7 @@ public class NoEffect extends Effect implements OnLandEffect, OnEnterEffect {
     public void triggerOnEnter() {
     }
 
+    @Override
     public String getDescription() {
         return String.format("%s", description);
     }

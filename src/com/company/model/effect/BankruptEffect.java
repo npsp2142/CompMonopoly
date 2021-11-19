@@ -15,7 +15,6 @@ public class BankruptEffect extends Effect implements OnLandEffect {
      * @param name the name of the effect
      * @param player the player to be bankrupt
      * @param abandonPropertyEffects to set property to unowned
-     * @see AbandonPropertyEffect
      */
     public BankruptEffect(String name, Player player, List<AbandonPropertyEffect> abandonPropertyEffects) {
         super(name);
@@ -32,6 +31,7 @@ public class BankruptEffect extends Effect implements OnLandEffect {
         }
     }
 
+    @Override
     public String getDescription() {
         return String.format("%s has no money in Turn End.", player);
     }

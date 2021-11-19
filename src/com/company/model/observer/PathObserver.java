@@ -27,6 +27,7 @@ public class PathObserver implements PlayerObserver {
         }
     }
 
+    @Override
     public void update(Player player) {
         Block currentLocation = player.getCurrentLocation(playerLocation);
         if (!paths.containsKey(player)) {
@@ -44,6 +45,7 @@ public class PathObserver implements PlayerObserver {
         path.add(currentLocation);
     }
 
+    @Override
     public void reset() {
         paths.clear();
         for (Player player : playerLocation.getPlayers()) {

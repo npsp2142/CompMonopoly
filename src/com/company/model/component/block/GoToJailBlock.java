@@ -18,6 +18,7 @@ public class GoToJailBlock extends Block {
         this.playerLocation = playerLocation;
     }
 
+    @Override
     public OnLandEffect createOnLandEffect(Player player) {
         SetGroundedEffect setGroundedEffect = new SetGroundedEffect("Grounded", player);
         TeleportEffect teleportEffect = new TeleportEffect(

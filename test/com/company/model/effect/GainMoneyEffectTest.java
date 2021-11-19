@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GainMoneyEffectTest {
 
-    final int initialAmount = 1050;
-    final int amountToBeAdded = 100;
-    Player player;
+    private final int initialAmount = 1050;
+    private final int amountToBeAdded = 100;
+    private Player player;
 
     @BeforeEach
     void setUp() {

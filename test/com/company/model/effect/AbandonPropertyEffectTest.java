@@ -11,12 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * Unit Test case for AbandonPropertyEffect
  */
-class AbandonPropertyEffectTest {
+public final class AbandonPropertyEffectTest {
 
 
-    Player player;
-    Property wanChai;
-    AbandonPropertyEffect abandonPropertyEffect;
+    private Player player;
+    private Property wanChai;
 
     @BeforeEach
     void setUp() {
@@ -32,7 +31,7 @@ class AbandonPropertyEffectTest {
         // Test that the effect should change the property ownership to no one.
         wanChai.setOwner(player);
         assertEquals(player, wanChai.getOwner());
-        abandonPropertyEffect = new AbandonPropertyEffect("Bankrupt", wanChai);
+        AbandonPropertyEffect abandonPropertyEffect = new AbandonPropertyEffect("Bankrupt", wanChai);
         abandonPropertyEffect.triggerOnLand();
         assertNull(wanChai.getOwner());
     }

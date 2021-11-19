@@ -16,6 +16,7 @@ public class CureEffect extends Effect implements OnLandEffect {
         player.setStatus(Player.Status.NORMAL);
     }
 
+    @Override
     public String getDescription() {
         return "You are healthy";
     }

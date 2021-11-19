@@ -16,6 +16,7 @@ public class SetGroundedEffect extends Effect implements OnLandEffect {
         notifyEffectSubscribers();
     }
 
+    @Override
     public String getDescription() {
         return String.format("%s cannot move", player);
     }

@@ -21,14 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class GameLoaderTest {
 
-    GameSystem gameSystem;
-    PlayerLocation playerLocation;
-    Player playerA;
-    NoEffectBlock noEffectBlockA;
-    NoEffectBlock noEffectBlockB;
-    NoEffectBlock noEffectBlockC;
-    NoEffectBlock noEffectBlockD;
-    int customAmount;
+    private GameSystem gameSystem;
+    private PlayerLocation playerLocation;
+    private Player playerA;
+    private NoEffectBlock noEffectBlockA;
+    private NoEffectBlock noEffectBlockB;
+    private NoEffectBlock noEffectBlockC;
+    private NoEffectBlock noEffectBlockD;
+    private int customAmount;
 
     @BeforeEach
     void setUp() {

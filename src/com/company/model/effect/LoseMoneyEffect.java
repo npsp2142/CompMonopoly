@@ -20,11 +20,13 @@ public class LoseMoneyEffect extends Effect implements OnLandEffect {
         this.amount = amount;
     }
 
+    @Override
     public void triggerOnLand() {
         player.reduceAmount(amount);
         notifyEffectSubscribers();
     }
 
+    @Override
     public String getDescription() {
         return String.format("%s losses %d HKD", player, amount);
     }

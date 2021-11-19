@@ -18,18 +18,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GoJailEffectTest {
 
-    Board board;
-    PlayerLocation playerLocation;
-    ArrayList<Player> players;
-    GoBlock goBlock;
-    PropertyBlock centralBlock;
-    PropertyBlock wanChaiBlock;
-    NoEffectBlock justVisitingBlock;
-    JailBlock jailBlock;
-    GoToJailBlock goToJailBlock;
-    JustVisitingOrInJailBlock justVisitingOrInJailBlock;
-    Player playerA;
-    HashMap<Player, Integer> inJailRoundCounter;
+    private Board board;
+    private PlayerLocation playerLocation;
+    private ArrayList<Player> players;
+    private GoBlock goBlock;
+    private PropertyBlock centralBlock;
+    private PropertyBlock wanChaiBlock;
+    private NoEffectBlock justVisitingBlock;
+    private JailBlock jailBlock;
+    private GoToJailBlock goToJailBlock;
+    private JustVisitingOrInJailBlock justVisitingOrInJailBlock;
+    private Player playerA;
+    private HashMap<Player, Integer> inJailRoundCounter;
 
     @BeforeEach
     void setUp() {

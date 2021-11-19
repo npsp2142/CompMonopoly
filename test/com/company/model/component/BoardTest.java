@@ -12,15 +12,15 @@ import static org.junit.jupiter.api.Assertions.assertSame;
  */
 class BoardTest {
 
-    final String nameA = "No Effect Block A";
-    final String nameB = "No Effect Block B";
-    final String nameC = "No Effect Block C";
-    final String nameD = "No Effect Block D";
-    Board board;
-    NoEffectBlock noEffectBlockA;
-    NoEffectBlock noEffectBlockB;
-    NoEffectBlock noEffectBlockC;
-    NoEffectBlock noEffectBlockD;
+    private final String nameA = "No Effect Block A";
+    private final String nameB = "No Effect Block B";
+    private final String nameC = "No Effect Block C";
+    private final String nameD = "No Effect Block D";
+    private Board board;
+    private NoEffectBlock noEffectBlockA;
+    private NoEffectBlock noEffectBlockB;
+    private NoEffectBlock noEffectBlockC;
+    private NoEffectBlock noEffectBlockD;
 
     @BeforeEach
     void setUp() {

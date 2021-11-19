@@ -48,6 +48,7 @@ public class PayToLeaveJailEffect extends Effect implements OnLandEffect {
         moveEffect.triggerOnLand();
     }
 
+    @Override
     public String getDescription() {
         return "You paid to leave jail";
     }

@@ -20,12 +20,14 @@ public class PayRentEffect extends Effect implements OnLandEffect {
         this.loseMoneyEffect = loseMoneyEffect;
     }
 
+    @Override
     public void triggerOnLand() {
         notifyEffectSubscribers();
         gainMoneyEffect.triggerOnLand();
         loseMoneyEffect.triggerOnLand();
     }
 
+    @Override
     public String getDescription() {
         return "You stepped on a property owned by others and pay Rent";
     }

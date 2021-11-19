@@ -23,15 +23,15 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class GameSystemTest {
 
-    GameSystem gameSystem;
-    PlayerLocation playerLocation;
-    Player playerA;
-    Player playerB;
-    NoEffectBlock noEffectBlockA;
-    NoEffectBlock noEffectBlockB;
-    NoEffectBlock noEffectBlockC;
-    NoEffectBlock noEffectBlockD;
-    int customAmount;
+    private GameSystem gameSystem;
+    private PlayerLocation playerLocation;
+    private Player playerA;
+    private Player playerB;
+    private NoEffectBlock noEffectBlockA;
+    private NoEffectBlock noEffectBlockB;
+    private NoEffectBlock noEffectBlockC;
+    private NoEffectBlock noEffectBlockD;
+    private int customAmount;
 
     @BeforeEach
     void setUp() {

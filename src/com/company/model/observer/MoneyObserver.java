@@ -13,6 +13,7 @@ public class MoneyObserver implements PlayerObserver {
         this.money = money;
     }
 
+    @Override
     public void update(Player player) {
         int amount = player.getAmount();
         if (!money.containsKey(player)) {

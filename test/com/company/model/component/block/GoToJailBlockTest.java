@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Unit test of GoToJailBlock
  */
 class GoToJailBlockTest {
-    PlayerLocation playerLocation;
-    Player player;
-    GoToJailBlock goToJailBlock;
-    JustVisitingOrInJailBlock justVisitingOrInJailBlock;
+    private PlayerLocation playerLocation;
+    private Player player;
+    private GoToJailBlock goToJailBlock;
+    private JustVisitingOrInJailBlock justVisitingOrInJailBlock;
 
     @BeforeEach
     void setUp() {

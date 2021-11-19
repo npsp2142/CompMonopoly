@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class ConditionalBlockTest {
 
-    ConditionalBlock conditionalBlock;
-    Player playerA;
-    Property central;
-    Property wanChai;
+    private ConditionalBlock conditionalBlock;
+    private Player playerA;
+    private Property central;
+    private Property wanChai;
 
     @BeforeEach
     void setUp() {
@@ -53,7 +53,7 @@ class ConditionalBlockTest {
         assertEquals(-wanChai.getRent(), playerA.getAmount());
     }
 
-    private static class TwoPropertyConditionalBlock extends ConditionalBlock {
+    private final static class TwoPropertyConditionalBlock extends ConditionalBlock {
 
         private TwoPropertyConditionalBlock(PropertyBlock central, PropertyBlock wanChai) {
             super("Two Property", central, wanChai);

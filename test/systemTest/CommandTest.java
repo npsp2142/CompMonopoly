@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * System tests for CompMonopoly commands
  */
 class CommandTest {
-    CompMonopolyApplication compMonopolyApplication;
+    private CompMonopolyApplication compMonopolyApplication;
 
     @BeforeEach
     void setUp() {

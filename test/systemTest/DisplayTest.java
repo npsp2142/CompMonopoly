@@ -17,7 +17,7 @@ import java.util.List;
  * System tests for CompMonopoly commands
  */
 class DisplayTest {
-    CompMonopolyApplication compMonopolyApplication;
+    private CompMonopolyApplication compMonopolyApplication;
 
     @BeforeEach
     void setUp() {

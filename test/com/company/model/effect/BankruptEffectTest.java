@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class BankruptEffectTest {
 
-    Player player;
-    Property wanChai;
+    private Player player;
+    private Property wanChai;
 
     @BeforeEach
     void setUp() {

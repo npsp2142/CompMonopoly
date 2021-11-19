@@ -12,6 +12,7 @@ public class PropertyBlock extends Block {
         this.property = property;
     }
 
+    @Override
     public OnLandEffect createOnLandEffect(Player player) {
         if (hasNoOwner()) {
             if (player.getAmount() < property.getPrice()) {
